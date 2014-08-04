@@ -1,4 +1,4 @@
 Rails.application.routes.draw do
   
-  root => 'public#index'
+  root to: 'public#index'
 end
