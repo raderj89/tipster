@@ -54,6 +54,13 @@ GEM
     colorize (0.7.3)
     erubis (2.7.0)
     execjs (2.2.1)
+    haml (4.0.5)
+      tilt
+    haml-rails (0.5.3)
+      actionpack (>= 4.0.1)
+      activesupport (>= 4.0.1)
+      haml (>= 3.1, < 5.0)
+      railties (>= 4.0.1)
     hike (1.2.3)
     hoptoad_notifier (2.4.11)
       activesupport
@@ -146,6 +153,8 @@ DEPENDENCIES
   capistrano-bundler
   capistrano-rails
   coffee-rails (~> 4.0.0)
+  haml
+  haml-rails
   hoptoad_notifier
   jbuilder (~> 2.0)
   jquery-rails

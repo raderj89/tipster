@@ -9,6 +9,9 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
 gem 'jbuilder', '~> 2.0'
 
+gem 'haml'
+gem 'haml-rails'
+
 gem 'bcrypt', '~> 3.1.7'
 
 group :development do
