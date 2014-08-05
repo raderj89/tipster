@@ -1,0 +1,8 @@
+%h1 Invite property managers
+
+= simple_form_for [:admin, @invitation], remote: true do |f|
+  = f.input :recipient_email, label: 'Email'
+  = f.submit "Send Invitation"
+
+
+%ul.js-sent-invites-list

@@ -11,11 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140804183407) do
+ActiveRecord::Schema.define(version: 20140805160630) do
 
   create_table "admins", force: true do |t|
     t.string   "email",           null: false
     t.string   "password_digest", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "invitations", force: true do |t|
+    t.string   "recipient_email", null: false
+    t.string   "token",           null: false
+    t.integer  "sender_id",       null: false
+    t.string   "sender_type",     null: false
+    t.string   "position"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

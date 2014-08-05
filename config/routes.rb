@@ -5,6 +5,8 @@ Rails.application.routes.draw do
     post 'log_in' => 'sessions#create'
     post 'log_out' => 'sessions#destroy', as: :log_out
     root to: 'dashboard#index'
+
+    resources :invitations, except: [:edit, :update]
   end
 
   root to: 'public#index'

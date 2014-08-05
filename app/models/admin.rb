@@ -12,6 +12,9 @@ class Admin < ActiveRecord::Base
   validates :password, presence: true, length: { minimum: 6 },
             unless: Proc.new { |a| a.password.blank? }
 
+  # Relations
+  has_many :invitations, as: :sender, dependent: :destroy
+
   # BCrypt
   has_secure_password
 end

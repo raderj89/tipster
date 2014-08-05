@@ -47,3 +47,6 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
 end
+
+ActiveRecord::Migration.maintain_test_schema!
+Capybara.javascript_driver = :webkit
