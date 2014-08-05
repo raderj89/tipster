@@ -12,6 +12,8 @@ gem 'jbuilder', '~> 2.0'
 gem 'haml'
 gem 'haml-rails'
 
+gem 'simple_form'
+
 gem 'bcrypt', '~> 3.1.7'
 
 group :development do
@@ -21,6 +23,7 @@ group :development do
   gem 'pry-rails'
   gem 'spring'
   gem 'rspec-rails'
+  gem 'ffaker'
 end
 
 group :test do
@@ -28,6 +31,8 @@ group :test do
   gem 'capybara'
   gem 'factory_girl_rails'
   gem 'database_cleaner'
+  gem 'simplecov', '~>0.8.0', :require => false
+  gem 'shoulda'
 end
 
 # Errbit
