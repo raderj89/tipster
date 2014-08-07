@@ -3,6 +3,14 @@ class PropertiesController < ApplicationController
   def new
     @property = Property.new
     @employee = Employee.new(invitation_token: params[:invitation_token])
+    @property.name = @employee.invitation.property_name
+    @property.address = @employee.invitation.property_address
+    @property.city = @employee.invitation.property_city
+    @property.state = @employee.invitation.property_state
+    @property.zip = @employee.invitation.property_zip
+
+    binding.pry
+
     @property_employee = @property.property_employees.build
     
     @property_employee.build_employee(invitation_id: @employee.invitation.id,

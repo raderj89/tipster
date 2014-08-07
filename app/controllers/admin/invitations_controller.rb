@@ -31,7 +31,8 @@ class Admin::InvitationsController < Admin::BaseController
     end
 
     def invitation_params
-      params.require(:invitation).permit(:recipient_email)
+      params.require(:invitation).permit(:recipient_email, :property_name, :property_address,
+                                         :property_city, :property_state, :property_zip)
     end
 
 end

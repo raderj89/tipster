@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140806175308) do
+ActiveRecord::Schema.define(version: 20140807155814) do
 
   create_table "admins", force: true do |t|
     t.string   "email",           null: false
@@ -41,14 +41,19 @@ ActiveRecord::Schema.define(version: 20140806175308) do
   add_index "employees", ["invitation_id"], name: "index_employees_on_invitation_id", using: :btree
 
   create_table "invitations", force: true do |t|
-    t.string   "recipient_email",                 null: false
-    t.string   "token",                           null: false
-    t.integer  "sender_id",                       null: false
-    t.string   "sender_type",                     null: false
+    t.string   "recipient_email",                  null: false
+    t.string   "token",                            null: false
+    t.integer  "sender_id",                        null: false
+    t.string   "sender_type",                      null: false
     t.string   "position"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_admin",        default: false
+    t.boolean  "is_admin",         default: false
+    t.string   "property_name"
+    t.string   "property_address"
+    t.string   "property_city"
+    t.string   "property_state"
+    t.string   "property_zip"
   end
 
   add_index "invitations", ["recipient_email"], name: "index_invitations_on_recipient_email", using: :btree

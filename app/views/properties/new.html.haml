@@ -2,10 +2,10 @@
 
 = simple_form_for @property, html: { multipart: true } do |f|
   = f.input :name, label: "Name of Building"
-  = f.input :address
-  = f.input :city
-  = f.input :state, collection: us_states
-  = f.input :zip
+  = f.input :address, input_html: { value: @property.address }
+  = f.input :city, input_html: { value: @property.city }
+  = f.input :state, collection: us_states, input_html: { value: @property.state }
+  = f.input :zip, input_html: { value: @property.zip }
   = f.input :picture, as: :file, label: 'Upload a photo of your building'
   
   %h2 Your information
