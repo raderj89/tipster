@@ -1,0 +1,25 @@
+%h2 Building Information
+
+= simple_form_for @property, html: { multipart: true } do |f|
+  = f.input :name, label: "Name of Building"
+  = f.input :address, input_html: { value: @property.address }
+  = f.input :city, input_html: { value: @property.city }
+  = f.input :state, collection: us_states, input_html: { value: @property.state }
+  = f.input :zip, input_html: { value: @property.zip }
+  = f.input :picture, as: :file, label: 'Upload a photo of your building'
+  
+  %h2 Your information
+  = f.simple_fields_for :property_employees do |e|
+    = e.simple_fields_for :title do |t|
+      = t.input :title, as: :hidden, input_html: { value: "Super" } 
+    = e.simple_fields_for :employee, html: { multipart: true } do |e|
+      = e.input :invitation_token, as: :hidden, input_html: { value: @employee.invitation_token }
+      = e.input :first_name
+      = e.input :last_name
+      = e.input :nickname
+      = e.input :email
+      = e.input :password
+      = e.input :password_confirmation
+      = e.input :avatar, as: :file, label: 'Upload a photo of yourself'
+
+  = f.submit "Create Account"

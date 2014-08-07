@@ -12,8 +12,8 @@ describe Admin::SessionsController do
 
   describe 'POST #create' do
     context "with valid credentials" do 
-      before { post :create, session: { email: admin.email, password: admin.password } }
-
+      before(:each) { post :create, session: { email: admin.email, password: admin.password } }
+      
       it "sets the admin ID in the session" do
         expect(session[:admin_id]).to eq admin.id
       end
@@ -28,7 +28,7 @@ describe Admin::SessionsController do
     end
 
     context "with invalid credentials" do
-      before { post :create, session: { email: '', password: '' } }
+      before(:each) { post :create, session: { email: '', password: '' } }
       
         it "renders the login page" do
           expect(response).to render_template(:new)
@@ -41,7 +41,7 @@ describe Admin::SessionsController do
   end
 
   describe 'DELETE #destroy' do
-    before { delete :destroy }
+    before(:each) { delete :destroy }
 
     it "logs out the user, destroying admin ID in the session" do
       expect(session[:admin]).to be_nil

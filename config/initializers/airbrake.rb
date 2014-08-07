@@ -3,4 +3,5 @@ Airbrake.configure do |config|
   config.host    = 'e.nycdevshop.com'
   config.port    = 80
   config.secure  = config.port == 443
+  config.environment_name = Rails.env.production? ? `hostname` : Rails.env
 end
