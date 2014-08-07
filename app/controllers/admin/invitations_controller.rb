@@ -5,11 +5,13 @@ class Admin::InvitationsController < Admin::BaseController
   before_action :set_admin
 
   def new
+    @invitations = Invitation.all
     @invitation = @admin.invitations.build
   end
 
   def create
     @invitation = @admin.invitations.build(invitation_params)
+    @invitation.is_admin = true
 
     if @invitation.save
       flash.now[:success] = "Invite sent successfully!"

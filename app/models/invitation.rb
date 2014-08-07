@@ -5,6 +5,7 @@ class Invitation < ActiveRecord::Base
 
   # Callbacks
   before_create :generate_token
+  after_create :send_invitation_email
 
   # Email regex
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -15,8 +16,14 @@ class Invitation < ActiveRecord::Base
 
   private
 
+    # Generate url-safe invitation token
     def generate_token
       self.token = SecureRandom.urlsafe_base64
+    end
+
+    # Send invitation email
+    def send_invitation_email
+      UserInvitationMailer.confirm_invite(self).deliver
     end
 
 end

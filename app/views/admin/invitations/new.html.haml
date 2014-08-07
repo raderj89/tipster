@@ -4,5 +4,10 @@
   = f.input :recipient_email, label: 'Email'
   = f.submit "Send Invitation"
 
+#sent-invitations
+  - if @invitations.any?
+    %h2 Sent invitations
 
 %ul.js-sent-invites-list
+  - if @invitations.any?
+    = render @invitations

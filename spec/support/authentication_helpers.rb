@@ -10,6 +10,7 @@ end
 
 RSpec.configure do |c|
   c.include AuthenticationHelpers, type: :feature
+  c.include AuthenticationHelpers, type: :request
 end
 
 module AuthHelpers

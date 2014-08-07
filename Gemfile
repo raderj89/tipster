@@ -13,6 +13,7 @@ gem 'haml'
 gem 'haml-rails'
 
 gem 'simple_form'
+gem 'paperclip', '~> 4.1'
 
 gem 'bcrypt', '~> 3.1.7'
 
@@ -22,8 +23,9 @@ group :development do
   gem 'capistrano-rails'
   gem 'pry-rails'
   gem 'spring'
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~> 2.14.2'
   gem 'ffaker'
+  gem 'quiet_assets'
 end
 
 group :test do
