@@ -36,6 +36,7 @@ group :test do
   gem 'database_cleaner'
   gem 'simplecov', '~>0.8.0', :require => false
   gem 'shoulda'
+  gem 'webmock'
 end
 
 # Errbit

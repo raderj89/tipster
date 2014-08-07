@@ -1,0 +1,16 @@
+%h1 Invite Employees
+
+= simple_form_for [current_employee, @invitation], remote: true do |f|
+  = f.input :recipient_email, label: "Employee Email Address"
+  = f.input :position, collection: titles
+  = f.submit "Send Invitation"
+
+#sent-invitations
+  - if @invitations.any?
+    %h2 Sent invitations
+
+%ul.js-sent-invites-list
+  - if @invitations.any?
+    = render @invitations
+
+= link_to "Next Step", employee_setup_payment_path(current_employee)

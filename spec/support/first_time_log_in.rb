@@ -1,14 +1,8 @@
-require 'spec_helper'
+module FirstTimeLogIn
 
-feature 'creating property' do
-  let(:manager_invitation) { create(:manager_invitation) }
-
-  before do
+  def first_time_log_in(manager_invitation)
     visit new_property_path(manager_invitation.token)
-  end
 
-  scenario 'with valid information' do
-    # Property form
     fill_in 'Name of Building', with: 'Trump Tower'
     fill_in 'Address', with: '123 Rich Person Way'
     fill_in 'City', with: 'New York'
@@ -31,12 +25,10 @@ feature 'creating property' do
     click_button 'Create Account'
 
     expect(page).to have_content("Your account was successfully created!")
-    expect(current_path).to match(new_employee_invitation_path(Employee.last))
   end
 
-  scenario 'with invalid credentials' do
-    click_button 'Create Account'
+end
 
-    expect(page).to have_content("There was a problem creating your account.")
-  end
+RSpec.configure do |c|
+  c.include FirstTimeLogIn, type: :feature
 end
