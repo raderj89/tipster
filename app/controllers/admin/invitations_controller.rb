@@ -5,7 +5,7 @@ class Admin::InvitationsController < Admin::BaseController
   before_action :set_admin
 
   def new
-    @invitations = Invitation.all
+    @invitations = @admin.invitations
     @invitation = @admin.invitations.build
   end
 

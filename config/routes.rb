@@ -10,7 +10,10 @@ Rails.application.routes.draw do
   end
 
   resources :properties, except: [:new], shallow: true do
-    resources :employees
+    resources :employees do
+      resources :invitations
+      get 'setup_payment' => 'employees#setup_payment', as: :setup_payment
+    end
   end
 
   get 'properties/new/:invitation_token' => 'properties#new', as: :new_property
