@@ -19,6 +19,16 @@ FactoryGirl.define do
     zip "11372"
   end
 
+  factory :building_manager_first_login, class: 'Employee' do
+    first_name "Mike"
+    last_name "Super"
+    sequence(:email) { |n| "manager-#{n}@example.com" }
+    password "password"
+    is_admin true
+    invitation factory: :manager_invitation
+    log_in_count 1
+  end
+
   factory :building_manager, class: 'Employee' do
     first_name "Mike"
     last_name "Super"
@@ -26,6 +36,7 @@ FactoryGirl.define do
     password "password"
     is_admin true
     invitation factory: :manager_invitation
+    log_in_count 10
   end
   
   factory :property_employee_admin, class: 'PropertyEmployee' do

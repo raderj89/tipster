@@ -9,8 +9,6 @@ class PropertiesController < ApplicationController
     @property.state = @employee.invitation.property_state
     @property.zip = @employee.invitation.property_zip
 
-    binding.pry
-
     @property_employee = @property.property_employees.build
     
     @property_employee.build_employee(invitation_id: @employee.invitation.id,

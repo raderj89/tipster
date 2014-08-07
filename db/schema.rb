@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140807155814) do
+ActiveRecord::Schema.define(version: 20140807162809) do
 
   create_table "admins", force: true do |t|
     t.string   "email",           null: false
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 20140807155814) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.integer  "log_in_count"
   end
 
   add_index "employees", ["email"], name: "index_employees_on_email", unique: true, using: :btree

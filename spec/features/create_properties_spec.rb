@@ -8,14 +8,18 @@ feature 'creating property' do
   end
 
   scenario 'with valid information' do
+    # Property form
     fill_in 'Name of Building', with: 'Trump Tower'
     fill_in 'Address', with: '123 Rich Person Way'
     fill_in 'City', with: 'New York'
     find('#property_state').find(:xpath, 'option[2]').select_option
     fill_in 'Zip', with: '11372'
     attach_file 'Upload a photo of your building', "#{Rails.root}/spec/support/images/test.jpeg"
+    
     find(:xpath, "//input[@id='property_property_employees_attributes_0_title_attributes_title']").set "Super"
     find(:xpath, "//input[@id='property_property_employees_attributes_0_employee_attributes_invitation_token']").set manager_invitation.token
+    
+    # Property admin form
     fill_in 'First name', with: 'Mike'
     fill_in 'Last name', with: 'Super'
     fill_in 'Nickname', with: 'SuperMike'
