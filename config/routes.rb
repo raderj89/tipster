@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   end
 
   resources :properties, except: [:new] do
+    resources :property_employees, except: [:new]
     resources :employees do
       get 'setup_payment' => 'employees#setup_payment', as: :setup_payment
       post 'create_payment' => 'employees#create_payment', as: :create_payment
@@ -19,6 +20,8 @@ Rails.application.routes.draw do
     end
   end
 
+
+  get 'properties/:property_id/property_employees/new/:invitation_token' => 'property_employees#new', as: :new_property_property_employee
   get 'properties/new/:invitation_token' => 'properties#new', as: :new_property
 
 

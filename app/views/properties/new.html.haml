@@ -9,10 +9,10 @@
   = f.input :picture, as: :file, label: 'Upload a photo of your building'
   
   %h2 Your information
-  = f.simple_fields_for :property_employees do |e|
-    = e.simple_fields_for :title do |t|
+  = f.simple_fields_for :property_employees do |pe|
+    = pe.simple_fields_for :title do |t|
       = t.input :title, as: :hidden, input_html: { value: "Super" } 
-    = e.simple_fields_for :employee, html: { multipart: true } do |e|
+    = pe.simple_fields_for :employee, html: { multipart: true } do |e|
       = e.input :invitation_token, as: :hidden, input_html: { value: @employee.invitation_token }
       = e.input :is_admin, as: :hidden, input_html: { value: @employee.invitation_is_admin }
       = e.input :first_name
