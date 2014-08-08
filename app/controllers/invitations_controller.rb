@@ -1,7 +1,9 @@
 class InvitationsController < ApplicationController
   respond_to :js
 
-  before_action :set_employee
+  before_action :set_property
+  before_action :signed_in_employee
+  before_action :correct_employee
 
   def new
     @invitations = @employee.sent_invitations.all
@@ -12,20 +14,34 @@ class InvitationsController < ApplicationController
     @invitation = @employee.sent_invitations.build(invitation_params)
 
     if @invitation.save
+      UserInvitationMailer.confirm_invite(@invitation).deliver
       flash.now[:success] = "Invite sent successfully!"
     else
       flash.now[:error] = "There was a problem sending your invitation."
     end
 
     respond_with(@invitation) do |f|
-      f.html { redirect_to new_employee_invitation_path }
+      f.html { redirect_to new_property_employee_invitation_path }
     end
   end
 
   private
 
-    def set_employee
-      @employee = current_employee
+    def set_property
+      @property = Property.find(params[:property_id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to root_path, notice: "We couldn't find that page."
+    end
+
+    def signed_in_employee
+      unless employee_signed_in?
+        redirect_to root_path, notice: "Please sign in."
+      end
+    end
+
+    def correct_employee
+      @employee = Employee.find(params[:employee_id])
+      redirect_to root_path unless current_employee?(@employee)
     end
 
     def invitation_params

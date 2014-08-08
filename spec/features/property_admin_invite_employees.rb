@@ -7,8 +7,6 @@ feature 'invite employees', js: true do
   let(:manager) { create(:building_manager) }
 
   scenario 'on first time logging in' do
-    
-
     expect(page).to have_content("Invite Employees")
 
     fill_in 'Employee Email Address', with: 'employee@example.com'

@@ -10,10 +10,11 @@ class Employee < ActiveRecord::Base
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
   # Validations
+  # validates_presence_of :invitation
   validates :first_name, presence: true, length: { maximum: 100}
   validates :last_name, presence: true, length: { maximum: 100}
   validates :email, presence: true, length: { maximum: 100}, format: { with: VALID_EMAIL_REGEX }
-  validates :password, length: { minimum: 6 }
+  validates :password, length: { minimum: 6 }, unless: Proc.new { |a| a.password.blank? }
 
   # Paperclip
   has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
@@ -21,6 +22,12 @@ class Employee < ActiveRecord::Base
 
   # BCrypt
   has_secure_password
+
+  # Methods
+
+  def full_name
+    "#{first_name} #{last_name}"
+  end
 
   # Invitation confirmation
   def invitation_token
@@ -33,6 +40,19 @@ class Employee < ActiveRecord::Base
 
   def invitation_is_admin
     invitation.is_admin if invitation
+  end
+
+  def setup_bank_deposit(bank_info)
+    recipient = Stripe::Recipient.create(name: full_name,
+                             type: 'individual',
+                             email: email,
+                             bank_account: bank_info.merge(country: 'US' ))
+    stripe_id = recipient.id
+    save!
+  rescue Stripe::InvalidRequestError => e
+    logger.error "Stripe error while creating recipient: #{e.message}"
+    errors.add(:base, "There was a problem with your bank information.")
+    false
   end
 
 end

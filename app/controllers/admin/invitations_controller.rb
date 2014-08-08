@@ -5,7 +5,7 @@ class Admin::InvitationsController < Admin::BaseController
   before_action :set_admin
 
   def new
-    @invitations = @admin.invitations
+    @invitations = @admin.invitations.all
     @invitation = @admin.invitations.build
   end
 
@@ -14,6 +14,7 @@ class Admin::InvitationsController < Admin::BaseController
     @invitation.is_admin = true
 
     if @invitation.save
+      UserInvitationMailer.confirm_invite(@invitation).deliver
       flash.now[:success] = "Invite sent successfully!"
     else
       flash.now[:error] = "There was a problem sending your invitation."
