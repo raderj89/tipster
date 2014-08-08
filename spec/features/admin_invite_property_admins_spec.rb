@@ -4,24 +4,12 @@ feature 'inviting property admins', js: true do
   let(:admin) { create(:admin) }
   let(:invite) { build(:manager_invitation) }
 
-  # Create some existing invitations
-  let!(:invite2) { create(:manager_invitation) }
-  let!(:invite3) { create(:manager_invitation) }
-
   before do
     log_in_admin!(admin)
 
     visit '/admin/invitations/new'
 
     expect(page).to have_content("Invite property managers")
-
-    expect(page).to have_selector('.js-sent-invites-list')
-
-    within('.js-sent-invites-list') do
-      expect(page.find('li:first-child')).to have_content(invite2.recipient_email)
-    end
-
-    expect(page.find('.js-sent-invites-list').all('li').size).to eq Invitation.all.count
   end
 
   scenario 'with valid credentials' do

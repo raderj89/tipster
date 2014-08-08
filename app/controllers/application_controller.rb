@@ -11,5 +11,17 @@ class ApplicationController < ActionController::Base
     end
 
     helper_method :current_employee
+
+    def employee_signed_in?
+      !current_employee.nil?
+    end
+
+    helper_method :employee_signed_in?
+
+    def current_employee?(employee)
+      employee == current_employee
+    end
+
+    helper_method :current_employee?
     
 end

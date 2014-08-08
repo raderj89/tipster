@@ -1,7 +1,7 @@
 
 #ach Get Paid Through ACH
 
-= simple_form_for :bank_information do |f|
+= simple_form_for :bank_information, url: property_employee_create_payment_path(@property, @employee), method: :post do |f|
   = f.input :account_number, label: "Bank Account Number"
   = f.input :routing_number, label: "Bank Routing Number"
   = f.submit "Submit"

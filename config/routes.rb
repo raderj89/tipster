@@ -9,10 +9,11 @@ Rails.application.routes.draw do
     resources :invitations, except: [:edit, :update]
   end
 
-  resources :properties, except: [:new], shallow: true do
+  resources :properties, except: [:new] do
     resources :employees do
       resources :invitations
       get 'setup_payment' => 'employees#setup_payment', as: :setup_payment
+      post 'create_payment' => 'employees#create_payment', as: :create_payment
     end
   end
 

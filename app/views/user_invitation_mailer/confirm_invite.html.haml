@@ -1,3 +1,8 @@
-You've been invited to Tipster! Click
-= link_to "here", new_property_url(@invitation.token)
-to set up your property and create your account.
+- if @invitation.is_admin
+  You've been invited to Tipster! Click
+  = link_to "here", new_property_url(@invitation.token)
+  to set up your property and create your account.
+- else
+  You've been invited to Tipster! Click
+  = link_to "here", new_property_employee_url(@invitation.token)
+  to create your account.

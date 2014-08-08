@@ -1,4 +1,6 @@
 class PropertiesController < ApplicationController
+  
+  before_action :set_property, only: [:show]
 
   def new
     @property = Property.new
@@ -24,12 +26,11 @@ class PropertiesController < ApplicationController
     @property = Property.new(property_params)
 
     if @property.save
-      employee = @property.employees.first
+      @employee = @property.employees.first
       flash[:success] = "Your account was successfully created!"
-      session[:employee_id] = employee.id
-      employee.log_in_count += 1
-      employee.save
-      redirect_to new_employee_invitation_path(employee)
+      session[:employee_id] = @employee.id
+      @employee.update_attribute(:log_in_count, 1)
+      redirect_to new_property_employee_invitation_path(@property, @employee)
     else
       # Re-set the @employee instance with its invitation token
       @employee = Employee.new(invitation_token: params[:property][:property_employees_attributes]["0"][:employee_attributes][:invitation_token])
@@ -40,7 +41,16 @@ class PropertiesController < ApplicationController
     end
   end
 
+  def show
+  end
+
   private
+
+    def set_property
+      @property = Property.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to root_path, notice: "We couldn't find that page."
+    end
 
     def property_params
       params.require(:property).permit(:name, :address, :city, :state, :zip, :picture,
