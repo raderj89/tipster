@@ -1,9 +1,17 @@
 
 #ach Get Paid Through ACH
 
-= simple_form_for :bank_information, url: property_employee_create_payment_path(@property, @employee), method: :post do |f|
+= simple_form_for :bank_information, url: property_employee_create_payment_path(@property, @employee) do |f|
   = f.input :account_number, label: "Bank Account Number"
   = f.input :routing_number, label: "Bank Routing Number"
   = f.submit "Submit"
 
 #check Get A Check In The Mail
+
+= simple_form_for @address, url: property_employee_create_address_path(@property, @employee) do |f|
+  = f.input :address_line_1
+  = f.input :address_line_2
+  = f.input :city
+  = f.input :state, collection: us_states
+  = f.input :zip
+  = f.submit "Submit"

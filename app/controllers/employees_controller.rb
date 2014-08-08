@@ -8,6 +8,7 @@ class EmployeesController < ApplicationController
   end
 
   def setup_payment
+    @address = @employee.build_address
   end
 
   def create_payment
@@ -17,7 +18,19 @@ class EmployeesController < ApplicationController
     else
       flash[:notice] = "There was a problem linking your bank account."
       render :setup_payment
-    end 
+    end
+  end
+
+  def create_address
+    @address = @employee.build_address(address_params)
+
+    if @address.save
+      flash[:success] = "Your mailing address was successfully saved."
+      redirect_to @property
+    else
+      flash[:notice] = "There was a problem saving your mailing address."
+      render :setup_payment
+    end
   end
 
   private
@@ -41,5 +54,9 @@ class EmployeesController < ApplicationController
 
     def payment_params
       params.require(:bank_information).permit(:account_number, :routing_number)
+    end
+
+    def address_params
+      params.require(:employee_address).permit(:address_line_1, :address_line_2, :city, :state, :zip)
     end
 end 

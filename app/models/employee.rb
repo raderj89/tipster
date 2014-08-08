@@ -3,6 +3,7 @@ class Employee < ActiveRecord::Base
   # Relations
   has_many :positions, class_name: 'PropertyEmployee', foreign_key: 'employee_id'
   has_many :properties, through: :positions
+  has_one :address, class_name: 'EmployeeAddress', foreign_key: 'employee_id'
   belongs_to :invitation
   has_many :sent_invitations, as: :sender, class_name: 'Invitation', foreign_key: 'sender_id'
 
