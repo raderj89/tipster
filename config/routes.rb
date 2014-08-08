@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  
+
   namespace :admin do
     get 'log_in' => 'sessions#new', as: :log_in
     post 'log_in' => 'sessions#create'
@@ -11,9 +11,11 @@ Rails.application.routes.draw do
 
   resources :properties, except: [:new] do
     resources :employees do
-      resources :invitations
       get 'setup_payment' => 'employees#setup_payment', as: :setup_payment
       post 'create_payment' => 'employees#create_payment', as: :create_payment
+      post 'create_address' => 'employees#create_address', as: :create_address
+      resources :invitations
+      resources :employee_addresses
     end
   end
 

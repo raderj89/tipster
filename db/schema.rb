@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140808172825) do
+ActiveRecord::Schema.define(version: 20140808190822) do
 
   create_table "admins", force: true do |t|
     t.string   "email",           null: false
@@ -19,6 +19,19 @@ ActiveRecord::Schema.define(version: 20140808172825) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "employee_addresses", force: true do |t|
+    t.string   "address_line_1"
+    t.string   "address_line_2"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip"
+    t.integer  "employee_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "employee_addresses", ["employee_id"], name: "index_employee_addresses_on_employee_id", using: :btree
 
   create_table "employees", force: true do |t|
     t.string   "first_name",                          null: false
