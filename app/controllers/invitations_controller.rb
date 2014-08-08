@@ -14,7 +14,7 @@ class InvitationsController < ApplicationController
     @invitation = @employee.sent_invitations.build(invitation_params)
 
     if @invitation.save
-      UserInvitationMailer.confirm_invite(@invitation).deliver
+      UserInvitationMailer.property_employee_invite(@property, @invitation).deliver
       flash.now[:success] = "Invite sent successfully!"
     else
       flash.now[:error] = "There was a problem sending your invitation."

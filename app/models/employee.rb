@@ -43,6 +43,10 @@ class Employee < ActiveRecord::Base
     invitation.is_admin if invitation
   end
 
+  def invitation_position
+    invitation.position if invitation
+  end
+
   def setup_bank_deposit(bank_info)
     recipient = Stripe::Recipient.create(name: full_name,
                              type: 'individual',

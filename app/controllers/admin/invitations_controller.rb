@@ -14,7 +14,7 @@ class Admin::InvitationsController < Admin::BaseController
     @invitation.is_admin = true
 
     if @invitation.save
-      UserInvitationMailer.confirm_invite(@invitation).deliver
+      UserInvitationMailer.property_admin_invite(@invitation).deliver
       flash.now[:success] = "Invite sent successfully!"
     else
       flash.now[:error] = "There was a problem sending your invitation."
