@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140808190822) do
+ActiveRecord::Schema.define(version: 20140809174509) do
 
   create_table "admins", force: true do |t|
     t.string   "email",           null: false
@@ -85,6 +85,7 @@ ActiveRecord::Schema.define(version: 20140808190822) do
     t.string   "picture_content_type"
     t.integer  "picture_file_size"
     t.datetime "picture_updated_at"
+    t.text     "full_address"
   end
 
   create_table "property_employees", force: true do |t|
