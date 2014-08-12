@@ -9,23 +9,20 @@ Rails.application.routes.draw do
     resources :invitations, except: [:edit, :update]
   end
 
-  resources :properties, except: [:new] do
-    resources :property_employees, except: [:new]
-    resources :users
-    resources :property_users
-    resources :employees do
-      get 'setup_payment' => 'employees#setup_payment', as: :setup_payment
-      post 'create_payment' => 'employees#create_payment', as: :create_payment
-      post 'create_address' => 'employees#create_address', as: :create_address
-      resources :invitations
-      resources :employee_addresses
+  resources :properties, path_names: { new: 'new/:invitation_token' } do
+    resources :employees, only: [:new, :create],
+              path_names: { new: 'new/:invitation_token' },
+              controller: 'properties/employees' do
+      get 'setup_payment' => 'properties/employees#setup_payment', as: :setup_payment
+      post 'create_payment' => 'properties/employees#create_payment', as: :create_payment
+      post 'create_address' => 'properties/employees#create_address', as: :create_address
+      resources :invitations, path_names: { new: 'new'}
     end
   end
 
-  resources :users
+  resources :employees
 
-  get 'properties/:property_id/property_employees/new/:invitation_token' => 'property_employees#new', as: :new_property_property_employee
-  get 'properties/new/:invitation_token' => 'properties#new', as: :new_property
+  resources :users
 
   root to: 'public#index'
 end

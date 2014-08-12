@@ -1,4 +1,3 @@
-
 #ach Get Paid Through ACH
 
 = simple_form_for :bank_information, url: property_employee_create_payment_path(@property, @employee) do |f|
@@ -15,3 +14,5 @@
   = f.input :state, collection: us_states
   = f.input :zip
   = f.submit "Submit"
+
+= link_to "Skip This Step", @employee

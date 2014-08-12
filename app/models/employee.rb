@@ -1,11 +1,14 @@
 class Employee < ActiveRecord::Base
 
   # Relations
-  has_many :positions, class_name: 'PropertyEmployee', foreign_key: 'employee_id'
+  has_many :positions, class_name: 'PropertyEmployee', foreign_key: 'employee_id', inverse_of: :employee
   has_many :properties, through: :positions
   has_one :address, class_name: 'EmployeeAddress', foreign_key: 'employee_id'
   belongs_to :invitation
   has_many :sent_invitations, as: :sender, class_name: 'Invitation', foreign_key: 'sender_id'
+
+  # Nested Attributes
+  accepts_nested_attributes_for :positions
 
   # Email regex
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
