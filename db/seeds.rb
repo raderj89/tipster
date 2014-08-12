@@ -1,3 +1,4 @@
+Admin.delete_all
 Admin.create!(email: 'admin@smartytip.com', password: 'password')
 
 25.times do

@@ -19,6 +19,7 @@ gem 'nokogiri'
 gem 'searchkick'
 
 gem 'stripe'
+gem 'ffaker'
 
 gem 'bcrypt', '~> 3.1.7'
 
@@ -28,7 +29,6 @@ group :development do
   gem 'capistrano-rails'
   gem 'pry-rails'
   gem 'rspec-rails', '~> 2.14.2'
-  gem 'ffaker'
   gem 'quiet_assets'
   gem 'letter_opener'
   gem 'launchy'
