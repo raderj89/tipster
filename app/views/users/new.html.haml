@@ -1,43 +1,52 @@
-.centering-wrapper
-  = simple_form_for @user do |f|
-    = hidden_field_tag :property_id, @property.id
-    %fieldset
+= simple_form_for @user do |f|
+  = hidden_field_tag :property_id, @property.id
+  %section.form-section-1
+    %fieldset.fields-1
       %h3
         %span 1
         Find Your Building
-      %fieldset
-        .fields-wrapper
+      .fields-wrapper
+        %fieldset
           .js-property-relation
             = f.simple_fields_for :property_relations do |p|
               = render 'fields_for_property_relations', p: p, property: @property
-    
-      = link_to "Add Another Building", '#', class: 'js-add-building'
 
-      #js-building-search
-        = text_field_tag :query, nil, data: { autocomplete_source: properties_path }, id: 'js-property-search'
-        #js-property-listings
+        #js-building-search
+          = text_field_tag :query, nil, data: { autocomplete_source: properties_path }, id: 'js-property-search', placeholder: '555 Anywhere St, SomewheresVille, OK', class: 'full-input'
+          #js-property-listings
 
-    %fieldset
+        = link_to '#', class: 'js-add-building' do
+          %span.circle-wrap
+            &#43;
+          add another building
+
+  %section.form-section-2
+    %fieldset.fields-2
       %h3 
         %span 2
         Create Your Account
       .fields-wrapper
-        = f.input :first_name
-        = f.input :last_name
-        = f.input :email
-        = f.input :signature
-        = f.input :password
-        = f.input :password_confirmation
+        = f.input_field :first_name, placeholder: 'First Name', class: 'third-input'
+        .third-spacer
+        = f.input_field :last_name, placeholder: 'Last Name', class: 'third-input'
+        .third-spacer
+        = f.input_field :signature, placeholder: 'Signature', class: 'third-input'
+        = f.input_field :email, placeholder: 'Email', class: 'full-input'
+        = f.input_field :password, placeholder: 'Password',class: 'full-input'
+        = f.input_field :password_confirmation, placeholder: 'Password Confirmation',class: 'full-input'
 
-    %fieldset
+  %section.form-section-3
+    %fieldset.fields-3
       %h3 
         %span 3
         Enter Payment Information
       .fields-wrapper
         = simple_fields_for :billing_information do |b|
-          = b.input :card_number
-          = b.input :cvv
-          = b.input :expiration_month
-          = b.input :expiration_year
+          = b.input_field :card_number, placeholder: 'Credit Card Number', class: 'full-input'
+          = b.input_field :cvv, placeholder: 'CVV', class: 'third-input'
+          .third-spacer
+          = b.input_field :expiration_month, placeholder: 'MM', class: 'third-input'
+          .third-spacer
+          = b.input_field :expiration_year, placeholder: 'YYYY', class: 'third-input'
 
-      = f.submit "Create Account"
+          = f.submit "Create Account", class: 'right'
