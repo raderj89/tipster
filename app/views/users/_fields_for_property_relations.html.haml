@@ -1,0 +1,7 @@
+= image_tag property.picture_thumb
+= property.name
+= property.address
+= "#{property.city}, #{property.state}"
+= p.input :property_id, as: :hidden, input_html: { value: property.id }
+= p.input :unit
+= link_to "Remove", '#', class: 'js-remove-building'

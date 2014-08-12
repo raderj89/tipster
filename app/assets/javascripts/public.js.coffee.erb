@@ -17,9 +17,15 @@ $ ->
     # Remove the no-property button
     close: (event, ui) ->
       $('.no-prop-button').remove();
+    select: (event, ui) ->
+      $('#property_id').val(ui.item.id)
   # Custom rendering on autocomplete instance
   # used to append property images to the list
   .autocomplete("instance")._renderItem = (ul, item) ->
+    # Required to auto-fill the search field when selected
+    item.value = item.full_address
+    item.label = item.full_address
     $("<li>")
-      .append("<img src='" + item.picture_url + "'>" + item.full_address)
+      .attr('data-value', item.value)
+      .append("<img src='" + item.picture_thumb + "'>" + item.label)
       .appendTo(ul)

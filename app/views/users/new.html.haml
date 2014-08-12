@@ -1,0 +1,33 @@
+= simple_form_for @user do |f|
+  = hidden_field_tag :property_id, @property.id
+  %fieldset
+    %h3 Find Your Building
+    %fieldset
+      .js-property-relation
+        = f.simple_fields_for :property_relations do |p|
+          = render 'fields_for_property_relations', p: p, property: @property
+  
+    = link_to "Add Another Building", '#', class: 'js-add-building'
+
+    #js-building-search
+      = text_field_tag :query, nil, data: { autocomplete_source: properties_path }, id: 'js-property-search'
+      #js-property-listings
+
+  %fieldset
+    %h3 Create Your Account
+    = f.input :first_name
+    = f.input :last_name
+    = f.input :email
+    = f.input :signature
+    = f.input :password
+    = f.input :password_confirmation
+
+  %fieldset
+    %h3 Enter Payment Information
+    = simple_fields_for :billing_information do |b|
+      = b.input :card_number
+      = b.input :cvv
+      = b.input :expiration_month
+      = b.input :expiration_year
+
+    = f.submit "Create Account"

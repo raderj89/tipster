@@ -3,8 +3,8 @@ class PropertiesController < ApplicationController
   before_action :set_property, only: [:show]
 
   def index
-    @properties = Property.search(params[:term], autocomplete: true)
-    render json: @properties, only: [:id, :full_address, :picture], methods: [:picture_url]
+    @properties = Property.search(params[:term], fields: [:address, :full_address])
+    render json: @properties, only: [:id, :full_address, :picture], methods: [:picture_thumb]
   end
 
   def new
