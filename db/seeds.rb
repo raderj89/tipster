@@ -8,3 +8,4 @@ Admin.create!(email: 'admin@smartytip.com', password: 'password')
                    zip: Faker::AddressUS.zip_code,
                    picture: File.new("#{Rails.root}/app/assets/images/Apartments.jpg"))
 end
+

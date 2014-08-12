@@ -21,22 +21,22 @@ $ ->
   $('.js-add-building').on 'click', (e) ->
     e.preventDefault()
     $('#js-building-search').show()
+    $('#js-property-search').val('')
 
   $('#js-property-search').autocomplete
     appendTo: '#js-property-listings'
     source: $('#js-property-search').data('autocomplete-source')
     minLength: 5
     open: (event, ui) ->
-      unless $('.js-no-prop-button').is(':visible')
-        $('.ui-autocomplete').after("<div class='js-no-prop-button'>" +
-                                    "<a href='#'>Don't see your property?" +
-                                    " Invite your property manager to SmartyTip</div>")
+      unless $('#js-property-search').val().length > 0
+        $('#js-property-search').val('')
     close: (event, ui) ->
-      $('.js-no-prop-button').remove();
+      inputField = $('#js-property-search')
+      $('.js-no-prop-button').remove()
     select: (event, ui) ->
       $('.js-property-relation:last-child').after(property_partial(ui.item))
       $('#js-building-search').hide()
-      $('#js-building-search').find('input').value = ""
+      $('.ui-autocomplete').children().remove()
   .autocomplete("instance")._renderItem = (ul, item) ->
     item.value = item.full_address
     item.label = item.full_address

@@ -14,7 +14,6 @@ class Employee < ActiveRecord::Base
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
   # Validations
-  # validates_presence_of :invitation
   validates :first_name, presence: true, length: { maximum: 100}
   validates :last_name, presence: true, length: { maximum: 100}
   validates :email, presence: true, length: { maximum: 100}, format: { with: VALID_EMAIL_REGEX }
@@ -28,7 +27,6 @@ class Employee < ActiveRecord::Base
   has_secure_password
 
   # Methods
-
   def full_name
     "#{first_name} #{last_name}"
   end
