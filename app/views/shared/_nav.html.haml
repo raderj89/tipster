@@ -1,0 +1,12 @@
+%nav{class: (yield :home_nav)}
+  .logo
+    %p SmartyTip
+
+  / If not signed in
+  %ul.nav-links
+    %li
+      = link_to "About", '#'
+    %li
+      = link_to "FAQ", '#'
+    %li
+      = link_to "Log In", '#', class: 'primary-button'
