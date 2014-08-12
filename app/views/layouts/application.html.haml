@@ -13,4 +13,6 @@
   %body
     = render partial: 'shared/flash_messages'
     = render partial: 'shared/nav'
-    = yield 
+    .page-wrapper
+      = yield 
+    = render partial: 'shared/footer'

@@ -18,6 +18,15 @@
   height: 0
   clear: both
 
+// Necessary for pushed footer
+.page-wrapper
+  min-height: 100%
+  margin-bottom: -250px
+  &:after
+    display: block
+    content: ''
+    height: 250px
+
 // TEXT STYLING
 h1, h2, h3, h4, h5, h6, p, li, a
   font-family: $sans
@@ -37,7 +46,6 @@ h5, p
 
 a
   text-decoration: none
-
 
 .headliner
   text-transform: none
@@ -76,8 +84,6 @@ a
   &:hover
     background: darken($teal, 15%)
     cursor: pointer
-
-
 
 // Visual decorations
 .circle-wrap
