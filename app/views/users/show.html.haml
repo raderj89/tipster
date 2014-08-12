@@ -1,9 +1,47 @@
 %section.my-properties
-  .property-info
-    %h5 Acacia
-    %p 1560 Fulton Street
-    %p Brooklyn, NY 11213
+  %h2 My properties
+  .all-properties-wrapper
+    .single-property.clearfix
+      = image_tag('http://placekitten.com/120/120')
+      .property-info
+        %h2 Acacia
+        %p 1560 Fulton Street
+        %p Brooklyn, NY 11213
+      = link_to "remove", '#', class: 'action-link js-remove-building'
+
+      = link_to "Give Tips", '#', class: 'primary-button right'
+
+    .add-building-wrapper.clearfix
+      = link_to '#', class: 'js-add-building' do
+        %span.circle-wrap
+          &#43;
+        add a building
+
 
 %section.my-payment
+  %h2 My Payment Method
+  .payment-information
+    %p 
+      Mastercard &ndash;3335
+    = link_to "edit", '#', class: 'action-link right'
 
 %section.my-tipping
+  %h2 My Tipping History
+  %table.dashboard-table
+    %thead
+      %tr
+        %th Date
+        %th Property
+        %th Total
+        %th
+      %tbody
+        / each tipping time
+        %tr
+          %td 
+            10/03/14
+          %td 
+            Acacia
+            1560 Fulton Street
+            Brooklyn, NY 11213
+          %td
+            $610
