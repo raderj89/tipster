@@ -18,7 +18,7 @@ $ ->
     close: (event, ui) ->
       $('.no-prop-button').remove();
     select: (event, ui) ->
-      $('#property_id').val(ui.item.id)
+      window.location.href = "users/new?property_id=" + ui.item.id
   # Custom rendering on autocomplete instance
   # used to append property images to the list
   .autocomplete("instance")._renderItem = (ul, item) ->
