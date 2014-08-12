@@ -1,15 +1,14 @@
 window.property_partial = (item) ->
   '<div class="js-property-relation">' +
-      '<img alt="Apartments" src="' + item.picture_thumb + '">' +
-      item.full_address + '<div class="input hidden user_property_relations_property_id">' +
+      '<img alt="Apartments" src="' + item.picture_thumb + '">' + '<div class="property-info">' +
+      '<p>' + item.full_address + '</p>' + '<div class="input hidden user_property_relations_property_id">' +
       '<input class="hidden" id="user_property_relations_attributes_' + item.id + 
       '_property_id" name="user[property_relations_attributes][' + item.id +
       '][property_id]" type="hidden" value="' + item.id + '"></div>' +
       '<div class="input string required user_property_relations_unit">'+
       '<label class="string required control-label" for="user_property_relations_attributes_' + item.id + '_unit">'+
-      '<abbr title="required">*</abbr> Unit</label>' +
-      '<input class="string required" id="user_property_relations_attributes_' + item.id + '_unit" name="user[property_relations_attributes][' + item.id + '][unit]" type="text">' +
-      '</div><a class="js-remove-building" href="#">Remove</a>' +  
+      '<input class="string required" id="user_property_relations_attributes_' + item.id + '_unit" name="user[property_relations_attributes][' + item.id + '][unit]" type="text" placeholder="Unit #">' +
+      '</div></div><a class="js-remove-building" href="#">remove</a>' +  
   '</div>'
 
 $ ->

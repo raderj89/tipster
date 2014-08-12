@@ -1,0 +1,29 @@
+#property_listings
+  position: absolute
+
+  li
+    font-family: $sans
+    font-size: 1rem
+    vertical-align: top
+
+  .ui-menu-item
+    border-bottom: 1px solid $gray
+
+  .ui-state-focus
+    background: rgba($teal, .7)
+
+.ui-autocomplete
+  position: relative
+  max-height: 250px
+  overflow-y: auto
+  overflow-x: hidden
+  z-index: 1000 !important
+
+  .no-prop-button
+    display: none
+    position: absolute
+    bottom: 0
+    background-color: #eee
+    &:hover
+      background-color: #ddd
+      cursor: pointer

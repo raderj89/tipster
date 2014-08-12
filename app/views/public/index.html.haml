@@ -1,10 +1,76 @@
-%h1 Tipster
+= content_for :home_nav do
+  home-nav
 
-%h2 Find your property
+%section.panel.call-to-action
+  .small-centering-wrapper
+    %h1.headliner Don&apos;t stress over how to tip the people who help you.
+    %p Save the envelope and safely send money to doormen and other service providers. We even help you guess what other people are tipping.
 
-= form_tag new_user_path, method: :get do
-  = hidden_field_tag :property_id
-  = text_field_tag :query, params[:query], data: { autocomplete_source: properties_path }, id: 'property_search'
-  = submit_tag "Search"
+    %p.prompt Find your property to get started
 
-#property_listings
+    = form_tag new_user_path, method: :get do
+      = hidden_field_tag :property_id
+      = text_field_tag :query, params[:query], data: { autocomplete_source: properties_path }, id: 'property_search', placeholder: '555 Anywhere St., Somewheresville, OK', class: 'property-search'
+      = submit_tag ""
+
+    #property_listings
+
+%section.panel.features
+  .centering-wrapper.clearfix
+    %ul
+      %li.single-feature
+        = image_tag('features_signup.png')
+        %h5 Sign up for free
+        %p Social bookmarking group buying crowded market pivot onboarding freemium prototype pingpong.
+      
+      %li.single-feature
+        = image_tag('features_forget.png')
+        %h5 Forget figuring out what to pay
+        %p Social bookmarking group buying crowded market pivot onboarding freemium prototype pingpong.
+      
+      %li.single-feature
+        = image_tag('features_safe.png')
+        %h5 Completely safe &amp; secure
+        %p Social bookmarking group buying crowded market pivot onboarding freemium prototype pingpong.
+
+%section.panel.how-it-works
+  .centering-wrapper.clearfix
+    %h1 Here&apos;s how it works
+    %ul
+      %li.single-how.clearfix
+        = image_tag('how_1.png')
+        %h5 Find your building
+        %p Social bookmarking group buying crowded market pivot onboarding freemium prototype pingpong.
+
+      %li.single-how.clearfix
+        = image_tag('how_2.png')
+        %h5 Register for free
+        %p Social bookmarking group buying crowded market pivot onboarding freemium prototype pingpong.
+
+      %li.single-how.clearfix
+        = image_tag('how_3.png')
+        %h5 Set your payment method
+        %p Social bookmarking group buying crowded market pivot onboarding freemium prototype pingpong.
+
+      %li.single-how.clearfix
+        = image_tag('how_4.png')
+        %h5 Give to those who help you
+        %p Social bookmarking group buying crowded market pivot onboarding freemium prototype pingpong.
+
+%section.panel.tenant-showcase
+  %h1 Tenants at awesome buildings like these use smartytip
+  %ul.tenant-examples
+    %li
+      = image_tag('http://placekitten.com/200/50')
+    %li
+      = image_tag('http://placekitten.com/200/50')
+    %li
+      = image_tag('http://placekitten.com/200/50')
+    %li
+      = image_tag('http://placekitten.com/200/50')
+    %li
+      = image_tag('http://placekitten.com/200/50')
+    %li
+      = image_tag('http://placekitten.com/200/50')
+    %li
+      = image_tag('http://placekitten.com/200/50')
