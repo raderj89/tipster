@@ -277,6 +277,7 @@ DEPENDENCIES
   letter_opener
   letter_opener_web (~> 1.2.0)
   mysql2
+  nokogiri
   paperclip (~> 4.1)
   pry-rails
   quiet_assets
