@@ -45,3 +45,4 @@ $ ->
       .append("<img src='" + item.picture_thumb + "'>" + item.label +
               "<a href='#' class='js-property-select'>Select</a>")
       .appendTo(ul)
+      
