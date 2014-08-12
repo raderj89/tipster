@@ -1,1 +1,10 @@
 %h1 Tipster
+
+%h2 Find your property
+
+= form_tag new_user_path, method: :get do
+  = hidden_field_tag :property_id
+  = text_field_tag :query, params[:query], data: { autocomplete_source: properties_path }, id: 'property_search'
+  = submit_tag "Search"
+
+#property_listings

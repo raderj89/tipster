@@ -4,14 +4,6 @@ class EmployeesController < ApplicationController
   before_action :signed_in_employee
   before_action :correct_employee
 
-  def new
-    @property_employee = @property.employees.build
-    @employee = Employee.new(invitation_token: params[:invitation_token])
-  end
-
-  def create
-  end
-
   def setup_payment
     @address = @employee.build_address
   end

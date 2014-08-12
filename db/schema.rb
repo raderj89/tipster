@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140808190822) do
+ActiveRecord::Schema.define(version: 20140811213518) do
 
   create_table "admins", force: true do |t|
     t.string   "email",           null: false
@@ -75,28 +75,39 @@ ActiveRecord::Schema.define(version: 20140808190822) do
 
   create_table "properties", force: true do |t|
     t.string   "name"
-    t.string   "address",              null: false
-    t.string   "city",                 null: false
-    t.string   "state",                null: false
-    t.string   "zip",                  null: false
+    t.string   "address",                              null: false
+    t.string   "city",                                 null: false
+    t.string   "state",                                null: false
+    t.string   "zip",                                  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "picture_file_name"
     t.string   "picture_content_type"
     t.integer  "picture_file_size"
     t.datetime "picture_updated_at"
+    t.text     "full_address"
+    t.boolean  "is_managed",           default: false
   end
 
   create_table "property_employees", force: true do |t|
     t.integer  "employee_id", null: false
     t.integer  "property_id", null: false
+    t.integer  "title_id",    null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "title_id"
   end
 
   add_index "property_employees", ["employee_id"], name: "index_property_employees_on_employee_id", using: :btree
   add_index "property_employees", ["property_id"], name: "index_property_employees_on_property_id", using: :btree
+  add_index "property_employees", ["title_id"], name: "index_property_employees_on_title_id", using: :btree
+
+  create_table "property_users", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "property_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "unit"
+  end
 
   create_table "titles", force: true do |t|
     t.string   "title",         null: false
@@ -104,5 +115,22 @@ ActiveRecord::Schema.define(version: 20140808190822) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "users", force: true do |t|
+    t.string   "first_name",          null: false
+    t.string   "last_name",           null: false
+    t.string   "email",               null: false
+    t.string   "password_digest",     null: false
+    t.string   "signature"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
+    t.string   "stripe_id"
+  end
+
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
 
 end

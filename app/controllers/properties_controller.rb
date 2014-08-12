@@ -2,10 +2,16 @@ class PropertiesController < ApplicationController
   
   before_action :set_property, only: [:show]
 
+  def index
+    @properties = Property.search(params[:term], fields: [:address, :full_address])
+    render json: @properties, only: [:id, :full_address, :picture], methods: [:picture_thumb]
+  end
+
   def new
     @property = Property.new
     @employee = Employee.new(invitation_token: params[:invitation_token])
     if @employee.invitation
+      # If property attributes were added to the invitation, include those
       @property.name = @employee.invitation.property_name
       @property.address = @employee.invitation.property_address
       @property.city = @employee.invitation.property_city
@@ -13,6 +19,7 @@ class PropertiesController < ApplicationController
       @property.zip = @employee.invitation.property_zip
       @property_employee = @property.property_employees.build
       
+      # Build related objects
       @property_employee.build_employee(invitation_id: @employee.invitation.id,
                                         email: (@employee.invitation.recipient_email if @employee.invitation),
                                         is_admin: (@employee.invitation_is_admin if @employee.invitation ) )
