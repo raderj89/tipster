@@ -17,6 +17,7 @@ class PropertiesController < ApplicationController
       @property.city = @employee.invitation.property_city
       @property.state = @employee.invitation.property_state
       @property.zip = @employee.invitation.property_zip
+      
       @property_employee = @property.property_employees.build
       
       # Build related objects
@@ -64,5 +65,6 @@ class PropertiesController < ApplicationController
                                        property_employees_attributes: [title_attributes: [:title], employee_attributes: [:invitation_token, :first_name,
                                        :last_name, :nickname, :email, :is_admin, :password, :password_confirmation]])
     end
+
 
 end

@@ -2,6 +2,7 @@ class InvitationsController < ApplicationController
   respond_to :js
 
   before_action :set_property
+  before_action :set_employee
   before_action :signed_in_employee
   before_action :correct_employee
 
@@ -29,6 +30,12 @@ class InvitationsController < ApplicationController
 
     def set_property
       @property = Property.find(params[:property_id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to root_path, notice: "We couldn't find that page."
+    end
+
+    def set_employee
+      @employee = Employee.find(params[:employee_id])
     rescue ActiveRecord::RecordNotFound
       redirect_to root_path, notice: "We couldn't find that page."
     end
