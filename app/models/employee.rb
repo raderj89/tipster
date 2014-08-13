@@ -32,6 +32,10 @@ class Employee < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
+  def avatar_thumb
+    avatar.url(:thumb)
+  end
+
   # Invitation confirmation
   def invitation_token
     invitation.token if invitation

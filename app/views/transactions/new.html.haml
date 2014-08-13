@@ -1,9 +1,23 @@
-= simple_form_for [@property, current_user, @transaction] do |f|
-  - @property.employees.each do |employee|
-    = f.simple_fields_for :employee_tips do |t|
-      = employee.first_name
-      = t.input :employee_id, as: :hidden, input_html: { value: employee.id }
-      = t.input :amount
-      = t.input :message
-  = link_to "Cancel", '#'
-  = f.submit "Check Out"
+.tipping-wrapper.clearfix
+  %h3= @property.address + " " + @property.city + ", " + @property.state
+  = simple_form_for [@property, current_user, @transaction] do |f|
+    - @property.employees.each do |employee|
+      .tip-single-employee.clearfix
+        = f.simple_fields_for :employee_tips do |t|
+          .employee-info
+            = image_tag employee.avatar_thumb
+            .employee-name-position
+              %h2= employee.first_name
+              %p= employee.positions.where(property_id: @property.id).first.title
+          .tip-fields
+            = t.input :employee_id, as: :hidden, input_html: { value: employee.id }
+            = t.input :amount, placeholder: "avg. $30"
+            = t.input :message, placeholder: "Optional Message"
+    
+    .subtotal
+      %h1
+        Subtotal
+      %h2
+        $
+    = f.submit "Check Out"
+    = link_to "Cancel", '#', class: 'secondary-button'

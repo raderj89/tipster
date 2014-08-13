@@ -88,8 +88,11 @@ a
 .right
   float: right
 
+input[type=submit]
+  padding: 0
+
 // Buttons
-.primary-button, input[type=submit], .js-pretty-input
+.primary-button, input[type=submit], .js-pretty-input, .secondary-button
   background: $teal
   padding: .8rem 2rem
   border: none
@@ -99,9 +102,16 @@ a
   font-weight: 700
   text-transform: uppercase
   font-family: $sans
+  float: right
+  line-height: inherit
+  margin: 0
   &:hover
     background: darken($teal, 15%)
     cursor: pointer
+
+.secondary-button
+  background: $gray
+  margin-right: 1rem
 
 // Visual decorations
 .circle-wrap

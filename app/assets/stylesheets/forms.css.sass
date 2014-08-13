@@ -1,4 +1,4 @@
-input[type=text], input[type=email], input[type=password]
+input[type=text], input[type=email], input[type=password], input[type=number], textarea
   border: 1px solid $light-gray
   border-radius: 3px
   padding: .5rem
@@ -22,6 +22,10 @@ input[type=text], input[type=email], input[type=password]
   font-size: .7rem
   color: $gray
   font-weight: 700
+
+textarea
+  resize: none
+  height: 6rem
 
 h3 span
   border: 2px solid $black
@@ -62,6 +66,14 @@ fieldset
 .js-next-step
   clear: both
   margin-top: 1rem
+
+// Hides spinners for number inputs
+input[type=number]
+  -moz-appearance: textfield
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button
+  -webkit-appearance: none
 
 // Errors
 .error
