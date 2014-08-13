@@ -7,7 +7,7 @@ class Property < ActiveRecord::Base
   has_many :property_employees, dependent: :delete_all
   has_many :employees, through: :property_employees
   has_many :property_tenants, class_name: 'PropertyUser', foreign_key: 'property_id', dependent: :delete_all
-  has_many :tenants, through: :tenant_relations, source: :user
+  has_many :tenants, through: :property_tenants, source: :user
 
   # Nested attributes
   accepts_nested_attributes_for :property_employees
