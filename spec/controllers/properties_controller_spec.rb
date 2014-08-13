@@ -66,7 +66,7 @@ describe PropertiesController do
 
       it "redirects to the employee invitations page" do
         post :create, property: property_params_hash
-        expect(response).to redirect_to new_employee_invitation_path(Employee.last)
+        expect(response).to redirect_to new_property_employee_invitation_path(Property.last, Employee.last)
       end
     end
 

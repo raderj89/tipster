@@ -1,7 +1,7 @@
 class Employee < ActiveRecord::Base
 
   # Relations
-  has_many :positions, class_name: 'PropertyEmployee', foreign_key: 'employee_id', inverse_of: :employee
+  has_many :positions, inverse_of: :employee, class_name: 'PropertyEmployee', foreign_key: 'employee_id', dependent: :delete_all
   has_many :properties, through: :positions
   has_one :address, class_name: 'EmployeeAddress', foreign_key: 'employee_id'
   belongs_to :invitation

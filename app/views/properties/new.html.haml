@@ -1,24 +1,23 @@
 %h2 Building Information
 
 = simple_form_for @property, html: { multipart: true } do |f|
-  = f.input :name, label: "Name of Building"
-  = f.input :address, input_html: { value: @property.address }
-  = f.input :city, input_html: { value: @property.city }
-  = f.input :state, collection: us_states, input_html: { value: @property.state }
-  = f.input :zip, input_html: { value: @property.zip }
+  = f.input :name, input_html: { value: @employee.invitation.property_name }, label: "Name of Building"
+  = f.input :address, input_html: { value: @employee.invitation.property_address }
+  = f.input :city, input_html: { value: @employee.invitation.property_city }
+  = f.input :state, collection: us_states, selected: @employee.invitation.property_state
+  = f.input :zip, input_html: { value: @employee.invitation.property_zip}
   = f.input :picture, as: :file, label: 'Upload a photo of your building'
   
   %h2 Your information
   = f.simple_fields_for :property_employees do |pe|
-    = pe.simple_fields_for :title do |t|
-      = t.input :title, as: :hidden, input_html: { value: "Super" } 
-    = pe.simple_fields_for :employee, html: { multipart: true } do |e|
+    = pe.input :title, input_html: { value: @employee.invitation_position } 
+    = pe.simple_fields_for :employee do |e|
       = e.input :invitation_token, as: :hidden, input_html: { value: @employee.invitation_token }
       = e.input :is_admin, as: :hidden, input_html: { value: @employee.invitation_is_admin }
       = e.input :first_name
       = e.input :last_name
       = e.input :nickname
-      = e.input :email
+      = e.input :email, input_html: { value: @employee.invitation.recipient_email }
       = e.input :password
       = e.input :password_confirmation
       = e.input :avatar, as: :file, label: 'Upload a photo of yourself'

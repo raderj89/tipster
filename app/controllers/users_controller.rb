@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  def dashboard
+  def show
   end
 
   def new

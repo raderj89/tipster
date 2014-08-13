@@ -20,9 +20,13 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :employees
+  resources :employees, path_names: { new: 'new/:invitation_token' }
 
   resources :users
+
+  get 'log_in' => 'sessions#new', as: :log_in
+  post 'log_in' => 'sessions#create'
+  match 'log_out' => 'sessions#destroy', as: :log_out, via: [:get, :post]
 
   root to: 'public#index'
 end

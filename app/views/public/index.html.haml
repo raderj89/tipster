@@ -11,7 +11,6 @@
     = form_tag new_user_path, method: :get do
       = hidden_field_tag :property_id
       = text_field_tag :query, params[:query], data: { autocomplete_source: properties_path }, id: 'property_search', placeholder: '555 Anywhere St., Somewheresville, OK', class: 'property-search'
-      = submit_tag ""
 
     #property_listings
 
