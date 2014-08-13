@@ -34,7 +34,9 @@ class ApplicationController < ActionController::Base
     def sign_in(user)
       session_key = "#{user.class.to_s.downcase}_id".to_sym
       session[session_key] = user.id
-      user.update(log_in_count: 1)
+      if session_key == :employee_id && user.is_admin
+        user.update(log_in_count: 1)
+      end
     end
 
     def employee_signed_in?

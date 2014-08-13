@@ -17,11 +17,29 @@ TITLES = %w(bellhop porter doorman handyman valet)
                               picture: File.new("#{Rails.root}/app/assets/images/Apartments.jpg"))
 end
 
+employee_admin_counter = 0
 employee_counter = 0
 user_counter = 0
 
 Property.all.each do |property|
-  10.times do
+  1.times do
+    employee = Employee.create!(first_name: Faker::Name.first_name,
+                                last_name: Faker::Name.last_name,
+                                email: "admin-employee-#{}@tipster.com",
+                                password: 'password',
+                                nickname: 'Jay',
+                                invitation_id: (rand(99) + 1),
+                                avatar: File.new("#{Rails.root}/app/assets/images/bill.jpeg"),
+                                tip_average: rand(99),
+                                is_admin: true)
+
+    property.property_employees.create!(employee_id: employee.id,
+                                        title: TITLES.sample,
+                                        suggested_tip: rand(99) )
+    employee_admin_counter += 1
+  end
+
+  9.times do
     employee = Employee.create!(first_name: Faker::Name.first_name,
                                 last_name: Faker::Name.last_name,
                                 email: "employee-#{employee_counter}@tipster.com",
@@ -29,7 +47,8 @@ Property.all.each do |property|
                                 nickname: 'Jay',
                                 invitation_id: (rand(99) + 1),
                                 avatar: File.new("#{Rails.root}/app/assets/images/bill.jpeg"),
-                                tip_average: rand(99))
+                                tip_average: rand(99),
+                                is_admin: true)
 
     property.property_employees.create!(employee_id: employee.id,
                                         title: TITLES.sample,

@@ -64,7 +64,7 @@ class Employee < ActiveRecord::Base
 
   def send_tip(tip_amount)
     transfer = Stripe::Transfer.create(recipient: stripe_id,
-                                       amount: tip_amount,
+                                       amount: tip_amount * 100,
                                        currency: 'usd')
   rescue => e
     logger.error "Stripe error while creating transfer: #{e.message}"
