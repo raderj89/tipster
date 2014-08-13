@@ -6,6 +6,8 @@ class User < ActiveRecord::Base
   # Relations
   has_many :property_relations, class_name: 'PropertyUser', foreign_key: 'user_id', dependent: :delete_all
   has_many :properties, through: :property_relations
+  has_many :transactions
+  has_many :tips, through: :transactions
 
   accepts_nested_attributes_for :property_relations, allow_destroy: true
 
@@ -40,5 +42,11 @@ class User < ActiveRecord::Base
       logger.error "Stripe error while creating customer: #{e.message}"
       errors.add :base, "There was a problem with your credit card."
       false
+  end
+
+  def charge_user(transaction_amount)
+    charge = Stripe::Charge.create(amount: transaction_amount,
+                                   customer: stripe_id,
+                                   currency: 'usd')
   end
 end

@@ -37,6 +37,10 @@ class Property < ActiveRecord::Base
     picture.url(:thumb)
   end
 
+  def city_state
+    "#{city}, #{state}"
+  end
+
   private
 
     def set_full_address

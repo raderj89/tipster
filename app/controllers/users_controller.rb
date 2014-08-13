@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
-  def show
-  end
+  before_action :signed_in_user, except: [:new, :create]
+  before_action :correct_user, except: [:new, :create]
 
   def new
     @property = Property.find(params[:property_id])
@@ -14,7 +14,7 @@ class UsersController < ApplicationController
     @user = @property.tenants.build(user_params)
 
     if @user.save_with_payment(params[:billing_information])
-      session[:user_id] = @user.id
+      sign_in(@user)
       flash[:success] = "Your account was successfully created!"
       redirect_to @user
     else
@@ -22,6 +22,11 @@ class UsersController < ApplicationController
       render :new
     end
   end
+
+  def show
+    @properties = current_user.properties
+  end
+
 
   private
 
@@ -38,7 +43,7 @@ class UsersController < ApplicationController
     end
 
     def correct_user
-      @user = User.find(params[:user_id])
+      @user = User.find(params[:id])
       redirect_to root_path unless current_user?(@user)
     end
 

@@ -1,3 +1,8 @@
+%h2 My Properties
+
+= render partial: 'property', collection: @properties, locals: { user: current_user }
+
+%h2 My Tipping History
 %section.my-properties
   %h2 My properties
   .all-properties-wrapper

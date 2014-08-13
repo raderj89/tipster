@@ -6,6 +6,7 @@ class Employee < ActiveRecord::Base
   has_one :address, class_name: 'EmployeeAddress', foreign_key: 'employee_id'
   belongs_to :invitation
   has_many :sent_invitations, as: :sender, class_name: 'Invitation', foreign_key: 'sender_id'
+  has_many :tips
 
   # Nested Attributes
   accepts_nested_attributes_for :positions
@@ -58,6 +59,16 @@ class Employee < ActiveRecord::Base
   rescue Stripe::InvalidRequestError => e
     logger.error "Stripe error while creating recipient: #{e.message}"
     errors.add(:base, "There was a problem with your bank information.")
+    false
+  end
+
+  def send_tip(tip_amount)
+    transfer = Stripe::Transfer.create(recipient: stripe_id,
+                                       amount: tip_amount,
+                                       currency: 'usd')
+  rescue => e
+    logger.error "Stripe error while creating transfer: #{e.message}"
+    errors.add(:base, "There was a problem making the transfer.")
     false
   end
 

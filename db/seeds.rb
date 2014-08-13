@@ -15,29 +15,66 @@ TITLES = %w(bellhop porter doorman handyman valet)
                               state: 'NY',
                               zip: Faker::AddressUS.zip_code,
                               picture: File.new("#{Rails.root}/app/assets/images/Apartments.jpg"))
+end
 
-  employee = Employee.create!(first_name: Faker::Name.first_name,
-                              last_name: Faker::Name.last_name,
-                              email: "employee-#{i}@tipster.com",
-                              password: 'password',
-                              nickname: 'Jay',
-                              invitation_id: (rand(99) + 1),
-                              stripe_id: SecureRandom.urlsafe_base64,
-                              avatar: File.new("#{Rails.root}/app/assets/images/bill.jpeg"),
-                              tip_average: rand(99))
+employee_counter = 0
+user_counter = 0
 
-  user = User.create!(first_name: Faker::Name.first_name,
-                      last_name: Faker::Name.last_name,
-                      email: "user-#{i}@tipster.com",
-                      password: 'password',
-                      avatar: File.new("#{Rails.root}/app/assets/images/bill.jpeg"),
-                      signature: "The #{Faker::Name.last_name} family",
-                      stripe_id: SecureRandom.urlsafe_base64)
+Property.all.each do |property|
+  10.times do
+    employee = Employee.create!(first_name: Faker::Name.first_name,
+                                last_name: Faker::Name.last_name,
+                                email: "employee-#{employee_counter}@tipster.com",
+                                password: 'password',
+                                nickname: 'Jay',
+                                invitation_id: (rand(99) + 1),
+                                avatar: File.new("#{Rails.root}/app/assets/images/bill.jpeg"),
+                                tip_average: rand(99))
 
-  property.property_employees.create!(employee_id: employee.id,
-                                      title: TITLES.sample,
-                                      suggested_tip: rand(99) )
+    begin
+      recipient = Stripe::Recipient.create(name: employee.full_name,
+                               type: 'individual',
+                               email: employee.email,
+                               bank_account: {
+                                account_number: '000123456789',
+                                routing_number: '110000000',
+                                country: 'US'} )
+      employee.stripe_id = recipient.id
+      employee.save!
+    rescue Stripe::InvalidRequestError => e
+      puts "Stripe error while creating recipient: #{e.message}"
+      false
+    end
 
-  property.property_tenants.create!(user_id: user.id, unit: "1L")
+    property.property_employees.create!(employee_id: employee.id,
+                                        title: TITLES.sample,
+                                        suggested_tip: rand(99) )
+    employee_counter += 1
+  end
+
+  10.times do
+    user = User.create!(first_name: Faker::Name.first_name,
+                        last_name: Faker::Name.last_name,
+                        email: "user-#{user_counter}@tipster.com",
+                        password: 'password',
+                        avatar: File.new("#{Rails.root}/app/assets/images/bill.jpeg"),
+                        signature: "The #{Faker::Name.last_name} family")
+    begin
+      customer = Stripe::Customer.create(description: user.full_name,
+                                         email: user.email,
+                                         card: { number: 4242424242424242,
+                                                 exp_month: 11,
+                                                 exp_year: 2016,
+                                                 cvc: 123 })
+      user.stripe_id = customer.id
+      user.save!
+    rescue Stripe::CardError => e
+      puts "Stripe error while creating customer: #{e.message}"
+      false
+    end
+
+    property.property_tenants.create!(user_id: user.id, unit: "1L")
+    user_counter += 1
+  end
 
 end
