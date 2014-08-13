@@ -37,10 +37,10 @@ Property.all.each do |property|
                                email: employee.email,
                                bank_account: {
                                 account_number: '000123456789',
-                                routing_number: '',
+                                routing_number: '110000000',
                                 country: 'US'} )
       employee.stripe_id = recipient.id
-      save!
+      employee.save!
     rescue Stripe::InvalidRequestError => e
       puts "Stripe error while creating recipient: #{e.message}"
       false
@@ -67,7 +67,7 @@ Property.all.each do |property|
                                                  exp_year: 2016,
                                                  cvc: 123 })
       user.stripe_id = customer.id
-      save!
+      user.save!
     rescue Stripe::CardError => e
       puts "Stripe error while creating customer: #{e.message}"
       false
