@@ -4,10 +4,9 @@ class Property < ActiveRecord::Base
   before_save :set_full_address
   
   # Relations
-  has_many :property_employees, inverse_of: :property
+  has_many :property_employees, dependent: :delete_all
   has_many :employees, through: :property_employees
-  has_many :titles, through: :property_employees
-  has_many :tenant_relations, class_name: 'PropertyUser', foreign_key: 'property_id'
+  has_many :property_tenants, class_name: 'PropertyUser', foreign_key: 'property_id', dependent: :delete_all
   has_many :tenants, through: :tenant_relations, source: :user
 
   # Nested attributes

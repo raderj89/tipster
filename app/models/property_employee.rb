@@ -3,10 +3,18 @@ class PropertyEmployee < ActiveRecord::Base
   # Relations
   belongs_to :employee
   belongs_to :property
-  belongs_to :title
 
-  # validates_presence_of :employee, :property
+  validates_presence_of :property
+  validates_presence_of :employee
 
-  accepts_nested_attributes_for :employee
-  accepts_nested_attributes_for :title
+  accepts_nested_attributes_for :property
+
+  TITLES = [
+            [1, "Super"],
+            [2, "Bellhop"],
+            [3, "Porter"],
+            [4, "Handyman"],
+            [5, "Valet"],
+            [6, "Doorman"]
+           ]
 end

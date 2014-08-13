@@ -20,7 +20,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :employees
+  resources :employees, path_names: { new: 'new/:invitation_token' }
 
   resources :users
 

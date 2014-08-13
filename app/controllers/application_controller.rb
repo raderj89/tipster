@@ -31,6 +31,12 @@ class ApplicationController < ActionController::Base
 
     helper_method :current_employee
 
+    def sign_in(user)
+      session_key = "#{user.class.to_s.downcase}_id".to_sym
+      session[session_key] = user.id
+      user.update(log_in_count: 1)
+    end
+
     def employee_signed_in?
       !current_employee.nil?
     end

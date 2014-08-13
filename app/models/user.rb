@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   before_save { self.email = email.downcase }
 
   # Relations
-  has_many :property_relations, class_name: 'PropertyUser', foreign_key: 'user_id'
+  has_many :property_relations, class_name: 'PropertyUser', foreign_key: 'user_id', dependent: :delete_all
   has_many :properties, through: :property_relations
 
   accepts_nested_attributes_for :property_relations, allow_destroy: true

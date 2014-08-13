@@ -13,7 +13,7 @@ class Admin < ActiveRecord::Base
             unless: Proc.new { |a| a.password.blank? }
 
   # Relations
-  has_many :invitations, as: :sender, dependent: :destroy
+  has_many :invitations, as: :sender, dependent: :delete_all
 
   # BCrypt
   has_secure_password

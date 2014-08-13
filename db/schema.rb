@@ -90,16 +90,16 @@ ActiveRecord::Schema.define(version: 20140811213518) do
   end
 
   create_table "property_employees", force: true do |t|
-    t.integer  "employee_id", null: false
-    t.integer  "property_id", null: false
-    t.integer  "title_id",    null: false
+    t.integer  "employee_id",                null: false
+    t.integer  "property_id",                null: false
+    t.string   "title",         default: "", null: false
+    t.integer  "suggested_tip", default: 0,  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "property_employees", ["employee_id"], name: "index_property_employees_on_employee_id", using: :btree
   add_index "property_employees", ["property_id"], name: "index_property_employees_on_property_id", using: :btree
-  add_index "property_employees", ["title_id"], name: "index_property_employees_on_title_id", using: :btree
 
   create_table "property_users", force: true do |t|
     t.integer  "user_id"
@@ -107,13 +107,6 @@ ActiveRecord::Schema.define(version: 20140811213518) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "unit"
-  end
-
-  create_table "titles", force: true do |t|
-    t.string   "title",         null: false
-    t.integer  "suggested_tip"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|

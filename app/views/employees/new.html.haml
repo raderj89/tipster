@@ -1,0 +1,25 @@
+%h2 Building Information
+
+= simple_form_for @employee, html: { multipart: true } do |f|
+  = f.simple_fields_for :positions do |p|
+    = p.simple_fields_for :property do |pr|
+      = pr.input :name, input_html: { value: @employee.invitation.property_name }, label: "Name of Building"
+      = pr.input :address, input_html: { value: @employee.invitation.property_address }
+      = pr.input :city, input_html: { value: @employee.invitation.property_city }
+      = pr.input :state, collection: us_states, selected: @employee.invitation.property_state
+      = pr.input :zip, input_html: { value: @employee.invitation.property_zip}
+      = pr.input :picture, as: :file, label: 'Upload a photo of your building'
+  
+    %h2 Your information
+    = p.input :title, input_html: { value: @employee.invitation_position }
+  = f.input :invitation_token, as: :hidden, input_html: { value: @employee.invitation_token }
+  = f.input :is_admin, as: :hidden, input_html: { value: @employee.invitation_is_admin }
+  = f.input :first_name
+  = f.input :last_name
+  = f.input :nickname
+  = f.input :email, input_html: { value: @employee.invitation.recipient_email }
+  = f.input :password
+  = f.input :password_confirmation
+  = f.input :avatar, as: :file, label: 'Upload a photo of yourself'
+
+  = f.submit "Create Account"
