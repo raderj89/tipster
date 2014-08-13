@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :transactions
+
   namespace :admin do
     get 'log_in' => 'sessions#new', as: :log_in
     post 'log_in' => 'sessions#create'
@@ -9,7 +11,7 @@ Rails.application.routes.draw do
     resources :invitations, except: [:edit, :update]
   end
 
-  resources :properties, path_names: { new: 'new/:invitation_token' } do
+  resources :properties do
     resources :employees, only: [:new, :create],
               path_names: { new: 'new/:invitation_token' },
               controller: 'properties/employees' do
@@ -17,6 +19,10 @@ Rails.application.routes.draw do
       post 'create_payment' => 'properties/employees#create_payment', as: :create_payment
       post 'create_address' => 'properties/employees#create_address', as: :create_address
       resources :invitations, path_names: { new: 'new'}
+    end
+
+    resources :users, except: [:new, :create, :edit, :update] do
+      resources :transactions
     end
   end
 

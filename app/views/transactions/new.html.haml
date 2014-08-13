@@ -1,0 +1,9 @@
+= simple_form_for [@property, current_user, @transaction] do |f|
+  - @property.employees.each do |employee|
+    = f.simple_fields_for :employee_tips do |t|
+      = employee.first_name
+      = t.input :employee_id, as: :hidden, input_html: { value: employee.id }
+      = t.input :amount
+      = t.input :message
+  = link_to "Cancel", '#'
+  = f.submit "Check Out"

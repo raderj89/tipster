@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140811213518) do
+ActiveRecord::Schema.define(version: 20140813170930) do
 
   create_table "admins", force: true do |t|
     t.string   "email",           null: false
@@ -108,6 +108,27 @@ ActiveRecord::Schema.define(version: 20140811213518) do
     t.datetime "updated_at"
     t.string   "unit"
   end
+
+  create_table "tips", force: true do |t|
+    t.integer  "amount"
+    t.integer  "transaction_id"
+    t.integer  "employee_id"
+    t.text     "message"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tips", ["employee_id"], name: "index_tips_on_employee_id", using: :btree
+  add_index "tips", ["transaction_id"], name: "index_tips_on_transaction_id", using: :btree
+
+  create_table "transactions", force: true do |t|
+    t.integer  "user_id"
+    t.float    "total"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "transactions", ["user_id"], name: "index_transactions_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "first_name",          null: false
