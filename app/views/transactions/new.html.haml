@@ -11,13 +11,13 @@
               %p= employee.positions.where(property_id: @property.id).first.title
           .tip-fields
             = t.input :employee_id, as: :hidden, input_html: { value: employee.id }
-            = t.input :amount, placeholder: "avg. $30"
+            = t.input :amount, placeholder: "avg. $30", as: :string
             = t.input :message, placeholder: "Optional Message"
     
     .subtotal
       %h1
         Subtotal
-      %h2
+      %h2.js-subtotal
         $
     = f.submit "Check Out"
     = link_to "Cancel", '#', class: 'secondary-button'
