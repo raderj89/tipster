@@ -1,16 +1,18 @@
-%h1 Invite Employees
+.small-centering-wrapper
+  %h1 Invite Employees
 
-= simple_form_for [@property, current_employee, @invitation], remote: true do |f|
-  = f.input :recipient_email, label: "Employee Email Address"
-  = f.input :position, collection: titles
-  = f.submit "Send Invitation"
+  = simple_form_for [@property, current_employee, @invitation], remote: true do |f|
+    = f.input_field :recipient_email, placeholder: "Employee Email Address", class: 'full-input'
+    .styled-select.full-input
+      = f.input_field :position, collection: titles, prompt: "Employee Title"
+    = f.submit "Send Invitation"
 
-#sent-invitations
-  - if @invitations.any?
-    %h2 Sent invitations
+  #sent-invitations
+    - if @invitations.any?
+      %h2 Sent invitations
 
-%ul.js-sent-invites-list
-  - if @invitations.any?
-    = render @invitations
+  %ul.js-sent-invites-list
+    - if @invitations.any?
+      = render @invitations
 
-= link_to "Next Step", property_employee_setup_payment_path(@property, current_employee)
+  = link_to "Next Step", property_employee_setup_payment_path(@property, current_employee), class: "primary-button"

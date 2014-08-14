@@ -1,18 +1,31 @@
-#ach Get Paid Through ACH
+.medium-centering-wrapper.clearfix
+  %h1
+    Get Paid
 
-= simple_form_for :bank_information, url: property_employee_create_payment_path(@property, @employee) do |f|
-  = f.input :account_number, label: "Bank Account Number"
-  = f.input :routing_number, label: "Bank Routing Number"
-  = f.submit "Submit"
+  %p
+    If you are an employee of the building and would like to receive tips through SmartyTip, choose how you would like to receive your payments.
 
-#check Get A Check In The Mail
+  .switches.clearfix
+    = link_to "Get direct deposit", "#", class: "js-switch-dd"
+    %span
+      or
+    = link_to "Get a check in the mail", "#", class: "js-switch-check"
+  
 
-= simple_form_for @address, url: property_employee_create_address_path(@property, @employee) do |f|
-  = f.input :address_line_1
-  = f.input :address_line_2
-  = f.input :city
-  = f.input :state, collection: us_states
-  = f.input :zip
-  = f.submit "Submit"
+  .js-direct-deposit
+    = simple_form_for :bank_information, url: property_employee_create_payment_path(@property, @employee) do |f|
+      = f.input_field :account_number, placeholder: "Bank Account Number", class: "full-input"
+      = f.input_field :routing_number, placeholder: "Bank Routing Number", class: "full-input"
+      = f.submit "Submit"
 
-= link_to "Skip This Step", @employee
+  .js-check
+    = simple_form_for @address, url: property_employee_create_address_path(@property, @employee) do |f|
+      = f.input_field :address_line_1, placeholder: "Address Line 1", class: "full-input"
+      = f.input_field :address_line_2, placeholder: "Address Line 2", class: "full-input"
+      = f.input_field :city, placeholder: "City", class: "full-input"
+      .styled-select.full-input
+        = f.input_field :state, collection: us_states, placeholder: "State", prompt: "State"
+      = f.input_field :zip, placeholder: "Zip", class: "full-input"
+      = f.submit "Submit"
+
+  = link_to "Skip This Step", @employee, class: "primary-button clear top-spacer"
