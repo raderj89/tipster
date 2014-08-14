@@ -25,7 +25,7 @@ Property.all.each do |property|
   1.times do
     employee = Employee.create!(first_name: Faker::Name.first_name,
                                 last_name: Faker::Name.last_name,
-                                email: "admin-employee-#{}@tipster.com",
+                                email: "admin-employee-#{employee_admin_counter}@tipster.com",
                                 password: 'password',
                                 nickname: 'Jay',
                                 invitation_id: (rand(99) + 1),
