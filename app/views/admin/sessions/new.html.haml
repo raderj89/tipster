@@ -1,4 +1,9 @@
-= simple_form_for :session do |f|
-  = f.input :email
-  = f.input :password
-  = f.button :submit, "Log In"
+.small-centering-wrapper
+  %h1 Admin Login
+  = simple_form_for :session do |f|
+    = f.label :email, "Email"
+    = f.input_field :email, label: false, class: 'full-input'
+
+    = f.label :password, "Password"
+    = f.input_field :password, label: false, class: 'full-input'
+    = f.button :submit, "Log In"

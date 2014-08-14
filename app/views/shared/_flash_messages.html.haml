@@ -2,3 +2,4 @@
   - flash.each do |type, msg|
     = content_tag :div, class: "alert alert-#{type}" do
       = msg
+      = image_tag('x.png', class: 'js-close-flash')
