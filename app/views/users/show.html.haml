@@ -1,6 +1,5 @@
-%h2 My Properties
-
 %section.my-properties
+  %h2 My Properties
   .all-properties-wrapper
     = render partial: 'property', collection: @properties, locals: { user: current_user }
 
