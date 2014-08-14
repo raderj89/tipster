@@ -1,4 +1,10 @@
-= simple_form_for :session do |f|
-  = f.input :email
-  = f.input :password
-  = f.button :submit, "Log In"
+.small-centering-wrapper.clearfix
+  %h1
+    Welcome Back!
+  = simple_form_for :session do |f|
+    = f.label :email, "Email"
+    = f.input_field :email, class: "full-input"
+
+    = f.label :email, "Password"
+    = f.input_field :password, class: "full-input"
+    = f.button :submit, "Log In"
