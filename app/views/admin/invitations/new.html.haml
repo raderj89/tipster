@@ -17,6 +17,8 @@
   #sent-invitations
     - if @invitations.any?
       %h2 Sent invitations
+    - else
+      %h2
 
     %ul.js-sent-invites-list
       - if @invitations.any?
