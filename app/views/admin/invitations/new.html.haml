@@ -1,18 +1,28 @@
-%h1 Invite property managers
+.small-centering-wrapper
+  %h1 Invite property managers
 
-= simple_form_for [:admin, @invitation], remote: true do |f|
-  = f.input :recipient_email, label: 'Email'
-  = f.input :property_name
-  = f.input :property_address
-  = f.input :property_city
-  = f.input :property_state, collection: us_states
-  = f.input :property_zip
-  = f.submit "Send Invitation"
+  = simple_form_for [:admin, @invitation], remote: true do |f|
+    = f.label :recipient_email, "Email"
+    = f.input_field :recipient_email, class: 'full-input'
+    = f.label :property_name, "Property Name"
+    = f.input_field :property_name, class: 'full-input'
+    = f.label :property_address, "Address"
+    = f.input_field :property_address, class: 'full-input'
 
-#sent-invitations
-  - if @invitations.any?
-    %h2 Sent invitations
+    = f.label :property_city, "City"
+    = f.input_field :property_city, class: 'full-input'
 
-%ul.js-sent-invites-list
-  - if @invitations.any?
-    = render @invitations
+    = f.label :property_state, "State"
+    = f.input_field :property_state, collection: us_states, class: 'full-input'
+
+    = f.label :property_zip, "Zip"
+    = f.input_field :property_zip, class: 'full-input'
+    = f.submit "Send Invitation"
+
+  #sent-invitations
+    - if @invitations.any?
+      %h2 Sent invitations
+
+  %ul.js-sent-invites-list
+    - if @invitations.any?
+      = render @invitations
