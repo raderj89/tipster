@@ -1,25 +1,43 @@
-%h2 Building Information
+%h1 Sign Up Your Building
+.medium-centering-wrapper.clearfix.employee-form
+  %h2 Building Information
 
-= simple_form_for @employee, html: { multipart: true } do |f|
-  = f.simple_fields_for :positions do |p|
-    = p.simple_fields_for :property do |pr|
-      = pr.input :name, input_html: { value: @employee.invitation.property_name }, label: "Name of Building"
-      = pr.input :address, input_html: { value: @employee.invitation.property_address }
-      = pr.input :city, input_html: { value: @employee.invitation.property_city }
-      = pr.input :state, collection: us_states, selected: @employee.invitation.property_state
-      = pr.input :zip, input_html: { value: @employee.invitation.property_zip}
-      = pr.input :picture, as: :file, label: 'Upload a photo of your building'
-  
-    %h2 Your information
-    = p.input :title, input_html: { value: @employee.invitation_position }
-  = f.input :invitation_token, as: :hidden, input_html: { value: @employee.invitation_token }
-  = f.input :is_admin, as: :hidden, input_html: { value: @employee.invitation_is_admin }
-  = f.input :first_name
-  = f.input :last_name
-  = f.input :nickname
-  = f.input :email, input_html: { value: @employee.invitation.recipient_email }
-  = f.input :password
-  = f.input :password_confirmation
-  = f.input :avatar, as: :file, label: 'Upload a photo of yourself'
+  = simple_form_for @employee, html: { multipart: true } do |f|
+    = f.simple_fields_for :positions do |p|
+      = p.simple_fields_for :property do |pr|
+ 
+        = pr.input_field :name, value: @employee.invitation.property_name, label: "Name of Building", class: 'full-input', placeholder: "Building Name (Optional)"
+        = pr.input_field :address, value: @employee.invitation.property_address, class: 'full-input', placeholder: "Address"
+        = pr.input_field :city, value: @employee.invitation.property_city, class: 'third-input', placeholder: "City"
+        
+        .third-spacer
+        .styled-select.third-input
+          = pr.input_field :state, collection: us_states, selected: @employee.invitation.property_state, class: 'third-input', placeholder: "State"
 
-  = f.submit "Create Account"
+        .third-spacer
+        = pr.input_field :zip, value: @employee.invitation.property_zip, class: 'third-input', placeholder: "Zip"
+
+        = f.label :picture, "Upload a photo of your building"
+        .js-pretty-input
+          Choose File
+          = pr.input_field :picture, as: :file, label: 'Upload a photo of your building'
+      %fieldset
+        %h2.bottom-spacer Your information
+        = p.input_field :title, value: @employee.invitation_position, class: 'full-input', placeholder: "Job title at building"
+
+    = f.input_field :invitation_token, as: :hidden, value: @employee.invitation_token, class: 'full-input'
+    = f.input_field :is_admin, as: :hidden, value: @employee.invitation_is_admin, class: 'full-input'
+    = f.input_field :first_name, class: 'half-input', placeholder: "First Name"
+    .half-spacer
+    = f.input_field :last_name, class: 'half-input', placeholder: "Last Name"
+    = f.input_field :nickname, class: 'full-input', placeholder: "Nickname (Optional)"
+    = f.input_field :email, value: @employee.invitation.recipient_email, class: 'full-input', placeholder: "Email"
+    = f.input_field :password, class: 'full-input', placeholder: "Password"
+    = f.input_field :password_confirmation, class: 'full-input', placeholder: "Password Confirmation"
+
+    = f.label :avatar, "Upload a photo of yourself"
+    .js-pretty-input
+      Choose File
+      = f.input_field :avatar, as: :file, label: 'Upload a photo of yourself'
+
+    = f.submit "Create Account"
