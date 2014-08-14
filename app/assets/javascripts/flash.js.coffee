@@ -1,12 +1,11 @@
 $ ->
-  if $('.alert')[0]
 
-    closeAlert = () ->
-      $('.alert').slideUp('500')
-      
-    # Close flash message on click X
-    $('.js-close-flash').on 'click', ->
-      closeAlert()
+  closeAlert = () ->
+    $('.alert').slideUp('500')
+    
+  # Close flash message on click X
+  $('body').on 'click', '.js-close-flash', ->
+    closeAlert()
 
-    # # Close flash automatically
-    setTimeout(closeAlert, 500)
+  # # Close flash automatically
+  setInterval(closeAlert, 3000)
