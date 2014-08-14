@@ -44,8 +44,8 @@ class User < ActiveRecord::Base
       false
   end
 
-  def charge_user(transaction_amount)
-    charge = Stripe::Charge.create(amount: transaction_amount,
+  def charge(transaction_amount)
+    charge = Stripe::Charge.create(amount: transaction_amount * 100,
                                    customer: stripe_id,
                                    currency: 'usd')
   end

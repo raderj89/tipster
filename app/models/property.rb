@@ -37,8 +37,8 @@ class Property < ActiveRecord::Base
     picture.url(:thumb)
   end
 
-  def city_state
-    "#{city}, #{state}"
+  def city_state_zip
+    "#{city}, #{state}, #{zip}"
   end
 
   private

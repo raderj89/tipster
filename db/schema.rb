@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140813170930) do
+ActiveRecord::Schema.define(version: 20140813203751) do
 
   create_table "admins", force: true do |t|
     t.string   "email",           null: false
@@ -123,7 +123,7 @@ ActiveRecord::Schema.define(version: 20140813170930) do
 
   create_table "transactions", force: true do |t|
     t.integer  "user_id"
-    t.float    "total"
+    t.integer  "total"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -1,27 +1,8 @@
 %h2 My Properties
 
-= render partial: 'property', collection: @properties, locals: { user: current_user }
-
-%h2 My Tipping History
 %section.my-properties
-  %h2 My properties
   .all-properties-wrapper
-    .single-property.clearfix
-      = image_tag('http://placekitten.com/120/120')
-      .property-info
-        %h2 Acacia
-        %p 1560 Fulton Street
-        %p Brooklyn, NY 11213
-      = link_to "remove", '#', class: 'action-link js-remove-building'
-
-      = link_to "Give Tips", '#', class: 'primary-button right'
-
-    .add-building-wrapper.clearfix
-      = link_to '#', class: 'js-add-building' do
-        %span.circle-wrap
-          &#43;
-        add a building
-
+    = render partial: 'property', collection: @properties, locals: { user: current_user }
 
 %section.my-payment
   %h2 My Payment Method
