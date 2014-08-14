@@ -2,21 +2,16 @@
   %h1 Invite property managers
 
   = simple_form_for [:admin, @invitation], remote: true do |f|
-    = f.label :recipient_email, "Email"
-    = f.input_field :recipient_email, class: 'full-input'
-    = f.label :property_name, "Property Name"
-    = f.input_field :property_name, class: 'full-input'
-    = f.label :property_address, "Address"
-    = f.input_field :property_address, class: 'full-input'
+    = f.input_field :recipient_email, class: 'full-input', placeholder: "Property Manager Email"
 
-    = f.label :property_city, "City"
-    = f.input_field :property_city, class: 'full-input'
+    = f.input_field :property_name, class: 'full-input', placeholder: "Property Name(Optional)"
+    = f.input_field :property_address, class: 'full-input', placeholder: "Address"
 
-    = f.label :property_state, "State"
-    = f.input_field :property_state, collection: us_states, class: 'full-input'
+    = f.input_field :property_city, class: 'third-input', placeholder: "City"
+    .styled-select.third-input
+      = f.input_field :property_state, collection: us_states
 
-    = f.label :property_zip, "Zip"
-    = f.input_field :property_zip, class: 'full-input'
+    = f.input_field :property_zip, class: 'third-input', placeholder: "Zip"
     = f.submit "Send Invitation"
 
   #sent-invitations
