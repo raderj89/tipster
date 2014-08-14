@@ -1,16 +1,23 @@
 $ ->
-  $('.js-switch-dd').on 'click', ->
-    $('.js-direct-deposit').slideToggle()
-    $(this).addClass('active')
+  if $('.js-switch-dd')[0]
 
-    if $('.js-check').is(':visible')
-      $('.js-check').slideToggle()
-      $('.js-switch-check').removeClass('active')
+    highlightSwitch = (element) ->
+      if $(element).hasClass('active')
+        $(element).removeClass('active')
+      else
+        $(element).addClass('active')
 
-  $('.js-switch-check').on 'click', ->
-    $('.js-check').slideToggle()
-    $(this).addClass('active')
+    deactivateOtherFields = (otherField, otherSwitch) ->
+      if $(otherField).is(':visible')
+        $(otherField).slideToggle()
+        $(otherSwitch).removeClass('active')
 
-    if $('.js-direct-deposit').is(':visible')
+    $('.js-switch-dd').on 'click', ->
       $('.js-direct-deposit').slideToggle()
-      $('.js-switch-dd').removeClass('active')
+      highlightSwitch(this)
+      deactivateOtherFields('.js-check', '.js-switch-check')
+
+    $('.js-switch-check').on 'click', ->
+      $('.js-check').slideToggle()
+      highlightSwitch(this)
+      deactivateOtherFields('.js-direct-deposit', '.js-switch-dd')
