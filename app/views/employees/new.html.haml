@@ -20,7 +20,7 @@
         = f.label :picture, "Upload a photo of your building"
         .js-pretty-input
           Choose File
-          = pr.input_field :picture, as: :file, label: 'Upload a photo of your building'
+        = pr.input_field :picture, as: :file, label: 'Upload a photo of your building'
       %fieldset
         %h2.bottom-spacer Your information
         = p.input_field :title, value: @employee.invitation_position, class: 'full-input', placeholder: "Job title at building"
@@ -38,6 +38,6 @@
     = f.label :avatar, "Upload a photo of yourself"
     .js-pretty-input
       Choose File
-      = f.input_field :avatar, as: :file, label: 'Upload a photo of yourself'
+    = f.input_field :avatar, as: :file, label: 'Upload a photo of yourself'
 
     = f.submit "Create Account"
