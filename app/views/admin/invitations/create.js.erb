@@ -1,7 +1,7 @@
 <% if @invitation.valid? %>
   var recipientEmail = "<%= @invitation.recipient_email %>";
   $('.js-sent-invites-list').append('<li>' + recipientEmail + '</li>');
-  $('#sent-invitations').html('<h2>Sent invitations</h2>');
+  $('#sent-invitations h2').html('Sent invitations');
   $('#new_invitation')[0].reset();
 <% end %>
 
