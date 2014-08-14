@@ -48,7 +48,7 @@ Property.all.each do |property|
                                 invitation_id: (rand(99) + 1),
                                 avatar: File.new("#{Rails.root}/app/assets/images/bill.jpeg"),
                                 tip_average: rand(99),
-                                is_admin: true)
+                                is_admin: false)
 
     property.property_employees.create!(employee_id: employee.id,
                                         title: TITLES.sample,
