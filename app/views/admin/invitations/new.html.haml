@@ -9,7 +9,7 @@
 
     = f.input_field :property_city, class: 'third-input', placeholder: "City"
     .styled-select.third-input
-      = f.input_field :property_state, collection: us_states
+      = f.input_field :property_state, collection: us_states, prompt: "State"
 
     = f.input_field :property_zip, class: 'third-input', placeholder: "Zip"
     = f.submit "Send Invitation"
