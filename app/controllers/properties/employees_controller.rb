@@ -9,7 +9,6 @@ class Properties::EmployeesController < ApplicationController
     @employee.invitation_id = (@employee.invitation.id if @employee.invitation)
     @employee.email = (@employee.invitation.recipient_email if @employee.invitation)
     @employee.positions.build(property_id: @property.id)
-                       .build_title(title: @employee.invitation_position)
   end
 
   def create
