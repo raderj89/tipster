@@ -1,11 +1,18 @@
 %nav.clearfix{class: (yield :home_nav)}
   = link_to "SmartyTip", root_path, class: 'logo'
 
-  / If not signed in
   %ul.nav-links
-    %li
-      = link_to "About", '#'
-    %li
-      = link_to "FAQ", '#'
-    %li
-      = link_to "Log In", log_in_path, class: 'primary-button'
+    - if user_signed_in? || employee_signed_in?
+      %li
+        = link_to "About", '#'
+      %li
+        = link_to "FAQ", '#'
+      %li
+        = link_to "Log Out", log_out_path, class: 'primary-button'
+    - else
+      %li
+        = link_to "About", '#'
+      %li
+        = link_to "FAQ", '#'
+      %li
+        = link_to "Log In", log_in_path, class: 'primary-button'

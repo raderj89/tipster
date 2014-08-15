@@ -1,10 +1,10 @@
-.single-property.clearfix
+.single-property.clearfix{ id: "property-#{property.id}"}
   = image_tag property.picture_thumb
   .property-info
     %h2= property.name
     %p= property.address
     %p= property.city_state_zip
-  = link_to "remove", '#', class: 'action-link js-remove-building'
+  = link_to "remove", user_remove_property_path(current_user, property), method: :delete, remote: true, data: { confirm: "Are you sure you want to remove this property?" }, class: 'action-link js-remove-building'
 
   = link_to "Give Tips", new_property_user_transaction_path(property, user), class: 'primary-button right'
 

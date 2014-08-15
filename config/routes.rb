@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
 
-  resources :transactions
-
   namespace :admin do
     get 'log_in' => 'sessions#new', as: :log_in
     post 'log_in' => 'sessions#create'
@@ -28,8 +26,10 @@ Rails.application.routes.draw do
 
   resources :employees, path_names: { new: 'new/:invitation_token' }
 
-  resources :users
-
+  resources :users do
+    delete 'property/:id' => 'users#remove_property', as: :remove_property
+  end
+  
   get 'log_in' => 'sessions#new', as: :log_in
   post 'log_in' => 'sessions#create'
   match 'log_out' => 'sessions#destroy', as: :log_out, via: [:get, :post]

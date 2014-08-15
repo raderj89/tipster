@@ -9,4 +9,6 @@ class PropertyUser < ActiveRecord::Base
   validates_presence_of :property_id
 
   validates :unit, presence: true, length: { maximum: 10 }
+
+  delegate :full_address, to: :property
 end
