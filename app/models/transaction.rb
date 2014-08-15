@@ -24,6 +24,10 @@ class Transaction < ActiveRecord::Base
     end
   end
 
+  def address
+    Property.find_by(id: PropertyEmployee.where(employee_id: Tip.where(transaction_id: self.id))).full_address
+  end
+
   private
 
     def send_out_tips

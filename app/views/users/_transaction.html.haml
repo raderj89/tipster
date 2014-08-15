@@ -1,0 +1,9 @@
+%tr
+  %td 
+    = transaction.created_at
+  %td
+    = transaction.address
+  %td
+    = number_to_currency(transaction.total)
+  %td
+    = link_to "View Details", '#', class: 'action-link'

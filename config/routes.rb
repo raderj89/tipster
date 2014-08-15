@@ -18,7 +18,7 @@ Rails.application.routes.draw do
       get 'setup_payment' => 'properties/employees#setup_payment', as: :setup_payment
       post 'create_payment' => 'properties/employees#create_payment', as: :create_payment
       post 'create_address' => 'properties/employees#create_address', as: :create_address
-      resources :invitations, path_names: { new: 'new'}
+      resources :invitations, path_names: { new: 'new' }
     end
 
     resources :users, except: [:new, :create, :edit, :update] do
