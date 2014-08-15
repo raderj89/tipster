@@ -1,5 +1,8 @@
 %nav.clearfix{class: (yield :home_nav)}
-  = link_to "SmartyTip", root_path, class: 'logo'
+  - if user_signed_in? || employee_signed_in?
+    = link_to "SmartyTip", current_user, class: 'logo'
+  -else
+    = link_to "SmartyTip", root_path, class: 'logo'
 
   %ul.nav-links
     - if user_signed_in? || employee_signed_in?
