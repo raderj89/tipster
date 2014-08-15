@@ -15,4 +15,7 @@ class PublicController < ApplicationController
   def privacy
   end
 
+  def contact
+  end
+
 end

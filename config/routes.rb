@@ -43,4 +43,10 @@ Rails.application.routes.draw do
   match 'log_out' => 'sessions#destroy', as: :log_out, via: [:get, :post]
 
   root to: 'public#index'
+
+  get 'about' => 'public#about', as: :about
+  get 'tos' => 'public#tos', as: :tos
+  get 'faq' => 'public#faq', as: :faq
+  get 'privacy' => 'public#privacy', as: :privacy
+  get 'contact' => 'public#contact', as: :contact
 end
