@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
 
+  namespace :api do
+    namespace :v1 do
+      resources :sessions, only: [:create, :destroy]
+      resources :users
+      resources :properties
+    end
+  end
+
   namespace :admin do
     get 'log_in' => 'sessions#new', as: :log_in
     post 'log_in' => 'sessions#create'
