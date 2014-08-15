@@ -1,28 +1,36 @@
-.my-properties, .my-tipping
+.my-properties, .my-tipping, .my-employees
   width: 60%
   float: left
   margin: 2rem
 
-.my-payment
+.my-payment, .suggested-tips
   width: 30%
   float: left
   margin-top: 2rem
 
-.all-properties-wrapper, .payment-information, .dashboard-table
+.all-properties-wrapper, .all-employees-wrapper, .payment-information, .invitation-table-wrapper, .dashboard-table
   border: 1px solid $light-gray
   margin-top: .5rem
 
-.payment-information
+.payment-information, .single-employee, .invitation-table-wrapper
   padding: 1rem
 
   p
     display: inline-block
 
-.single-property
-  img
+.js-delete-employee
+  &:hover
+    cursor: pointer
+
+.single-property, .single-employee
+
+  .js-delete-employee
+    margin-bottom: 1rem
+
+  .property-image, .thumbnail
     float: left
 
-  .property-info
+  .property-info, .employee-info
     float: left
     margin-left: 1rem
 
@@ -45,6 +53,34 @@
     th
       padding: .5rem
       text-align: left
+      font-weight: 700
+      text-transform: uppercase
+      font-size: .8rem
 
   td
     padding: .5rem
+
+  tr
+    border-bottom: 1px solid $light-gray
+
+.employee-table
+  td, thead th
+    padding: .5rem 1rem
+
+  .message
+    width: 350px
+
+// Side tables
+
+.small-table
+  width: 100%
+  font-family: $sans
+
+  td
+    padding-bottom: 1rem
+
+  tr:last-of-type td
+    padding-bottom: 0
+
+td.right-column
+  text-align: right

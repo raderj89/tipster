@@ -1,0 +1,44 @@
+%section.my-properties
+  %h2 My Properties
+  .all-properties-wrapper
+    .single-property.clearfix
+      = image_tag('http://fillmurray.com/100/100', class: '.thumbnail')
+      .property-info
+        %h2 Acacia
+        %p 2980 Hacienda Drive
+        %p Concord, CA
+      
+      / If building manager
+      = link_to "Manage", "#", class: 'primary-button right'
+
+%section.my-payment
+  %h2 My Deposit Method
+  .payment-information
+    %p 
+      Mastercard &ndash;3335
+    = link_to "edit", '#', class: 'action-link right'
+
+%section.my-tipping
+  %h2 Tips received
+  %table.dashboard-table.employee-table
+    %thead
+      %tr
+        %th Date
+        %th From
+        %th.message Message
+        %th Amount
+      %tbody
+        / each tipping time
+        %tr
+          %td 
+            10/03/14
+          %td 
+            The Jones Family
+          %td.message
+            Dear Frank,
+            You are the best. We wish you happy holidays.
+            Hope you get some peace and quiet.
+            Best,
+            The Jones
+          %td
+            $30

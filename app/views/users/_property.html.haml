@@ -1,5 +1,5 @@
 .single-property.clearfix{ id: "property-#{property.id}"}
-  = image_tag property.picture_thumb
+  = image_tag property.picture_thumb, class: 'thumbnail'
   .property-info
     %h2= property.name
     %p= property.address
