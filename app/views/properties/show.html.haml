@@ -1,1 +1,71 @@
-= @property.name
+%section.my-properties
+  %h2 Property Information
+  .all-properties-wrapper
+    .single-property.clearfix
+      = image_tag('http://fillmurray.com/300/300', class: 'property-image')
+      .property-info
+        %h2 Acacia
+        %p 2980 Hacienda Drive
+        %p Concord, CA
+      
+      = link_to "edit", "#", class: 'action-link'
+      
+%section.suggested-tips
+  %h2 Suggested Tips
+  .payment-information  
+    %table.small-table
+      %tr
+        %td
+          Porter
+        %td.right-column
+          $30
+      %tr
+        %td
+          Doorman
+        %td.right-column
+          $30
+      %tr
+        %td
+          Doorman
+        %td.right-column
+          $30
+      %tr
+        %td
+          Porter
+        %td.right-column
+          $30
+
+%section.my-employees
+  %h2 Manage Employees
+  .all-employees-wrapper
+    .single-employee.clearfix
+      = image_tag('http://fillmurray.com/100/100', class: 'thumbnail')
+      .employee-info
+        %h2 Chris D.
+        %p Porter
+      
+      = image_tag('x.png', class: 'right js-delete-employee')
+      = link_to "edit", "#", class: 'action-link'
+
+%section.my-payment
+  %h2 Pending Invitations
+  .invitation-table-wrapper
+    %table.small-table
+      %tr
+        %td
+          jessemauro@gmail.com
+        %td.right-column
+          = link_to "edit", '#', class: 'action-link'
+
+%section.my-payment
+  %h2 Invite Employees
+  .payment-information
+    %table.small-table
+      %tr
+        %td
+          Mastercard &ndash;3335
+        %td.right-column
+          = link_to "edit", '#', class: 'action-link'
+    
+
+  

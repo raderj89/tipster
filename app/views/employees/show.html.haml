@@ -2,7 +2,7 @@
   %h2 My Properties
   .all-properties-wrapper
     .single-property.clearfix
-      = image_tag('http://fillmurray.com/100/100')
+      = image_tag('http://fillmurray.com/100/100', class: '.thumbnail')
       .property-info
         %h2 Acacia
         %p 2980 Hacienda Drive
@@ -10,7 +10,7 @@
       
       / If building manager
       = link_to "Manage", "#", class: 'primary-button right'
-      
+
 %section.my-payment
   %h2 My Deposit Method
   .payment-information

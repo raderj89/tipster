@@ -2,7 +2,7 @@
   %h2 My Properties
   .all-properties-wrapper
     .single-property.clearfix
-      = image_tag property.picture_thumb
+      = image_tag property.picture_thumb, class: '.thumbnail'
       .property-info
         %h2= property.name
         %p= property.address
