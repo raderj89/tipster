@@ -1,0 +1,12 @@
+defaults: &defaults
+  client:
+    origin: http://localhost:9000
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults
