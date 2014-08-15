@@ -4,15 +4,15 @@
   %ul.nav-links
     - if user_signed_in? || employee_signed_in?
       %li
-        = link_to "About", '#'
+        = link_to "About", about_path
       %li
-        = link_to "FAQ", '#'
+        = link_to "FAQ", faq_path
       %li
         = link_to "Log Out", log_out_path, class: 'primary-button'
     - else
       %li
-        = link_to "About", '#'
+        = link_to "About", about_path
       %li
-        = link_to "FAQ", '#'
+        = link_to "FAQ", faq_path
       %li
         = link_to "Log In", log_in_path, class: 'primary-button'
