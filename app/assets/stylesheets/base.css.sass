@@ -18,6 +18,9 @@
   height: 0
   clear: both
 
+.clear
+  clear: both
+
 // Necessary for pushed footer
 html, body
   height: 100%
@@ -44,6 +47,7 @@ h1, h2, h3, h4, h5
 h1
   text-align: center
   font-size: 2rem
+  margin: 4rem 0 1rem
 
 h2
   font-size: 1.5rem
@@ -68,25 +72,8 @@ a
   text-transform: none
   color: $yellow
 
-// Positioning
-.panel
-  width: 100%
-  padding: 2rem
-
-.centering-wrapper
-  max-width: 1100px
-  margin: 0 auto
-
-.medium-centering-wrapper
-  max-width: 800px
-  margin: 0 auto
-
-.small-centering-wrapper
-  max-width: 500px
-  margin: 0 auto
-
-.right
-  float: right
+li
+  line-height: 1.4
 
 input[type=submit]
   padding: 0
@@ -124,3 +111,29 @@ input[type=submit]
   color: white
   line-height: 16px
   text-align: center
+
+// Positioning
+.panel
+  width: 100%
+  padding: 2rem
+
+.centering-wrapper
+  max-width: 1100px
+  margin: 0 auto
+
+.medium-centering-wrapper
+  max-width: 800px
+  margin: 3rem auto
+
+.small-centering-wrapper
+  max-width: 500px
+  margin: 3rem auto
+
+.right
+  float: right
+
+.bottom-spacer
+  margin-bottom: 1rem
+
+.top-spacer
+  margin-top: 1rem

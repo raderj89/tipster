@@ -1,8 +1,12 @@
-%h2 My Properties
-
 %section.my-properties
+  %h2 My Properties
   .all-properties-wrapper
     = render partial: 'property', collection: current_user.properties, locals: { user: current_user }
+    .add-building-wrapper.clearfix
+      = link_to '#', class: 'js-add-building' do
+        %span.circle-wrap
+          &#43;
+        add a building
 
 %section.my-payment
   %h2 My Payment Method
