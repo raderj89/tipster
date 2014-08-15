@@ -24,6 +24,12 @@ class Transaction < ActiveRecord::Base
     end
   end
 
+  def address
+    # Transactions have many tips, which belong to employees, which have many property employee records, which
+    # belong to a property.
+    Property.find_by(id: PropertyEmployee.where(employee_id: Tip.where(transaction_id: self.id))).full_address
+  end
+
   private
 
     def send_out_tips
