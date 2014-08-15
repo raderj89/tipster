@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  respond_to :js
 
   before_action :signed_in_user, except: [:new, :create]
   before_action :correct_user, except: [:new, :create]
@@ -24,7 +25,18 @@ class UsersController < ApplicationController
   end
 
   def show
-    @properties = current_user.properties
+  end
+
+  def remove_property
+    @property_relation = current_user.property_relations.find(params[:id])
+
+    if @property_relation.destroy
+      flash.now[:notice] = "You have successfully removed the property at #{@property_relation.full_address}"
+    else
+      flash.now[:error] = "There was a problem removing this property."
+    end
+
+    respond_with(@property)
   end
 
 

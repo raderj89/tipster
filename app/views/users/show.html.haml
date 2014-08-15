@@ -1,7 +1,7 @@
 %section.my-properties
   %h2 My Properties
   .all-properties-wrapper
-    = render partial: 'property', collection: @properties, locals: { user: current_user }
+    = render partial: 'property', collection: current_user.properties, locals: { user: current_user }
     .add-building-wrapper.clearfix
       = link_to '#', class: 'js-add-building' do
         %span.circle-wrap
@@ -25,15 +25,4 @@
         %th Total
         %th
       %tbody
-        / each tipping time
-        %tr
-          %td 
-            10/03/14
-          %td 
-            Acacia
-            1560 Fulton Street
-            Brooklyn, NY 11213
-          %td
-            $610
-          %td
-            = link_to "View Details", '#', class: 'action-link'
+        = render partial: 'transaction', collection: current_user.transactions, locals: { user: current_user }
