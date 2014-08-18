@@ -1,15 +1,7 @@
 %section.my-properties
   %h2 My Properties
   .all-properties-wrapper
-    .single-property.clearfix
-      = image_tag('http://fillmurray.com/100/100', class: '.thumbnail')
-      .property-info
-        %h2 Acacia
-        %p 2980 Hacienda Drive
-        %p Concord, CA
-      
-      / If building manager
-      = link_to "Manage", "#", class: 'primary-button right'
+    = render partial: 'property', collection: current_employee.properties, locals: { user: current_employee }
 
 %section.my-payment
   %h2 My Deposit Method
@@ -28,17 +20,14 @@
         %th.message Message
         %th Amount
       %tbody
-        / each tipping time
-        %tr
-          %td 
-            10/03/14
-          %td 
-            The Jones Family
-          %td.message
-            Dear Frank,
-            You are the best. We wish you happy holidays.
-            Hope you get some peace and quiet.
-            Best,
-            The Jones
-          %td
-            $30
+        - if current_employee.tips.any?
+          - current_employee.tips.each do |tip|
+            %tr
+              %td 
+                = transaction_date(tip)
+              %td 
+                = tip.signature
+              %td.message
+                = tip.message
+              %td
+                = number_to_currency(tip.amount, precision: 0)

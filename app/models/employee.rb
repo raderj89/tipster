@@ -3,6 +3,7 @@ class Employee < ActiveRecord::Base
   # Relations
   has_many :positions, inverse_of: :employee, class_name: 'PropertyEmployee', foreign_key: 'employee_id', dependent: :delete_all
   has_many :properties, through: :positions
+  has_many :titles, through: :positions
   has_one :address, class_name: 'EmployeeAddress', foreign_key: 'employee_id'
   belongs_to :invitation
   has_many :sent_invitations, as: :sender, class_name: 'Invitation', foreign_key: 'sender_id'
@@ -15,9 +16,9 @@ class Employee < ActiveRecord::Base
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
   # Validations
-  validates :first_name, presence: true, length: { maximum: 100}
-  validates :last_name, presence: true, length: { maximum: 100}
-  validates :email, presence: true, length: { maximum: 100}, format: { with: VALID_EMAIL_REGEX }
+  validates :first_name, presence: true, length: { maximum: 100 }
+  validates :last_name, presence: true, length: { maximum: 100 }
+  validates :email, presence: true, length: { maximum: 100 }, format: { with: VALID_EMAIL_REGEX }
   validates :password, length: { minimum: 6 }, unless: Proc.new { |a| a.password.blank? }
 
   # Paperclip
@@ -30,6 +31,18 @@ class Employee < ActiveRecord::Base
   # Methods
   def full_name
     "#{first_name} #{last_name}"
+  end
+
+  def managed_employees
+    if is_admin
+      positions.map do |position|
+        PropertyEmployee.where(property_id: position.property_id)
+      end.flatten
+    end
+  end
+
+  def manages?(property_employee)
+    managed_employees.include?(property_employee)
   end
 
   def avatar_thumb

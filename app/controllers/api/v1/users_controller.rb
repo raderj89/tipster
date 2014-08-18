@@ -1,5 +1,7 @@
 class Api::V1::UsersController < Api::V1::BaseController
 
+  skip_before_filter :verify_authenticity_token
+
   def index
     render json: User.all
   end

@@ -19,6 +19,8 @@ class Property < ActiveRecord::Base
   # Validates
   validates_presence_of :address, :city, :state, :zip
 
+  scope :with_employees, -> { includes(:property_employees).includes(:employees) }
+
   # Search
   searchkick 
 
@@ -32,13 +34,25 @@ class Property < ActiveRecord::Base
 
   # Methods
 
-  # So we can return the correct image path through JSON
   def picture_thumb
     picture.url(:thumb)
   end
 
+  def picture_medium
+    picture.url(:medium)
+  end
+
   def city_state_zip
     "#{city}, #{state}, #{zip}"
+  end
+
+  def titles_and_suggested_tips
+    PropertyEmployee.where(property_id: self.id).pluck(:title).uniq.zip(
+    PropertyEmployee.where(property_id: self.id).pluck(:suggested_tip))
+  end
+
+  def unit
+    property_tenants.where(property_id: self.id).first.unit
   end
 
   private
