@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
-  respond_to :js
+  respond_to :js, :html
 
   before_action :signed_in_user, except: [:new, :create]
-  before_action :correct_user, except: [:new, :create]
+  before_action :correct_user, except: [:new, :create, :remove_property]
 
   def new
     @property = Property.find(params[:property_id])
@@ -27,12 +27,23 @@ class UsersController < ApplicationController
   def edit
   end
 
+  def update
+    if @user.update(user_params)
+      flash.now[:success] = "You've successfully updated your settings."
+    else
+      flash.now[:error] = "There was a problem updating your information."
+    end
+
+    respond_with(@user) do |format|
+      format.html { redirect_to @user }
+    end
+  end
+
   def show
   end
 
   def remove_property
     @property_relation = current_user.property_relations.find(params[:id])
-
     if @property_relation.destroy
       flash.now[:notice] = "You have successfully removed the property at #{@property_relation.full_address}"
     else

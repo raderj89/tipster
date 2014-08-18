@@ -40,6 +40,7 @@ Rails.application.routes.draw do
   end
 
   resources :users do
+    resources :property_users
     resources :transactions
     delete 'property/:id' => 'users#remove_property', as: :remove_property
   end
