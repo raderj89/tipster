@@ -2,7 +2,7 @@
   %td 
     = transaction_date(transaction)
   %td
-    = transaction.address
+    = transaction.full_address
   %td
     = number_to_currency(transaction.total, precision: 0)
   %td

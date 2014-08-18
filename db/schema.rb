@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140813203751) do
+ActiveRecord::Schema.define(version: 20140818193938) do
 
   create_table "admins", force: true do |t|
     t.string   "email",           null: false
@@ -126,8 +126,10 @@ ActiveRecord::Schema.define(version: 20140813203751) do
     t.integer  "total"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "property_id", null: false
   end
 
+  add_index "transactions", ["property_id"], name: "index_transactions_on_property_id", using: :btree
   add_index "transactions", ["user_id"], name: "index_transactions_on_user_id", using: :btree
 
   create_table "users", force: true do |t|

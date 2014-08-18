@@ -5,8 +5,10 @@ class Transaction < ActiveRecord::Base
 
   # Relations
   belongs_to :user
+  belongs_to :property
   has_many :employee_tips, class_name: 'Tip', foreign_key: 'transaction_id'
 
+  delegate :address, :full_address, :name, :city_state_zip, :picture_thumb, to: :property
   delegate :signature, to: :user
 
   # Nested attributes
@@ -24,12 +26,6 @@ class Transaction < ActiveRecord::Base
     else
       false
     end
-  end
-
-  def address
-    # Transactions belong to users, which have many property employee records, which
-    # belong to a property.
-    Property.find_by(id: PropertyUser.where(user_id: self.user_id)).full_address
   end
 
   private
