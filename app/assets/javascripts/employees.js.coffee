@@ -7,6 +7,7 @@ $ ->
   $('.action-link').on 'click', (e) ->
     e.preventDefault()
     $this = $(this)
+    $this.hide()
     $employeeBox = $this.parent('.single-employee')
     propEmployeeId = $this.data('prop-employee-id')
     $title = $employeeBox.find("p[data-prop-employee-id=#{propEmployeeId}]")
@@ -16,7 +17,9 @@ $ ->
   
   $('.single-employee').on 'change', '#titles', ->
     $this = $(this)
-
+    $employeeBox = $this.parents('.single-employee')
+    $editLink = $employeeBox.find('.action-link')
+    console.log($editLink)
     newTitle = $this.val()
     employeeId = $this.data('prop-employee-id')
 
@@ -28,6 +31,7 @@ $ ->
         $this.hide()
         $title.text(newTitle)
         $title.show()
+        $editLink.show()
       })
 
   $moneyField = ""
