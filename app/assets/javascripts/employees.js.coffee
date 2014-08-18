@@ -1,6 +1,6 @@
 $ ->
   titleInput = ""
-  title = ""
+  $title = ""
   currentEmployeeId = $('.all-employees-wrapper').data('current-employee')
   propertyId = $('.my-properties').data('property-id')
 
@@ -9,9 +9,10 @@ $ ->
     $this = $(this)
     $employeeBox = $this.parent('.single-employee')
     propEmployeeId = $this.data('prop-employee-id')
-    title = $employeeBox.find("p[data-prop-employee-id=#{propEmployeeId}]")
+    $title = $employeeBox.find("p[data-prop-employee-id=#{propEmployeeId}]")
     titleInput = $employeeBox.find("#titles[data-prop-employee-id='#{propEmployeeId}']")
-    title.replaceWith(titleInput.css('display', 'inline'))
+    $title.hide()
+    titleInput.show()
   
   $('.single-employee').on 'change', '#titles', ->
     $this = $(this)
@@ -24,7 +25,9 @@ $ ->
       type: "PUT",
       data: { property_employee: { title: newTitle } },
       success: (data) ->
-        $this.replaceWith("<p data-prop-employee-id=#{data.id}>#{data.title}</p>")
+        $this.hide()
+        $title.text(newTitle)
+        $title.show()
       })
 
   $moneyField = ""

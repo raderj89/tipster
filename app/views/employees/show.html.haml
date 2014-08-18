@@ -11,16 +11,16 @@
     = link_to "edit", '#', class: 'action-link right'
 
 %section.my-tipping
-  %h2 Tips received
-  %table.dashboard-table.employee-table
-    %thead
-      %tr
-        %th Date
-        %th From
-        %th.message Message
-        %th Amount
-      %tbody
-        - if current_employee.tips.any?
+  - if current_employee.tips.any?
+    %h2 Tips received
+    %table.dashboard-table.employee-table
+      %thead
+        %tr
+          %th Date
+          %th From
+          %th.message Message
+          %th Amount
+        %tbody
           - current_employee.tips.each do |tip|
             %tr
               %td 

@@ -23,7 +23,7 @@
         = pr.input_field :picture, as: :file, label: 'Upload a photo of your building'
       %fieldset
         %h2.bottom-spacer Your information
-        = p.input_field :title, collection: PropertyEmployee::TITLES, selected: Title::TITLES[0], class: 'full-input'
+        = p.input_field :title, collection: PropertyEmployee::TITLES, selected: PropertyEmployee::TITLES[0], class: 'third-input'
 
     = f.input_field :invitation_token, as: :hidden, value: @employee.invitation_token, class: 'full-input'
     = f.input_field :is_admin, as: :hidden, value: @employee.invitation_is_admin, class: 'full-input'
