@@ -1,5 +1,5 @@
 class Employees::PropertiesController < ApplicationController
-  respond_to :js
+  respond_to :html, :js
 
   before_action :signed_in_employee
   before_action :correct_employee
@@ -8,6 +8,18 @@ class Employees::PropertiesController < ApplicationController
 
   def show
     @invitation = Invitation.new
+  end
+
+  def update
+    if @property.update(property_params)
+      flash.now[:success] = "Building updated!"
+    else
+      flash.now[:error] = "There was a problem uploading your photo."
+    end
+
+    respond_with(@property) do |format|
+      format.html { redirect_to [current_employee, @property] }
+    end
   end
 
   def update_suggested_tips
@@ -41,6 +53,10 @@ class Employees::PropertiesController < ApplicationController
     rescue ActiveRecord::RecordNotFound
       flash[:notice] = "We couldn't find that page."
       redirect_to @employee
+    end
+
+    def property_params
+      params.require(:property).permit(:picture)
     end
 
 end

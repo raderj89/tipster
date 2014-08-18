@@ -9,11 +9,16 @@
         %p= @property.city_state_zip
 
         .js-edit-photo{ style: 'display: none;' }
-          .js-pretty-input
-            Choose File
-          = file_field_tag :picture, as: :file, label: 'Upload a photo of your building'
-      
-      = link_to "edit", "#", class: 'action-link'
+          = simple_form_for [current_employee, @property], html: { multipart: true }, remote: true,authenticity_token: true do |f|
+
+            = f.label :picture, "Edit your building photo"
+            .js-pretty-input
+              Choose File
+            = f.input_field :picture, as: :file, label: 'Upload a photo of your building'
+
+            = f.submit "Save"
+
+      = link_to "edit", "#", class: 'action-link js-action-link'
 
 %section.suggested-tips
   - if @property.property_employees.any?
@@ -28,7 +33,7 @@
               %span{data: { title: title } }= number_to_currency(sugg_tip, precision: 0)
               = text_field_tag 'suggested_tip', sugg_tip, size: 3, style: 'display: none;', data: { title: title }
             %td.js-edit-column
-              = link_to "edit", "#", class: 'action-link'
+              = link_to "edit", "#", class: 'action-link js-action-link'
 
 %section.my-employees
   %h2 Manage Employees
@@ -44,7 +49,7 @@
         
         - unless current_employee == prop_employee.employee
           = link_to image_tag('x.png', class: 'right js-delete-employee'), employee_property_employee_path(current_employee, prop_employee), method: :delete, remote: true, data: { confirm: "Are you sure you want to remove #{prop_employee.full_name}?" }
-        = link_to "edit", "#", class: 'action-link', data: { prop_employee_id: prop_employee.id }
+        = link_to "edit", "#", class: 'action-link js-action-link', data: { prop_employee_id: prop_employee.id }
 
 %section.my-payment
   %h2 Pending Invitations
