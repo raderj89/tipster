@@ -45,6 +45,10 @@ class Employee < ActiveRecord::Base
     managed_employees.include?(property_employee)
   end
 
+  def suggested_tip
+    PropertyEmployee.find_by(employee_id: self.id).suggested_tip
+  end
+
   def avatar_thumb
     avatar.url(:thumb)
   end

@@ -11,7 +11,7 @@
               %p= employee.positions.where(property_id: @property.id).first.title
           .tip-fields
             = t.input :employee_id, as: :hidden, input_html: { value: employee.id }
-            = t.input :amount, placeholder: "avg. $30", as: :string
+            = t.input :amount, placeholder: "sugg. $#{employee.suggested_tip}", as: :string
             = t.input :message, placeholder: "Optional Message"
     
     .subtotal
