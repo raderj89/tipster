@@ -11,7 +11,7 @@
     = link_to "edit", '#', class: 'action-link right'
 
 %section.my-tipping
-  - if current_employee.tips.any?
+  - if @tips.any?
     %h2 Tips received
     %table.dashboard-table.employee-table
       %thead
@@ -21,13 +21,5 @@
           %th.message Message
           %th Amount
         %tbody
-          - current_employee.tips.each do |tip|
-            %tr
-              %td 
-                = transaction_date(tip)
-              %td 
-                = tip.signature
-              %td.message
-                = tip.message
-              %td
-                = number_to_currency(tip.amount, precision: 0)
+          = render partial: 'tip', collection: @tips
+        = will_paginate @tips

@@ -1,0 +1,9 @@
+%tr
+  %td 
+    = transaction_date(tip)
+  %td 
+    = tip.signature
+  %td.message
+    = tip.message
+  %td
+    = number_to_currency(tip.amount, precision: 0)

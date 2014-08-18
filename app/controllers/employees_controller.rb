@@ -27,6 +27,7 @@ class EmployeesController < ApplicationController
   end
 
   def show
+    @tips = current_employee.tips.paginate(page: params[:page])
   end
 
   def edit

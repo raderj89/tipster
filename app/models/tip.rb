@@ -5,4 +5,6 @@ class Tip < ActiveRecord::Base
   delegate :signature, to: :user_transaction
 
   validates :amount, presence: true
+
+  self.per_page = 10
 end

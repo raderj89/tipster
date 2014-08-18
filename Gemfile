@@ -17,6 +17,7 @@ gem 'simple_form'
 gem 'paperclip', '~> 4.1'
 gem 'nokogiri'
 gem 'searchkick'
+gem 'will_paginate'
 
 gem 'stripe'
 gem 'ffaker'
