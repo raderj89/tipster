@@ -61,12 +61,11 @@
         %td.right-column
           = image_tag('x.png', class: 'right js-delete-employee')
 
-%section.my-payment
+%section.small-column
   %h2 Invite Employees
-  .payment-information
-    %table.small-table
-      %tr
-        %td
-          Mastercard &ndash;3335
-        %td.right-column
-          = link_to "edit", '#', class: 'action-link js-action-link'
+  .invitation-table-wrapper.clearfix
+    = simple_form_for [@property, current_employee, @invitation], remote: true do |f|
+      = f.input_field :recipient_email, placeholder: "Employee Email Address", class: 'full-input'
+      .styled-select.full-input
+        = f.input_field :position, collection: PropertyEmployee::TITLES, prompt: "Employee Title"
+      = f.submit "Send Invitation"

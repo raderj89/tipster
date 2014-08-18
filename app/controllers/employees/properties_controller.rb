@@ -7,6 +7,7 @@ class Employees::PropertiesController < ApplicationController
   before_action :set_property, except: [:update_suggested_tips]
 
   def show
+    @invitation = Invitation.new
   end
 
   def update

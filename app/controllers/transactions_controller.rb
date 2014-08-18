@@ -1,8 +1,9 @@
 class TransactionsController < ApplicationController
 
-  before_action :set_property
+  before_action :set_property, except: [:show]
   before_action :signed_in_user
   before_action :correct_user
+  before_action :set_transaction, only: [:show]
 
   def new
     @transaction = current_user.transactions.new
@@ -20,6 +21,9 @@ class TransactionsController < ApplicationController
     end
   end
 
+  def show
+  end
+
   private
 
     def set_property
@@ -35,6 +39,12 @@ class TransactionsController < ApplicationController
     def correct_user
       @user = User.find(params[:user_id])
       redirect_to root_path unless current_user?(@user)
+    end
+
+    def set_transaction
+      @transaction = Transaction.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to current_user, notice: "We couldn't find that page"
     end
 
     def transaction_params

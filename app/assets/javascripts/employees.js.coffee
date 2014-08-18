@@ -2,6 +2,7 @@ $ ->
   titleInput = ""
   $title = ""
   currentEmployeeId = $('.all-employees-wrapper').data('current-employee')
+  
   propertyId = $('.my-properties').data('property-id')
 
   $('.single-employee .js-action-link').on 'click', (e) ->

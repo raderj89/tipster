@@ -5,11 +5,18 @@
     = link_to "SmartyTip", root_path, class: 'logo'
 
   %ul.nav-links
-    - if user_signed_in? || employee_signed_in?
+    - if user_signed_in?
       %li
-        = link_to "About", about_path
+        = link_to "Dashboard", current_user
       %li
-        = link_to "FAQ", faq_path
+        = link_to "Settings", edit_user_path(current_user)
+      %li
+        = link_to "Log Out", log_out_path, class: 'primary-button'
+    - elsif employee_signed_in?
+      %li
+        = link_to "Dashboard", current_employee
+      %li
+        = link_to "Settings", edit_employee_path(current_employee)
       %li
         = link_to "Log Out", log_out_path, class: 'primary-button'
     - else
