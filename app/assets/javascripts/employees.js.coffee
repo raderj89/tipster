@@ -4,8 +4,9 @@ $ ->
   currentEmployeeId = $('.all-employees-wrapper').data('current-employee')
   propertyId = $('.my-properties').data('property-id')
 
-  $('.action-link').on 'click', (e) ->
+  $('.single-employee .js-action-link').on 'click', (e) ->
     e.preventDefault()
+
     $this = $(this)
     $this.hide()
     $employeeBox = $this.parent('.single-employee')
@@ -18,13 +19,12 @@ $ ->
   $('.single-employee').on 'change', '#titles', ->
     $this = $(this)
     $employeeBox = $this.parents('.single-employee')
-    $editLink = $employeeBox.find('.action-link')
+    $editLink = $employeeBox.find('.js-action-link')
     console.log($editLink)
     newTitle = $this.val()
     employeeId = $this.data('prop-employee-id')
 
-    $.ajax({
-      url: "/employees/#{currentEmployeeId}/property_employees/#{employeeId}",
+    $.ajax "/employees/#{currentEmployeeId}/property_employees/#{employeeId}",
       type: "PUT",
       data: { property_employee: { title: newTitle } },
       success: (data) ->
@@ -32,34 +32,43 @@ $ ->
         $title.text(newTitle)
         $title.show()
         $editLink.show()
-      })
 
   $moneyField = ""
-  $('.right-column').on 'click', 'span', ->
+  $row = ""
+  $('.js-edit-column').on 'click', '.js-action-link', (e) ->
+    e.preventDefault()
+
     $this = $(this)
+    $this.addClass('js-active')
+    $this.text("save")
+    $row = $this.parents('tr')
+    $tipText = $row.find('.right-column span')
+    $moneyField = $row.find('#suggested_tip')
 
-    $column = $this.parent('.right-column')
-    $moneyField = $column.find('#suggested_tip')
-
-    $this.hide()
-
+    $tipText.hide()
     $moneyField.show()
 
-  $('.right-column').on 'blur', '#suggested_tip', ->
+
+  $('.js-edit-column').on 'click', '.js-active', (e) ->
+    e.preventDefault()
+
     $this = $(this)
-    $column = $this.parent('.right-column')
-    $tipText = $column.find('span')
-    console.log($tipText)
+    $this.removeClass('js-active')
+    newNum = $row.find('#suggested_tip').val()
+    title = $moneyField.data('title')
+    $tipText = $row.find('.right-column span')
 
-    newNum = $this.val()
-    title = $this.data('title')
-
-    $.ajax({
-      url: "/employees/#{currentEmployeeId}/properties/#{propertyId}/update_tips",
+    $.ajax "/employees/#{currentEmployeeId}/properties/#{propertyId}/update_tips",
       type: "POST"
       data: { title: title, suggested_tip: newNum },
       success: ->
-        $this.hide()
+        $this.text("edit")
+        $moneyField.hide()
         $tipText.text("$#{newNum}")
         $tipText.show()
-      })
+
+  $('.single-property .js-action-link').on 'click', (e) ->
+    e.preventDefault()
+
+    $('.js-edit-photo').show()
+    
