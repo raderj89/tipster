@@ -1,0 +1,24 @@
+.tipping-wrapper.clearfix
+  %h2 Review Your Transaction
+  %hr
+  %br
+  %h3
+    = @transaction.address
+  - @transaction.employee_tips.each do |tip|
+    .tip-single-employee.clearfix
+      .employee-info
+        = image_tag tip.employee.avatar_thumb
+        .employee-name-position
+          %h2= tip.employee.first_name + " " + tip.employee.last_name[0] + "."
+          %p= PropertyEmployee.where(employee_id: tip.employee_id).first.title
+      .tip-fields
+        %p.tip-amount= number_to_currency(tip.amount, precision: 0)
+        - if tip.message.length > 0
+          %p.tip-message= tip.message
+  .subtotal
+    %h1
+      Total
+    %h2
+      = number_to_currency(@transaction.total, precision: 0)
+
+  = button_to("Send Tips", user_transaction_confirm_path(current_user, @transaction))

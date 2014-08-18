@@ -1,7 +1,7 @@
 class Transaction < ActiveRecord::Base
 
   # Callbacks
-  after_create :send_out_tips
+  before_create :set_total
 
   # Relations
   belongs_to :user
@@ -19,10 +19,13 @@ class Transaction < ActiveRecord::Base
     employee_tips.to_a.sum { |tip| tip.amount }
   end
 
-  def pay_and_save
+  def set_total
     self.total = total_price
+  end
+
+  def pay
     if user.charge(self.total)
-      save!
+      send_out_tips
     else
       false
     end
