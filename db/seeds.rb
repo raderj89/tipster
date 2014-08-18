@@ -4,12 +4,11 @@ User.delete_all
 PropertyEmployee.delete_all
 PropertyUser.delete_all
 Invitation.delete_all
+Property.delete_all
 
 Admin.create!(email: 'admin@smartytip.com', password: 'password')
 
-TITLES = %w(bellhop porter doorman handyman valet)
-
-25.times do |i|
+10.times do |i|
   property = Property.create!(address: '165 Central Ave',
                               city: Faker::Address.city,
                               state: 'NY',
@@ -22,6 +21,7 @@ employee_counter = 0
 user_counter = 0
 
 Property.all.each do |property|
+
   1.times do
     employee = Employee.create!(first_name: Faker::Name.first_name,
                                 last_name: Faker::Name.last_name,
@@ -33,13 +33,13 @@ Property.all.each do |property|
                                 tip_average: rand(99),
                                 is_admin: true)
 
-    property.property_employees.create!(employee_id: employee.id,
-                                        title: TITLES.sample,
-                                        suggested_tip: rand(99) )
+    prop_employee = property.property_employees.create!(employee_id: employee.id,
+                                                        title: PropertyEmployee::TITLES[0],
+                                                        suggested_tip: ((rand(100)).round(-1)))
     employee_admin_counter += 1
   end
 
-  9.times do
+  12.times do
     employee = Employee.create!(first_name: Faker::Name.first_name,
                                 last_name: Faker::Name.last_name,
                                 email: "employee-#{employee_counter}@tipster.com",
@@ -50,13 +50,14 @@ Property.all.each do |property|
                                 tip_average: rand(99),
                                 is_admin: false)
 
+
     property.property_employees.create!(employee_id: employee.id,
-                                        title: TITLES.sample,
-                                        suggested_tip: rand(99) )
+                                        title: PropertyEmployee::TITLES[(rand(11) + 1)],
+                                        suggested_tip: ((rand(100)).round(-1)))
     employee_counter += 1
   end
 
-  10.times do
+  2.times do
     user = User.create!(first_name: Faker::Name.first_name,
                         last_name: Faker::Name.last_name,
                         email: "user-#{user_counter}@tipster.com",
@@ -73,12 +74,12 @@ employee = Employee.find(1)
 
 begin
   recipient = Stripe::Recipient.create(name: employee.full_name,
-                           type: 'individual',
-                           email: employee.email,
-                           bank_account: {
-                            account_number: '000123456789',
-                            routing_number: '110000000',
-                            country: 'US'} )
+                                       type: 'individual',
+                                       email: employee.email,
+                                       bank_account: {
+                                        account_number: '000123456789',
+                                        routing_number: '110000000',
+                                        country: 'US'} )
   employee.stripe_id = recipient.id
   employee.save!
 rescue Stripe::InvalidRequestError => e
@@ -102,3 +103,15 @@ rescue Stripe::CardError => e
   false
 end
 
+User.all.each do |user|
+  user.properties.each do |property|
+    property.employees.each do |employee|
+      8.times do
+        transaction = user.transactions.create(total: (rand(400) + 1))
+        transaction.employee_tips.create(employee_id: employee.id,
+                                         message: "Thanks #{employee.first_name}, you're the best. Hope you get some peace and quiet this holiday!",
+                                         amount: (rand(100) + 1))
+      end
+    end
+  end
+end

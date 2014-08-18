@@ -44,4 +44,27 @@ $ ->
       .append("<img src='" + item.picture_thumb + "'>" + item.label +
               "<a href='#' class='js-property-select'>Select</a>")
       .appendTo(ul)
-      
+  
+  $('#js-property-search-user-show').autocomplete
+    appendTo: '#js-property-listings'
+    source: $('#js-property-search-user-show').data('autocomplete-source')
+    minLength: 5
+    open: (event, ui) ->
+      unless $('#js-property-search-user-show').val().length > 0
+        $('#js-property-search').val('')
+    close: (event, ui) ->
+      inputField = $('#js-property-search')
+      $('.js-no-prop-button').remove()
+    select: (event, ui) ->
+      $('.all-properties-wrapper').after(property_partial(ui.item))
+      $('#js-building-search').hide()
+      $('.ui-autocomplete').children().remove()
+  .autocomplete("instance")._renderItem = (ul, item) ->
+    item.value = item.full_address
+    item.label = item.full_address
+    $("<li>")
+      .attr('data-value', item.value)
+      .append("<img src='" + item.picture_thumb + "'>" + item.label +
+              "<a href='#' class='js-property-select'>Select</a>")
+      .appendTo(ul)
+  

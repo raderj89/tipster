@@ -7,6 +7,8 @@ class Transaction < ActiveRecord::Base
   belongs_to :user
   has_many :employee_tips, class_name: 'Tip', foreign_key: 'transaction_id'
 
+  delegate :signature, to: :user
+
   # Nested attributes
   accepts_nested_attributes_for :employee_tips, reject_if: proc { |attributes| attributes['amount'].blank? }
 
@@ -25,9 +27,9 @@ class Transaction < ActiveRecord::Base
   end
 
   def address
-    # Transactions have many tips, which belong to employees, which have many property employee records, which
+    # Transactions belong to users, which have many property employee records, which
     # belong to a property.
-    Property.find_by(id: PropertyEmployee.where(employee_id: Tip.where(transaction_id: self.id))).full_address
+    Property.find_by(id: PropertyUser.where(user_id: self.user_id)).full_address
   end
 
   private

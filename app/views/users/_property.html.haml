@@ -3,6 +3,7 @@
   .property-info
     %h2= property.name
     %p= property.address
+    %p= property.unit
     %p= property.city_state_zip
   = link_to "remove", user_remove_property_path(current_user, property), method: :delete, remote: true, data: { confirm: "Are you sure you want to remove this property?" }, class: 'action-link js-remove-building'
 

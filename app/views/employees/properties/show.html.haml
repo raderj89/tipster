@@ -1,0 +1,65 @@
+%section.my-properties{ data: { property_id: @property.id } }
+  %h2 Property Information
+  .all-properties-wrapper
+    .single-property.clearfix
+      = image_tag @property.picture_medium, class: 'property-image'
+      .property-info
+        %h2= @property.name
+        %p= @property.address
+        %p= @property.city_state_zip
+
+        .js-edit-photo{ style: 'display: none;' }
+          .js-pretty-input
+            Choose File
+          = file_field_tag :picture, as: :file, label: 'Upload a photo of your building'
+      
+      = link_to "edit", "#", class: 'action-link'
+
+%section.suggested-tips
+  - if @property.property_employees.any?
+    %h2 Suggested Tips
+    .payment-information  
+      %table.small-table
+        - @property.titles_and_suggested_tips.each do |title, sugg_tip|
+          %tr
+            %td
+              = title
+            %td.right-column
+              %span{data: { title: title } }= number_to_currency(sugg_tip, precision: 0)
+              = text_field_tag 'suggested_tip', sugg_tip, size: 3, style: 'display: none;', data: { title: title }
+
+%section.my-employees
+  %h2 Manage Employees
+  .all-employees-wrapper{ data: { current_employee: current_employee.id} }
+    - @property.property_employees.each do |prop_employee|
+      .single-employee.clearfix{ id: "employee-#{prop_employee.employee_id}" }
+        = image_tag prop_employee.avatar_thumb, class: 'thumbnail'
+        .employee-info
+          %h2= prop_employee.full_name
+          %p{ data: { prop_employee_id: prop_employee.id, title: prop_employee.title } }= prop_employee.title
+          .styled-select
+            = select_tag('titles', options_for_select(PropertyEmployee::TITLES), prompt: 'select title', style: 'display: none;', data: { prop_employee_id: prop_employee.id } )
+        
+        - unless current_employee == prop_employee.employee
+          = link_to image_tag('x.png', class: 'right js-delete-employee'), employee_property_employee_path(current_employee, prop_employee), method: :delete, remote: true, data: { confirm: "Are you sure you want to remove #{prop_employee.full_name}?" }
+        = link_to "edit", "#", class: 'action-link', data: { prop_employee_id: prop_employee.id }
+
+%section.my-payment
+  %h2 Pending Invitations
+  .invitation-table-wrapper
+    %table.small-table
+      %tr
+        %td
+          jessemauro@gmail.com
+        %td.right-column
+          = image_tag('x.png', class: 'right js-delete-employee')
+
+%section.my-payment
+  %h2 Invite Employees
+  .payment-information
+    %table.small-table
+      %tr
+        %td
+          Mastercard &ndash;3335
+        %td.right-column
+          = link_to "edit", '#', class: 'action-link'
