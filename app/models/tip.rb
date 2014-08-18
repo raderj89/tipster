@@ -6,5 +6,5 @@ class Tip < ActiveRecord::Base
 
   validates :amount, presence: true
 
-  self.per_page = 10
+  self.per_page = 5
 end
