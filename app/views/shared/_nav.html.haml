@@ -16,6 +16,8 @@
       %li
         = link_to "Dashboard", current_employee
       %li
+        = link_to "Settings", edit_employee_path(current_employee)
+      %li
         = link_to "Log Out", log_out_path, class: 'primary-button'
     - else
       %li
