@@ -1,0 +1,5 @@
+<% if @property.valid? %>
+  $('.property-image').attr('src', <%= @property.picture_medium %>)
+<% end %>
+
+$('#flash').html("<%= escape_javascript(render 'shared/flash_messages', flash: flash).html_safe %>");

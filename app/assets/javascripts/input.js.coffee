@@ -1,8 +1,6 @@
 $ ->
-  if $('.js-pretty-input')[0]
-
     # Trigger click event on real input when pretty one is clicked
-    $('.js-pretty-input').on 'click', (e) ->
+    $('body').on 'click', '.js-pretty-input', (e) ->
       e.preventDefault()
       $(this).next().click()  
 
