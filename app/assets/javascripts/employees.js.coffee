@@ -71,19 +71,4 @@ $ ->
     e.preventDefault()
 
     $('.js-edit-photo').show()
-
-  # $('.single-property').on 'change', '#picture:file', ->
-  #   console.log(this);
-  #   filename = this.files[0].name
-  #   subFilename = filename.substring(0, 12)
-
-  #   $.ajax "/employees/#{currentEmployeeId}/properties/#{propertyId}"
-  #     type: "PUT"
-  #     data: { property: { picture: }}
-  #   # Add ellipses if name is too long
-  #   if subFilename.length > 12
-  #     subFilename = subFilename + '...'
-
-  #   # Appends filename to page
-  #   $(this).prev().html(subFilename)
     
