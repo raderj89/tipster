@@ -7,7 +7,7 @@
           .employee-info
             = image_tag employee.avatar_thumb
             .employee-name-position
-              %h2= employee.first_name
+              %h2= employee.first_name + " " + employee.last_name[0] + "."
               %p= employee.positions.where(property_id: @property.id).first.title
           .tip-fields
             = t.input :employee_id, as: :hidden, input_html: { value: employee.id }
