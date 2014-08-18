@@ -9,6 +9,8 @@
       %li
         = link_to "Dashboard", current_user
       %li
+        = link_to "Settings", edit_user_path(current_user)
+      %li
         = link_to "Log Out", log_out_path, class: 'primary-button'
     - elsif employee_signed_in?
       %li
