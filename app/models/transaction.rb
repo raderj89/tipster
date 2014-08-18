@@ -29,7 +29,7 @@ class Transaction < ActiveRecord::Base
   def address
     # Transactions belong to users, which have many property employee records, which
     # belong to a property.
-    Property.find_by(id: PropertyUser.where(user_id: self.user_id))
+    Property.find_by(id: PropertyUser.where(user_id: self.user_id)).full_address
   end
 
   private
