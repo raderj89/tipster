@@ -65,7 +65,8 @@ Property.all.each do |property|
                         avatar: File.new("#{Rails.root}/app/assets/images/bill.jpeg"),
                         signature: "The #{Faker::Name.last_name} family")
 
-    property.property_tenants.create!(user_id: user.id, unit: "1L")
+    user.property_relations.create!(property_id: property.id, unit: "1L")
+
     user_counter += 1
   end
 end
@@ -103,14 +104,14 @@ rescue Stripe::CardError => e
   false
 end
 
-User.all.each do |user|
-  user.properties.each do |property|
-    property.employees.each do |employee|
-      8.times do
-        transaction = user.transactions.create(total: (rand(400) + 1))
+Property.all.each do |property|
+  property.tenants.each do |tenant|
+    8.times do |i|
+      transaction = tenant.transactions.create(total: (rand(400) + 1), created_at: (Time.now - i.weeks.ago))
+      property.employees.each do |employee|
         transaction.employee_tips.create(employee_id: employee.id,
-                                         message: "Thanks #{employee.first_name}, you're the best. Hope you get some peace and quiet this holiday!",
-                                         amount: (rand(100) + 1))
+                                       message: "Thanks #{employee.first_name}, you're the best. Hope you get some peace and quiet this holiday!",
+                                       amount: (rand(100) + 1))
       end
     end
   end

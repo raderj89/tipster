@@ -1,0 +1,7 @@
+<% if @user.valid? %>
+  var properties = "<%= escape_javascript(render partial: 'property', collection: current_user.properties, locals: { user: current_user }) %>"
+
+  $('.all-properties-wrapper').html(properties)
+<% end %>
+
+$('#flash').html("<%= escape_javascript(render 'shared/flash_messages', flash: flash).html_safe %>");

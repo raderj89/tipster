@@ -12,10 +12,11 @@ window.property_partial = (item) ->
   '</div>'
 
 $ ->
-  $('form').on 'click', '.js-remove-building', (e) ->
+  $('body').on 'click', '.js-remove-building', (e) ->
     e.preventDefault()
     $this = $(this)
     $this.closest('.js-property-relation').remove()
+    $this.closest('#js-add-property').remove()
 
   $('.js-add-building').on 'click', (e) ->
     e.preventDefault()
@@ -50,21 +51,26 @@ $ ->
     source: $('#js-property-search-user-show').data('autocomplete-source')
     minLength: 5
     open: (event, ui) ->
-      unless $('#js-property-search-user-show').val().length > 0
-        $('#js-property-search').val('')
+      if $('#js-property-search-user-show').val().length > 0
+        $('#js-property-search-user-show').val('')
     close: (event, ui) ->
       inputField = $('#js-property-search')
-      $('.js-no-prop-button').remove()
     select: (event, ui) ->
-      $('.all-properties-wrapper').after(property_partial(ui.item))
+      $('#js-property-search-user-show').val('')
       $('#js-building-search').hide()
       $('.ui-autocomplete').children().remove()
+      $editForm = $('.edit_user')
+      $editForm.show()
+      $editForm.find(".user_property_relations_property_id input").val(ui.item.id)
+      # $editForm.find('.building_name').text("#{ui.item.name}")
+      $editForm.find('.address').text("#{ui.item.full_address}")
+      $editForm.find('img').attr('src', "#{ui.item.picture_thumb}")
+
   .autocomplete("instance")._renderItem = (ul, item) ->
     item.value = item.full_address
     item.label = item.full_address
     $("<li>")
       .attr('data-value', item.value)
-      .append("<img src='" + item.picture_thumb + "'>" + item.label +
-              "<a href='#' class='js-property-select'>Select</a>")
+      .append("<img src='" + item.picture_thumb + "'>" + item.label)
       .appendTo(ul)
   

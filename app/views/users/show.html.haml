@@ -1,7 +1,7 @@
 %section.my-properties
   %h2 My Properties
   .all-properties-wrapper
-    = render partial: 'property', collection: current_user.properties, locals: { user: current_user }
+    = render partial: 'property', collection: current_user.property_relations, locals: { user: current_user }
     .add-building-wrapper.clearfix
       = link_to '#', class: 'js-add-building' do
         %span.circle-wrap
@@ -10,6 +10,19 @@
       #js-building-search
         = text_field_tag :query, nil, data: { autocomplete_source: properties_path }, id: 'js-property-search-user-show', placeholder: '555 Anywhere St, SomewheresVille, OK', class: 'full-input'
         #js-property-listings
+
+      #js-add-property
+        = simple_form_for current_user, remote: true, html: { style: 'display: none;' } do |f|
+          = f.simple_fields_for :property_relations, current_user.property_relations.build do |pr|
+            %img
+            .property-info
+              %h5.building_name
+              %p.address
+            = pr.input :property_id, as: :hidden
+            = pr.input :unit, placeholder: "Unit #"
+          = f.submit "Add Building"
+          = link_to "remove", '#', class: 'js-remove-building'
+
 
 %section.my-payment
   %h2 My Payment Method

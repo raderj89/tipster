@@ -14,11 +14,18 @@ class User < ActiveRecord::Base
   # BCrypt
   has_secure_password
 
+  # Email regex
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+
+  # Validations
+  validates :first_name, presence: true, length: { maximum: 100 }
+  validates :last_name, presence: true, length: { maximum: 100 }
+  validates :email, presence: true, length: { maximum: 100 }, format: { with: VALID_EMAIL_REGEX }
+  validates :password, length: { minimum: 6 }, unless: Proc.new { |a| a.password.blank? }
+
   # Paperclip
   has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
-
-  # Validations
 
   # Methods
 

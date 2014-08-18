@@ -1,5 +1,5 @@
 <% if @property_relation.destroyed? %>
-  $('#property-' + <%= @property_relation.property_id %>).remove();
+  $('#property-' + <%= @property_relation.id %>).remove();
 <% end %>
 
 $('#flash').html("<%= escape_javascript(render 'shared/flash_messages', flash: flash).html_safe %>");
