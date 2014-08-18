@@ -1,6 +1,7 @@
 .tipping-wrapper.clearfix
   %h3= @property.address + " " + @property.city + ", " + @property.state
   = simple_form_for [@property, current_user, @transaction] do |f|
+    = f.input :property_id, as: :hidden, input_html: { value: @property.id }
     - @property.employees.each do |employee|
       .tip-single-employee.clearfix
         = f.simple_fields_for :employee_tips do |t|

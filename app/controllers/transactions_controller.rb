@@ -1,6 +1,6 @@
 class TransactionsController < ApplicationController
 
-  before_action :set_property, except: [:show]
+  before_action :set_property, except: [:show, :review, :confirm]
   before_action :signed_in_user
   before_action :correct_user
   before_action :set_transaction, only: [:show]
@@ -12,12 +12,28 @@ class TransactionsController < ApplicationController
 
   def create
     @transaction = current_user.transactions.new(transaction_params)
-    if @transaction.pay_and_save
-      flash[:success] = "You have successfully sent out tips!"
-      redirect_to current_user
+    if @transaction.save
+      flash[:success] = "Please review your order."
+      redirect_to user_transaction_review_path(current_user, @transaction)
     else
       flash[:error] = "There was a problem sending out your tips."
       render :new
+    end
+  end
+
+  def review
+    @transaction = Transaction.find(params[:transaction_id])
+  end
+
+  def confirm
+    @transaction = Transaction.find(params[:transaction_id])
+    
+    if @transaction.pay
+      flash[:success] = "You have successfully sent out tips!"
+      redirect_to current_user
+    else
+      flash[:error] = "There was a problem sending out your tips. Please try again."
+      render :review
     end
   end
 
@@ -48,7 +64,7 @@ class TransactionsController < ApplicationController
     end
 
     def transaction_params
-      params.require(:transaction).permit(employee_tips_attributes: [:employee_id, :amount, :message])
+      params.require(:transaction).permit(:property_id, employee_tips_attributes: [:employee_id, :amount, :message])
     end
 
 end

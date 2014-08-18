@@ -41,7 +41,10 @@ Rails.application.routes.draw do
 
   resources :users do
     resources :property_users
-    resources :transactions
+    resources :transactions do
+      get "review" => 'transactions#review', as: :review
+      post "confirm" => 'transactions#confirm', as: :confirm
+    end
     delete 'property/:id' => 'users#remove_property', as: :remove_property
   end
   
