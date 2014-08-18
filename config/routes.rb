@@ -32,7 +32,12 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :employees, path_names: { new: 'new/:invitation_token' }
+  resources :employees, except: [:destroy], path_names: { new: 'new/:invitation_token' } do
+    resources :properties, except: [:destroy], controller: 'employees/properties' do
+      post 'update_tips' => 'employees/properties#update_suggested_tips', as: :update_tips
+    end
+    resources :property_employees, only: [:update, :destroy], controller: 'employees/property_employees'
+  end
 
   resources :users do
     delete 'property/:id' => 'users#remove_property', as: :remove_property

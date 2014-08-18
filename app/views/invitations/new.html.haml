@@ -4,7 +4,7 @@
   = simple_form_for [@property, current_employee, @invitation], remote: true do |f|
     = f.input_field :recipient_email, placeholder: "Employee Email Address", class: 'full-input'
     .styled-select.full-input
-      = f.input_field :position, collection: titles, prompt: "Employee Title"
+      = f.input_field :position, collection: PropertyEmployee::TITLES, prompt: "Employee Title"
     = f.submit "Send Invitation"
 
   #sent-invitations

@@ -22,6 +22,7 @@ gem 'stripe'
 gem 'ffaker'
 
 gem 'bcrypt', '~> 3.1.7'
+gem 'rack-cors', require: 'rack/cors'
 
 group :development do
   gem 'capistrano'

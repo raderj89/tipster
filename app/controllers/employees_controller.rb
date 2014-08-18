@@ -52,8 +52,8 @@ class EmployeesController < ApplicationController
     def employee_params
       params.require(:employee).permit(:invitation_token, :first_name, :last_name, :nickname,
                                        :email, :is_admin, :password, :password_confirmation,
-                                       positions_attributes: [:title, property_attributes:
-                                       [:name,:address, :city, :state, :zip, :picture]])
+                                       :avatar, positions_attributes: [:title, :suggested_tip,
+                                       property_attributes: [:name,:address, :city, :state, :zip, :picture]])
     end
 
     def redirect_to_property_invites_or_index(employee)
