@@ -4,15 +4,15 @@ $ ->
   currentEmployeeId = $('.all-employees-wrapper').data('current-employee')
   propertyId = $('.my-properties').data('property-id')
 
-  $('.action-link').on 'click', (e) ->
-    e.preventDefault()
-    $this = $(this)
-    $employeeBox = $this.parent('.single-employee')
-    propEmployeeId = $this.data('prop-employee-id')
-    $title = $employeeBox.find("p[data-prop-employee-id=#{propEmployeeId}]")
-    titleInput = $employeeBox.find("#titles[data-prop-employee-id='#{propEmployeeId}']")
-    $title.hide()
-    titleInput.show()
+  # $('.action-link').on 'click', (e) ->
+  #   e.preventDefault()
+  #   $this = $(this)
+  #   $employeeBox = $this.parent('.single-employee')
+  #   propEmployeeId = $this.data('prop-employee-id')
+  #   $title = $employeeBox.find("p[data-prop-employee-id=#{propEmployeeId}]")
+  #   titleInput = $employeeBox.find("#titles[data-prop-employee-id='#{propEmployeeId}']")
+  #   $title.hide()
+  #   titleInput.show()
   
   $('.single-employee').on 'change', '#titles', ->
     $this = $(this)
