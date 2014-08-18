@@ -27,6 +27,8 @@
             %td.right-column
               %span{data: { title: title } }= number_to_currency(sugg_tip, precision: 0)
               = text_field_tag 'suggested_tip', sugg_tip, size: 3, style: 'display: none;', data: { title: title }
+            %td.js-edit-column
+              = link_to "edit", "#", class: 'action-link'
 
 %section.my-employees
   %h2 Manage Employees
