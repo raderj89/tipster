@@ -1,6 +1,6 @@
 .tipping-wrapper.clearfix
-  %h2 Review Your Transaction
-  %hr
+  %h1 Review Your Tips
+
   %br
   %h3
     = @transaction.address
@@ -20,5 +20,6 @@
       Total
     %h2
       = number_to_currency(@transaction.total, precision: 0)
-
+  
   = button_to("Send Tips", user_transaction_confirm_path(current_user, @transaction))
+  = link_to "Cancel", current_user, class: 'secondary-button'
