@@ -1,0 +1,11 @@
+%h1 Request your building be added to SmartyTip
+
+%p Email us and we'll contact your building manager
+
+= simple_form_for @message, url: send_message_path do |f|
+  = f.input :property_id, as: :hidden, input_html: { value: @property.id }
+  = f.input :email
+  = f.input :name
+  = f.input :content
+
+  = f.submit "Send Message"
