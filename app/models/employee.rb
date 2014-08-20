@@ -86,11 +86,15 @@ class Employee < ActiveRecord::Base
     false
   end
 
-  def update_bank_deposit(bank_info)
-    recipient = Stripe::Recipient.retrieve(self.stripe_id)
-    recipient.bank_account = bank_info.merge(country: 'US')
-    recipient.save
-    update_deposit_method(bank_info)
+  def update_or_create_bank_deposit(bank_info)
+    if self.stripe_id
+      recipient = Stripe::Recipient.retrieve(self.stripe_id)
+      recipient.bank_account = bank_info.merge(country: 'US')
+      recipient.save
+      update_deposit_method(bank_info)
+    else
+      setup_bank_deposit(bank_info)
+    end
   rescue Stripe::InvalidRequestError => e
     logger.error "Stripe error while updating recipient: #{e.message}"
     errors.add(:base, "There was a problem updating your bank information.")

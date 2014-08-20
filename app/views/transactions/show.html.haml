@@ -1,5 +1,8 @@
 .tipping-wrapper.clearfix
   %h3
+    = transaction_date(@transaction)
+    
+  %h3
     = @transaction.address
   - @transaction.employee_tips.each do |tip|
     .tip-single-employee.clearfix
