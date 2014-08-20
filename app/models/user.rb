@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
 
   # Callbacks
   before_save { self.email = email.downcase }
+  before_save :generate_authentication_token
 
   # Relations
   has_many :property_relations, class_name: 'PropertyUser', foreign_key: 'user_id', dependent: :delete_all
@@ -56,4 +57,10 @@ class User < ActiveRecord::Base
                                    customer: stripe_id,
                                    currency: 'usd')
   end
+
+  private
+
+    def generate_authentication_token
+      self.authentication_token = SecureRandom.urlsafe_base64
+    end
 end

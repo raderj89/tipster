@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140818193938) do
+ActiveRecord::Schema.define(version: 20140819024339) do
 
   create_table "admins", force: true do |t|
     t.string   "email",           null: false
@@ -133,10 +133,10 @@ ActiveRecord::Schema.define(version: 20140818193938) do
   add_index "transactions", ["user_id"], name: "index_transactions_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
-    t.string   "first_name",          null: false
-    t.string   "last_name",           null: false
-    t.string   "email",               null: false
-    t.string   "password_digest",     null: false
+    t.string   "first_name",           null: false
+    t.string   "last_name",            null: false
+    t.string   "email",                null: false
+    t.string   "password_digest",      null: false
     t.string   "signature"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -145,8 +145,10 @@ ActiveRecord::Schema.define(version: 20140818193938) do
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.string   "stripe_id"
+    t.string   "authentication_token"
   end
 
+  add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
 
 end

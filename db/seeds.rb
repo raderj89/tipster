@@ -5,6 +5,8 @@ PropertyEmployee.delete_all
 PropertyUser.delete_all
 Invitation.delete_all
 Property.delete_all
+Transaction.delete_all
+Tip.delete_all
 
 Admin.create!(email: 'admin@smartytip.com', password: 'password')
 
@@ -107,12 +109,14 @@ end
 Property.all.each do |property|
   property.tenants.each do |tenant|
     8.times do |i|
-      transaction = tenant.transactions.create(total: (rand(400) + 1), created_at: (Time.now - i.weeks.ago), property_id: property.id)
+      transaction = tenant.transactions.build(created_at: (Time.now - i.weeks.ago), property_id: property.id)
       property.employees.each do |employee|
-        transaction.employee_tips.create(employee_id: employee.id,
-                                       message: "Thanks #{employee.first_name}, you're the best. Hope you get some peace and quiet this holiday!",
-                                       amount: (rand(100) + 1))
+        transaction.employee_tips.build(employee_id: employee.id,
+                                        message: "Thanks #{employee.first_name}, you're the best. Hope you get some peace and quiet this holiday!",
+                                        amount: (rand(100) + 1))
+
       end
+      transaction.save!
     end
   end
 end
