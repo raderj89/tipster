@@ -2,6 +2,13 @@ $ ->
   titleInput = ""
   $title = ""
   currentEmployeeId = $('.all-employees-wrapper').data('current-employee')
+
+  # Pulses text green
+  showSuccess = (container) ->
+    container.addClass('change-success')
+    changeBack = ->
+      container.removeClass('change-success')
+    setTimeout changeBack, 500
   
   propertyId = $('.my-properties').data('property-id')
 
@@ -20,6 +27,8 @@ $ ->
   $('.single-employee').on 'change', '#titles', ->
     $this = $(this)
     $employeeBox = $this.parents('.single-employee')
+    showSuccess($employeeBox)
+
     $editLink = $employeeBox.find('.js-action-link')
     console.log($editLink)
     newTitle = $this.val()
@@ -43,6 +52,7 @@ $ ->
     $this.addClass('js-active')
     $this.text("save")
     $row = $this.parents('tr')
+
     $tipText = $row.find('.right-column span')
     $moneyField = $row.find('#suggested_tip')
 
@@ -63,6 +73,7 @@ $ ->
       type: "POST"
       data: { title: title, suggested_tip: newNum },
       success: ->
+        showSuccess($row)
         $this.text("edit")
         $moneyField.hide()
         $tipText.text("$#{newNum}")
