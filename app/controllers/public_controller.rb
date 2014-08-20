@@ -24,9 +24,16 @@ class PublicController < ApplicationController
   end
 
   def send_message
+    binding.pry
     @message = Message.new(params[:message])
 
-    
+    @property = Property.find(params[:message][:property_id])
+
+    RequestBuilding.request_signup(@message, @property).deliver
+
+    flash[:success] = "Thanks! We have received your message and will be in touch soon!"
+
+    redirect_to root_url
   end
 
 end
