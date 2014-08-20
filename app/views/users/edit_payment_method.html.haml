@@ -1,17 +1,14 @@
 %section.form-section-3
-  %h1
-    Update your payment information
-    %fieldset.fields-3
-      %h3 
-        %span 3
-        Enter Payment Information
-      .fields-wrapper
-        = simple_form_for :billing_information, url: user_update_payment_method_path(current_user) do |f|
-          = f.input_field :card_number, placeholder: 'Credit Card Number', class: 'full-input'
-          = f.input_field :cvv, placeholder: 'CVV', class: 'third-input'
-          .third-spacer
-          = f.input_field :expiration_month, placeholder: 'MM', class: 'third-input'
-          .third-spacer
-          = f.input_field :expiration_year, placeholder: 'YYYY', class: 'third-input'
+  %fieldset.fields-3
+    %h1
+      Update your payment information
+    .fields-wrapper
+      = simple_form_for :billing_information, url: user_update_payment_method_path(current_user) do |f|
+        = f.input_field :card_number, placeholder: 'Credit Card Number', class: 'full-input'
+        = f.input_field :cvv, placeholder: 'CVV', class: 'third-input'
+        .third-spacer
+        = f.input_field :expiration_month, placeholder: 'MM', class: 'third-input'
+        .third-spacer
+        = f.input_field :expiration_year, placeholder: 'YYYY', class: 'third-input'
 
-          = f.submit "Update Payment", class: 'right'
+        = f.submit "Update Payment Method", class: 'right'

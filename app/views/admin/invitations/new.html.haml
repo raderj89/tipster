@@ -1,5 +1,7 @@
 .medium-centering-wrapper
   %h1 Invite property managers
+  %p
+    Get more buildings onto SmartyTip! Input a property manager&apos;s email address and the information of the property they manage to send them an invitation. The more building managers you invite, the more people can use SmartyTip! 
 
   = simple_form_for [:admin, @invitation], remote: true do |f|
     = f.input_field :recipient_email, class: 'full-input', placeholder: "Property Manager Email"

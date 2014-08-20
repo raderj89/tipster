@@ -12,9 +12,11 @@
   %body    
     .admin-wrapper
       - if admin_signed_in?
-        %nav
+        %nav.clearfix
           .nav-links
-            = link_to "Invite a property", new_admin_invitation_path
+            = link_to "Log Out", admin_log_out_path, class: 'primary-button'
+            = link_to "Invite a property", new_admin_invitation_path, class: 'text-nav-link'
+
       - else
         %nav
       = render partial: 'shared/flash_messages'
