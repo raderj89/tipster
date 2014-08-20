@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   has_many :properties, through: :property_relations
   has_many :transactions
   has_many :tips, through: :transactions
+  has_many :payment_methods, dependent: :destroy
 
   accepts_nested_attributes_for :property_relations, allow_destroy: true
 
@@ -43,6 +44,7 @@ class User < ActiveRecord::Base
                                                  exp_year: card_info[:expiration_year],
                                                  cvc: card_info[:cvv] })
       self.stripe_id = customer.id
+      create_payment_method(card_info)
       save!
     end
 
@@ -62,5 +64,11 @@ class User < ActiveRecord::Base
 
     def generate_authentication_token
       self.authentication_token = SecureRandom.urlsafe_base64
+    end
+
+    def create_payment_method(card_info)
+      card_type = CardChecker.new(card_info[:card_number]).type
+      payment = self.payment_methods.build(card_type: card_type, last_four: card_info[:card_number][-4..-1])
+      payment.save!
     end
 end

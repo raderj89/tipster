@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140819024339) do
+ActiveRecord::Schema.define(version: 20140820142003) do
 
   create_table "admins", force: true do |t|
     t.string   "email",           null: false
@@ -19,6 +19,16 @@ ActiveRecord::Schema.define(version: 20140819024339) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "deposit_methods", force: true do |t|
+    t.string   "last_four"
+    t.boolean  "is_card",     default: true
+    t.integer  "employee_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "deposit_methods", ["employee_id"], name: "index_deposit_methods_on_employee_id", using: :btree
 
   create_table "employee_addresses", force: true do |t|
     t.string   "address_line_1"
@@ -72,6 +82,16 @@ ActiveRecord::Schema.define(version: 20140819024339) do
   end
 
   add_index "invitations", ["recipient_email"], name: "index_invitations_on_recipient_email", using: :btree
+
+  create_table "payment_methods", force: true do |t|
+    t.string   "card_type"
+    t.string   "last_four"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "payment_methods", ["user_id"], name: "index_payment_methods_on_user_id", using: :btree
 
   create_table "properties", force: true do |t|
     t.string   "name"

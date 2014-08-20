@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  
+
+  resources :payment_methods
+
   namespace :api do
     namespace :v1 do
       resources :sessions, only: [:create, :destroy] do
@@ -37,7 +41,11 @@ Rails.application.routes.draw do
   resources :employees, except: [:destroy], path_names: { new: 'new/:invitation_token' } do
     resources :properties, except: [:destroy], controller: 'employees/properties' do
       post 'update_tips' => 'employees/properties#update_suggested_tips', as: :update_tips
+      resources :invitations, path_names: { new: 'new' }
     end
+    get 'edit_deposit_method' => 'employees#edit_deposit_method', as: :edit_deposit_method
+    post 'update_deposit_method' => 'employees#update_deposit_method', as: :update_deposit_method
+    post 'update_address' => 'employees#update_address', as: :update_address
     resources :property_employees, only: [:update, :destroy], controller: 'employees/property_employees'
   end
 

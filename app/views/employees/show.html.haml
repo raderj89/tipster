@@ -8,7 +8,7 @@
   .payment-information
     %p 
       Mastercard &ndash;3335
-    = link_to "edit", '#', class: 'action-link right'
+    = link_to "edit", employee_edit_deposit_method_path(current_employee), class: 'action-link right'
 
 %section.my-tipping
   - if @tips.any?

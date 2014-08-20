@@ -73,3 +73,5 @@ $ ->
 
     $('.js-edit-photo').show()
     
+  $('.js-cancel-edit').on 'click', ->
+    $('.js-edit-photo').hide()

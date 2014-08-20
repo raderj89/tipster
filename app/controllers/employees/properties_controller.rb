@@ -8,6 +8,7 @@ class Employees::PropertiesController < ApplicationController
 
   def show
     @invitation = Invitation.new
+    @property_employees = current_employee.employees_managed
   end
 
   def update

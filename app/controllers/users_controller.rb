@@ -40,6 +40,7 @@ class UsersController < ApplicationController
   end
 
   def show
+    @transactions = current_user.transactions.paginate(page: params[:page])
   end
 
   def remove_property

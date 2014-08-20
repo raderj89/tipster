@@ -1,0 +1,29 @@
+.medium-centering-wrapper.clearfix
+  %h1
+    Update your deposit method
+
+  %p
+    Choose how you would like to receive your payments.
+
+  .switches.clearfix
+    = link_to "Get direct deposit", "#", class: "js-switch-dd"
+    %span
+      or
+    = link_to "Get a check in the mail", "#", class: "js-switch-check"
+  
+
+  .js-direct-deposit
+    = simple_form_for :bank_information, url: employee_update_deposit_method_path(current_employee) do |f|
+      = f.input_field :account_number, placeholder: "Bank Account Number", class: "full-input"
+      = f.input_field :routing_number, placeholder: "Bank Routing Number", class: "full-input"
+      = f.submit "Submit"
+
+  .js-check
+    = simple_form_for @address, url: employee_update_address_path(current_employee) do |f|
+      = f.input_field :address_line_1, placeholder: "Address Line 1", class: "full-input"
+      = f.input_field :address_line_2, placeholder: "Address Line 2", class: "full-input"
+      = f.input_field :city, placeholder: "City", class: "full-input"
+      .styled-select.full-input
+        = f.input_field :state, collection: us_states, placeholder: "State", prompt: "State"
+      = f.input_field :zip, placeholder: "Zip", class: "full-input"
+      = f.submit "Submit"

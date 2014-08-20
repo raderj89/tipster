@@ -1,7 +1,8 @@
 %section.my-properties
   %h2 My Properties
   .all-properties-wrapper
-    = render partial: 'property', collection: current_user.property_relations, locals: { user: current_user }
+    .all-properties
+      = render partial: 'property', collection: current_user.property_relations, locals: { user: current_user }
     .add-building-wrapper.clearfix
       = link_to '#', class: 'js-add-building' do
         %span.circle-wrap
@@ -27,9 +28,12 @@
 %section.my-payment
   %h2 My Payment Method
   .payment-information
-    %p 
-      Mastercard &ndash;3335
-    = link_to "edit", '#', class: 'action-link right'
+    - current_user.payment_methods.each do |method|
+      %p 
+        = method.card_type
+        &ndash;
+        = method.last_four
+      = link_to "edit", '#', class: 'action-link right'
 
 %section.my-tipping
   %h2 My Tipping History
@@ -44,4 +48,5 @@
           %th Total
           %th
         %tbody
-          = render partial: 'transaction', collection: current_user.transactions, locals: { user: current_user }
+          = render partial: 'transaction', collection: @transactions, locals: { user: current_user }
+    = will_paginate @transactions
