@@ -33,12 +33,15 @@
 
 %section.my-tipping
   %h2 My Tipping History
-  %table.dashboard-table
-    %thead
-      %tr
-        %th Date
-        %th Property
-        %th Total
-        %th
-      %tbody
-        = render partial: 'transaction', collection: current_user.transactions, locals: { user: current_user }
+  - if current_user.transactions.empty?
+    %p You haven&apos;t given out tips yet! Spread the cheer and tip your building today!
+  - else
+    %table.dashboard-table
+      %thead
+        %tr
+          %th Date
+          %th Property
+          %th Total
+          %th
+        %tbody
+          = render partial: 'transaction', collection: current_user.transactions, locals: { user: current_user }
