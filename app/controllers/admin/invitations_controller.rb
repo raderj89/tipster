@@ -25,6 +25,18 @@ class Admin::InvitationsController < Admin::BaseController
     end
   end
 
+  def destroy
+    @invitation = Invitation.find(params[:id])
+
+    if @invitation.destroy
+      flash[:success] = "Invitation removed."
+      redirect_to new_admin_invitation_path
+    else
+      flash[:error] = "There was a problem removing this invitation."
+      render :new
+    end
+  end
+
   private
 
     def set_admin

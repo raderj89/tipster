@@ -1,4 +1,4 @@
-.small-centering-wrapper
+.medium-centering-wrapper
   %h1 Invite property managers
 
   = simple_form_for [:admin, @invitation], remote: true do |f|
@@ -8,8 +8,11 @@
     = f.input_field :property_address, class: 'full-input', placeholder: "Address"
 
     = f.input_field :property_city, class: 'third-input', placeholder: "City"
+    .third-spacer
+
     .styled-select.third-input
       = f.input_field :property_state, collection: us_states, prompt: "State"
+    .third-spacer
 
     = f.input_field :property_zip, class: 'third-input', placeholder: "Zip"
     = f.submit "Send Invitation"
@@ -22,4 +25,12 @@
 
     %ul.js-sent-invites-list
       - if @invitations.any?
-        = render @invitations
+        %table.dashboard-table.js-invitations-table
+          %thead
+            %tr
+              %th Date
+              %th Property
+              %th Manager Email
+              %th Delete
+            %tbody
+              = render @invitations
