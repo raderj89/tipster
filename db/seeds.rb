@@ -103,7 +103,8 @@ begin
                                              cvc: 123 })
   user.stripe_id = customer.id
   user.save!
-  user.payment_methods.create(last_four: '4242', card_type: 'Visa')
+  method = user.build_payment_method(last_four: '4242', card_type: 'Visa')
+  method.save!
 rescue Stripe::CardError => e
   puts "Stripe error while creating customer: #{e.message}"
   false
@@ -122,4 +123,11 @@ Property.all.each do |property|
       transaction.save!
     end
   end
+end
+
+Employee.all[1..-1].each do |employee|
+  address = employee.build_address(address_line_1: "165 Central Ave", address_line_2: "1L", city: "Brooklyn", state: "New York", zip: "11221")
+  address.save!
+  method = employee.build_deposit_method(is_card: false)
+  method.save!
 end

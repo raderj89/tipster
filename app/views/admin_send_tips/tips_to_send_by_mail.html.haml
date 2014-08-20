@@ -1,0 +1,11 @@
+Hey there,
+
+These employees need tips sent to them by mail.
+
+- @tips.each do |tip|
+  = tip.employee.full_name
+  %br
+  = tip.employee.full_address
+  %br
+  = "$#{tip.amount}"
+  %br

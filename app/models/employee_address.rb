@@ -7,6 +7,10 @@ class EmployeeAddress < ActiveRecord::Base
   validates_presence_of :city, :state, :zip
 
   def full_address
-    "#{address_line_1},\n#{city}, #{state}, #{zip}"
+    if self.address_line_2
+      "#{address_line_1},\n#{address_line_2}\n#{city}, #{state}, #{zip}"
+    else
+      "#{address_line_1},\n#{city}, #{state}, #{zip}"
+    end
   end
 end

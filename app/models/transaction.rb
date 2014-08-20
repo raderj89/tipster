@@ -41,7 +41,13 @@ class Transaction < ActiveRecord::Base
 
     def send_out_tips
       employee_tips.each do |tip|
-        tip.employee.send_tip(tip.amount)
+        if tip.employee.deposit_method && tip.employee.deposit_method.is_card
+          tip.employee.send_tip(tip.amount)
+        end
       end
+
+      tips_to_mail = employee_tips.map { |tip| tip if !tip.employee.deposit_method.nil? && tip.employee.deposit_method.is_card == false }
+      tips_to_mail.compact!
+      AdminSendTips.tips_to_send_by_mail(tips_to_mail).deliver
     end
 end

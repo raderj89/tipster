@@ -28,12 +28,15 @@
 %section.my-payment
   %h2 My Payment Method
   .payment-information
-    - current_user.payment_methods.each do |method|
+    - if current_user.payment_method
       %p 
-        = method.card_type
+        = current_user.payment_method.card_type
         &ndash;
-        = method.last_four
+        = current_user.payment_method.last_four
       = link_to "edit", user_edit_payment_method_path(current_user), class: 'action-link right'
+    - else
+      No payment method added yet.
+      = link_to "add", user_edit_payment_method_path(current_user), class: 'action-link right'
 
 %section.my-tipping
   %h2 My Tipping History

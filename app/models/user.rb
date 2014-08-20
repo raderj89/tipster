@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   has_many :properties, through: :property_relations
   has_many :transactions
   has_many :tips, through: :transactions
-  has_many :payment_methods, dependent: :destroy
+  has_one :payment_method, dependent: :destroy
 
   accepts_nested_attributes_for :property_relations, allow_destroy: true
 
@@ -45,6 +45,7 @@ class User < ActiveRecord::Base
                                                  cvc: card_info[:cvv] })
       self.stripe_id = customer.id
       create_payment_method(card_info)
+      save!
     end
 
     rescue Stripe::CardError => e
@@ -59,15 +60,19 @@ class User < ActiveRecord::Base
                                    currency: 'usd')
   end
 
-  def update_card(card_info)
-    customer = Stripe::Customer.retrieve(self.stripe_id)
+  def update_or_create_card(card_info)
+    if self.stripe_id
+      customer = Stripe::Customer.retrieve(self.stripe_id)
 
-    customer.card = { number: card_info[:card_number],
-                      exp_month: card_info[:expiration_month],
-                      exp_year: card_info[:expiration_year],
-                      cvc: card_info[:cvv] }
-    customer.save
-    update_payment_method(card_info)
+      customer.card = { number: card_info[:card_number],
+                        exp_month: card_info[:expiration_month],
+                        exp_year: card_info[:expiration_year],
+                        cvc: card_info[:cvv] }
+      customer.save
+    else
+      save_with_payment(card_info)
+    end
+    update_or_create_payment_method(card_info)
   end
 
   private
@@ -78,15 +83,20 @@ class User < ActiveRecord::Base
 
     def create_payment_method(card_info)
       card_type = CardChecker.new(card_info[:card_number]).type
-      payment = self.payment_methods.build(card_type: card_type, last_four: card_info[:card_number][-4..-1])
+      payment = self.build_payment_method(card_type: card_type, last_four: card_info[:card_number][-4..-1])
       payment.save!
 
     rescue ActiveRecord::RecordNotUnique
       return false
     end
 
-    def update_payment_method(card_info)
+    def update_or_create_payment_method(card_info)
       card_type = CardChecker.new(card_info[:card_number]).type
-      self.payment_methods.first.update(last_four: card_info[:card_number][-4..-1], card_type: card_type)
+      if self.payment_method
+        self.payment_method.update(last_four: card_info[:card_number][-4..-1], card_type: card_type)
+      else
+        method = self.build_payment_method(last_four: card_info[:card_number][-4..-1], card_type: card_type)
+        method.save!
+      end
     end
 end

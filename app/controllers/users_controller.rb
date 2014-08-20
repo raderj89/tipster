@@ -58,7 +58,7 @@ class UsersController < ApplicationController
   end
 
   def update_payment_method
-    if current_user.update_card(params[:billing_information])
+    if current_user.update_or_create_card(params[:billing_information])
       flash[:success] = "Your payment method has been successfully updated."
       redirect_to current_user
     else
