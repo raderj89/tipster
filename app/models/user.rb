@@ -85,7 +85,6 @@ class User < ActiveRecord::Base
 
     def update_payment_method(card_info)
       card_type = CardChecker.new(card_info[:card_number]).type
-      binding.pry
       self.payment_methods.first.update(last_four: card_info[:card_number][-4..-1], card_type: card_type)
     end
 end
