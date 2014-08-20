@@ -33,7 +33,7 @@
         = method.card_type
         &ndash;
         = method.last_four
-      = link_to "edit", '#', class: 'action-link right'
+      = link_to "edit", user_edit_payment_method_path(current_user), class: 'action-link right'
 
 %section.my-tipping
   %h2 My Tipping History

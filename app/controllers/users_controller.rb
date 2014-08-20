@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   respond_to :js, :html
 
   before_action :signed_in_user, except: [:new, :create]
-  before_action :correct_user, except: [:new, :create, :remove_property]
+  before_action :correct_user, except: [:new, :create, :remove_property, :edit_payment_method, :update_payment_method]
 
   def new
     @property = Property.find(params[:property_id])
@@ -54,6 +54,18 @@ class UsersController < ApplicationController
     respond_with(@property)
   end
 
+  def edit_payment_method
+  end
+
+  def update_payment_method
+    if current_user.update_card(params[:billing_information])
+      flash[:success] = "Your payment method has been successfully updated."
+      redirect_to current_user
+    else
+      flash[:error] = "There was a problem updating your payment method."
+      render :edit_payment_method
+    end
+  end
 
   private
 

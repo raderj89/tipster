@@ -28,6 +28,8 @@ class Employee < ActiveRecord::Base
   # BCrypt
   has_secure_password
 
+  delegate :full_address, to: :address
+
   # Methods
   def full_name
     "#{first_name} #{last_name}"

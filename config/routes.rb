@@ -56,6 +56,8 @@ Rails.application.routes.draw do
       post "confirm" => 'transactions#confirm', as: :confirm
     end
     delete 'property/:id' => 'users#remove_property', as: :remove_property
+    get 'edit_payment_method' => 'users#edit_payment_method', as: :edit_payment_method
+    post 'update_payment_method' => 'users#update_payment_method', as: :update_payment_method
   end
   
   get 'log_in' => 'sessions#new', as: :log_in

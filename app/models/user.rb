@@ -60,6 +60,17 @@ class User < ActiveRecord::Base
                                    currency: 'usd')
   end
 
+  def update_card(card_info)
+    customer = Stripe::Customer.retrieve(self.stripe_id)
+
+    customer.card = { number: card_info[:card_number],
+                      exp_month: card_info[:expiration_month],
+                      exp_year: card_info[:expiration_year],
+                      cvc: card_info[:cvv] }
+    customer.save
+    update_payment_method(card_info)
+  end
+
   private
 
     def generate_authentication_token
@@ -70,5 +81,11 @@ class User < ActiveRecord::Base
       card_type = CardChecker.new(card_info[:card_number]).type
       payment = self.payment_methods.build(card_type: card_type, last_four: card_info[:card_number][-4..-1])
       payment.save!
+    end
+
+    def update_payment_method(card_info)
+      card_type = CardChecker.new(card_info[:card_number]).type
+      binding.pry
+      self.payment_methods.first.update(last_four: card_info[:card_number][-4..-1], card_type: card_type)
     end
 end
