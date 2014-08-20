@@ -73,7 +73,7 @@ Property.all.each do |property|
   end
 end
 
-employee = Employee.find(1)
+employee = Employee.first
 
 begin
   recipient = Stripe::Recipient.create(name: employee.full_name,
@@ -85,12 +85,14 @@ begin
                                         country: 'US'} )
   employee.stripe_id = recipient.id
   employee.save!
+  method = employee.build_deposit_method(last_four: '6789')
+  method.save!
 rescue Stripe::InvalidRequestError => e
   puts "Stripe error while creating recipient: #{e.message}"
   false
 end
 
-user = User.find(1)
+user = User.first
 
 begin
   customer = Stripe::Customer.create(description: user.full_name,
