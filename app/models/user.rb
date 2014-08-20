@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   # Validations
   validates :first_name, presence: true, length: { maximum: 100 }
   validates :last_name, presence: true, length: { maximum: 100 }
-  validates :email, presence: true, length: { maximum: 100 }, format: { with: VALID_EMAIL_REGEX }
+  validates :email, presence: true, length: { maximum: 100 }, format: { with: VALID_EMAIL_REGEX }, uniqueness: { case_sensitive: false }
   validates :password, length: { minimum: 6 }, unless: Proc.new { |a| a.password.blank? }
 
   # Paperclip
@@ -45,7 +45,6 @@ class User < ActiveRecord::Base
                                                  cvc: card_info[:cvv] })
       self.stripe_id = customer.id
       create_payment_method(card_info)
-      save!
     end
 
     rescue Stripe::CardError => e
@@ -81,6 +80,9 @@ class User < ActiveRecord::Base
       card_type = CardChecker.new(card_info[:card_number]).type
       payment = self.payment_methods.build(card_type: card_type, last_four: card_info[:card_number][-4..-1])
       payment.save!
+
+    rescue ActiveRecord::RecordNotUnique
+      return false
     end
 
     def update_payment_method(card_info)

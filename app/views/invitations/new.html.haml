@@ -11,10 +11,11 @@
 
   #sent-invitations
     - if @invitations.any?
-      %h2 Sent invitations
+      %h2{id: 'js-sent-invites-header'} Sent invitations
 
   %table.js-sent-invites-list.small-table
     - if @invitations.any?
       = render @invitations
+    %tbody 
 
   = link_to "Next Step", property_employee_setup_payment_path(@property, current_employee), class: "primary-button top-spacer bottom-spacer"
