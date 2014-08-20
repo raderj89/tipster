@@ -4,6 +4,7 @@
   $('.all-properties').html(properties)
   $('.edit_user')[0].reset()
   $('.edit_user').hide()
+  $('.js-add-building').show()
 <% end %>
 
 $('#flash').html("<%= escape_javascript(render 'shared/flash_messages', flash: flash).html_safe %>");

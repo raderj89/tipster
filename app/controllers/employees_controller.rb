@@ -48,13 +48,13 @@ class EmployeesController < ApplicationController
   end
 
   def update_deposit_method
-    if current_employee.update_bank_deposit(payment_params)
+    if current_employee.update_or_create_bank_deposit(payment_params)
       flash[:success] = "Your deposit method has been updated."
       redirect_to current_employee
     else
       flash[:error] = "There was a problem updating your deposit method"
       @address = current_employee.build_address
-      render edit_deposit_method
+      render :edit_deposit_method
     end
   end
 
