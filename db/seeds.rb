@@ -15,7 +15,8 @@ Admin.create!(email: 'admin@smartytip.com', password: 'password')
                               city: Faker::Address.city,
                               state: 'NY',
                               zip: Faker::AddressUS.zip_code,
-                              picture: File.new("#{Rails.root}/app/assets/images/Apartments.jpg"))
+                              picture: File.new("#{Rails.root}/app/assets/images/Apartments.jpg"),
+                              is_managed: true)
 end
 
 employee_admin_counter = 0
