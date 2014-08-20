@@ -1,7 +1,7 @@
 .medium-centering-wrapper
   %h1 Request a building invitation
 
-  %p Email us and we'll contact your building manager so you can enjoy the benefits of being on SmartyTip!
+  %p Couldn&apos;t find your building? Email us and we&apos;ll contact your building manager so you can enjoy the benefits of being on SmartyTip!
 
   = simple_form_for @message, url: send_message_path do |f|
     = f.input :property_id, as: :hidden, input_html: { value: @property.id }
