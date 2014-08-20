@@ -14,6 +14,10 @@ class Transaction < ActiveRecord::Base
   # Nested attributes
   accepts_nested_attributes_for :employee_tips, reject_if: proc { |attributes| attributes['amount'].blank? }
 
+  # Scopes
+
+  default_scope { order('created_at DESC' ) }
+
   # Methods
   def total_price
     employee_tips.to_a.sum { |tip| tip.amount }

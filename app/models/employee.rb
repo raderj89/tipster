@@ -3,7 +3,6 @@ class Employee < ActiveRecord::Base
   # Relations
   has_many :positions, inverse_of: :employee, class_name: 'PropertyEmployee', foreign_key: 'employee_id', dependent: :delete_all
   has_many :properties, through: :positions
-  has_many :titles, through: :positions
   has_one :address, class_name: 'EmployeeAddress', foreign_key: 'employee_id'
   belongs_to :invitation
   has_many :sent_invitations, as: :sender, class_name: 'Invitation', foreign_key: 'sender_id'
@@ -33,7 +32,7 @@ class Employee < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
-  def managed_employees
+  def employees_managed
     if is_admin
       positions.map do |position|
         PropertyEmployee.where(property_id: position.property_id)

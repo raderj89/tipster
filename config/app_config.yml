@@ -1,6 +1,6 @@
 defaults: &defaults
   client:
-    origin: http://localhost:9000
+    origin: http://localhost:8000
 
 development:
   <<: *defaults
