@@ -22,7 +22,7 @@ class Employee < ActiveRecord::Base
   validates :password, length: { minimum: 6 }, unless: Proc.new { |a| a.password.blank? }
 
   # Paperclip
-  has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
+  has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "user_placeholder.png"
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
   # BCrypt
@@ -86,11 +86,15 @@ class Employee < ActiveRecord::Base
     false
   end
 
-  def update_bank_deposit(bank_info)
-    recipient = Stripe::Recipient.retrieve(self.stripe_id)
-    recipient.bank_account = bank_info.merge(country: 'US')
-    recipient.save
-    update_deposit_method(bank_info)
+  def update_or_create_bank_deposit(bank_info)
+    if self.stripe_id
+      recipient = Stripe::Recipient.retrieve(self.stripe_id)
+      recipient.bank_account = bank_info.merge(country: 'US')
+      recipient.save
+      update_deposit_method(bank_info)
+    else
+      setup_bank_deposit(bank_info)
+    end
   rescue Stripe::InvalidRequestError => e
     logger.error "Stripe error while updating recipient: #{e.message}"
     errors.add(:base, "There was a problem updating your bank information.")
