@@ -12,7 +12,7 @@
         = text_field_tag :query, nil, data: { autocomplete_source: properties_path }, id: 'js-property-search-user-show', placeholder: '555 Anywhere St, SomewheresVille, OK', class: 'full-input'
         #js-property-listings
 
-      #js-add-property
+      .building-in-progress#js-add-property
         = simple_form_for current_user, remote: true, html: { style: 'display: none;' } do |f|
           = f.simple_fields_for :property_relations, current_user.property_relations.build do |pr|
             %img
@@ -21,8 +21,9 @@
               %p.address
             = pr.input :property_id, as: :hidden
             = pr.input :unit, placeholder: "Unit #"
+
+          = link_to "cancel", '#', class: 'js-remove-building secondary-button'
           = f.submit "Add Building"
-          = link_to "remove", '#', class: 'js-remove-building'
 
 
 %section.my-payment
