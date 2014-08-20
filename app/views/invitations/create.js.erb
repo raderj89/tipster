@@ -7,10 +7,14 @@
                       data: { confirm: 'Are you sure you want to delete this invitation?' }, remote: true)) %>" + '<td class="right-column">');
     $('#sent-invitations').html('<h2>Sent invitations</h2>');
     $('#new_invitation')[0].reset();
+    $('#js-no-invites-msg').remove();
+    $('#js-sent-invites-header').show();
   } else {
-    $('.invitation-table-wrapper tbody').append('<tr><td>' + recipientEmail + '</td><td>' + "<%= escape_javascript(link_to(image_tag('x.png', class: 'right js-delete-employee'),
+    $('#new_invitation')[0].reset();
+    $('.invitation-table-wrapper tbody').append('<tr id="js-invitation-' + <%= @invitation.id %> + '"><td>' + recipientEmail + '</td><td>' + "<%= escape_javascript(link_to(image_tag('x.png', class: 'right js-delete-employee'),
                       [current_employee, @property, @invitation], method: :delete,
                       data: { confirm: 'Are you sure you want to delete this invitation?' }, remote: true)) %>" + '<td class="right-column">');
+    $('#js-no-invites-msg').remove()
   }
   
 <% end %>

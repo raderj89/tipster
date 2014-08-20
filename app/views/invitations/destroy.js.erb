@@ -1,5 +1,8 @@
 <% if @invitation.destroyed? %>
   $('#js-invitation-' + <%= @invitation.id %>).remove();
+  if($('.invitation-table-wrapper tbody tr').length == 0) {
+    $('.invitation-table-wrapper').first().append('<p id="js-no-invites-msg">You have no pending invitations.');
+  }
 <% end %>
 
 $('#flash').html("<%= escape_javascript(render 'shared/flash_messages', flash: flash).html_safe %>");
