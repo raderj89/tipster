@@ -22,6 +22,7 @@ $ ->
 
   $('.js-add-building').on 'click', (e) ->
     e.preventDefault()
+    $('.js-add-building').hide()
     $('#js-building-search').show()
     $('#js-property-search').val('')
 
