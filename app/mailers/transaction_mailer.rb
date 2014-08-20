@@ -5,7 +5,8 @@ class TransactionMailer < ActionMailer::Base
     mail(to: user.email, subject: 'Thanks for Tipping!')
   end
 
-  def employee_receive_tips(employee)
-    mail(to: employee.email, subject: 'You just received tips!')
+  def employee_receive_tips(tip)
+    @tip = tip
+    mail(to: tip.employee.email, subject: 'You just received tips!')
   end
 end

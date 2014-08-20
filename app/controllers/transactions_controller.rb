@@ -30,7 +30,7 @@ class TransactionsController < ApplicationController
     TransactionMailer.user_transaction(current_user).deliver
 
     @transaction.employee_tips.each do |tip|
-      TransactionMailer.employee_receive_tips(tip.employee).deliver
+      TransactionMailer.employee_receive_tips(tip).deliver
       puts tip.employee.email
     end
 
