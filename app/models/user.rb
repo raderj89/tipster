@@ -75,6 +75,10 @@ class User < ActiveRecord::Base
     update_or_create_payment_method(card_info)
   end
 
+  def avatar_thumb
+    avatar.url(:thumb)
+  end
+
   private
 
     def generate_authentication_token
