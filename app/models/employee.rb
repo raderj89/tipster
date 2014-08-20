@@ -7,6 +7,7 @@ class Employee < ActiveRecord::Base
   belongs_to :invitation
   has_many :sent_invitations, as: :sender, class_name: 'Invitation', foreign_key: 'sender_id'
   has_many :tips
+  has_one :deposit_method
 
   # Nested Attributes
   accepts_nested_attributes_for :positions
@@ -76,9 +77,21 @@ class Employee < ActiveRecord::Base
                              bank_account: bank_info.merge(country: 'US' ))
     stripe_id = recipient.id
     save!
+    create_deposit_method(bank_info)
   rescue Stripe::InvalidRequestError => e
     logger.error "Stripe error while creating recipient: #{e.message}"
     errors.add(:base, "There was a problem with your bank information.")
+    false
+  end
+
+  def update_bank_deposit(bank_info)
+    recipient = Stripe::Recipient.retrieve(self.stripe_id)
+    recipient.bank_account = bank_info.merge(country: 'US')
+    recipient.save
+    update_deposit_method(bank_info)
+  rescue Stripe::InvalidRequestError => e
+    logger.error "Stripe error while updating recipient: #{e.message}"
+    errors.add(:base, "There was a problem updating your bank information.")
     false
   end
 
@@ -90,6 +103,24 @@ class Employee < ActiveRecord::Base
     logger.error "Stripe error while creating transfer: #{e.message}"
     errors.add(:base, "There was a problem making the transfer.")
     false
+  end
+
+  def create_deposit_method(bank_info)
+    if self.stripe_id
+      method = self.build_deposit_method(last_four: bank_info[:account_number][-4..-1])
+      method.save!
+    else
+      method = self.build_deposit_method(is_card: false)
+      method.save!
+    end
+  end
+
+  def update_deposit_method(bank_info)
+    if self.stripe_id
+      self.deposit_method.update(is_card: true, last_four: bank_info[:account_number][-4..-1])
+    else
+      self.deposit_method.update(is_card: false, last_four: nil)
+    end
   end
 
 end

@@ -1,8 +1,8 @@
 class EmployeesController < ApplicationController
 
-  before_action :set_employee, except: [:new, :create]
+  before_action :set_employee, except: [:new, :create, :edit_deposit_method, :update_deposit_method, :update_address]
   before_action :signed_in_employee, except: [:new, :create]
-  before_action :correct_employee, except: [:new, :create]
+  before_action :correct_employee, except: [:new, :create, :edit_deposit_method, :update_deposit_method, :update_address]
 
   def new
     @employee = Employee.new(invitation_token: params[:invitation_token])
@@ -31,6 +31,43 @@ class EmployeesController < ApplicationController
   end
 
   def edit
+  end
+
+  def update
+    if @employee.update(employee_params)
+      flash[:success] = "Your settings have been updated successfully!"
+      redirect_to @employee
+    else
+      flash[:error] = "There was a problem updating your settings."
+      render :edit
+    end
+  end
+
+  def edit_deposit_method
+    @address = current_employee.build_address
+  end
+
+  def update_deposit_method
+    if current_employee.update_bank_deposit(payment_params)
+      flash[:success] = "Your deposit method has been updated."
+      redirect_to current_employee
+    else
+      flash[:error] = "There was a problem updating your deposit method"
+      @address = current_employee.build_address
+      render edit_deposit_method
+    end
+  end
+
+  def update_address
+    @address = current_employee.build_address(address_params)
+    if @address.save
+      current_employee.deposit_method.update(is_card: false, last_four: nil)
+      flash[:success] = "Your deposit method has been updated."
+      redirect_to current_employee
+    else
+      flash[:error] = "There was a problem updating your deposit method."
+      render :edit_deposit_method
+    end
   end
 
   private
@@ -66,5 +103,13 @@ class EmployeesController < ApplicationController
       else
         redirect_to new_property_employee_invitation_path(@employee.properties.first, @employee)
       end
+    end
+
+    def payment_params
+      params.require(:bank_information).permit(:account_number, :routing_number)
+    end
+
+    def address_params
+      params.require(:employee_address).permit(:address_line_1, :address_line_2, :city, :state, :zip)
     end
 end 
