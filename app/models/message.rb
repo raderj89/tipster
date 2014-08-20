@@ -2,7 +2,7 @@ class Message
   include ActiveModel::Model
 
 # Attribute Accessors
-  attr_accessor :name, :email, :content, :address, :city, :state, :zip
+  attr_accessor :name, :email, :content, :address, :city, :state, :zip, :property_id
 
   # Validations
   validates_presence_of :name, :content
