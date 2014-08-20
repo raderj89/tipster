@@ -1,5 +1,5 @@
 class InvitationsController < ApplicationController
-  respond_to :js
+  respond_to :js, :html
 
   before_action :set_property
   before_action :set_employee
@@ -34,7 +34,9 @@ class InvitationsController < ApplicationController
       flash.now[:error] = "There was a problem removing this invitation."
     end
 
-    respond_with(@invitation)
+    respond_with(@invitation) do |format|
+      format.html { redirect_to new_employee_property_invitation_path(current_employee, @property) }
+    end
   end
 
   private

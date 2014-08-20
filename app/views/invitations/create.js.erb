@@ -2,13 +2,15 @@
   var recipientEmail = "<%= @invitation.recipient_email %>";
 
   if ($('.js-sent-invites-list')[0]) {
-    $('.js-sent-invites-list').append('<li>' + recipientEmail + '</li>');
+    $('.js-sent-invites-list tbody').append('<tr><td>' + recipientEmail + '</td><td>' + "<%= escape_javascript(link_to(image_tag('x.png', class: 'right js-delete-employee'),
+                      [current_employee, @property, @invitation], method: :delete,
+                      data: { confirm: 'Are you sure you want to delete this invitation?' }, remote: true)) %>" + '<td class="right-column">');
     $('#sent-invitations').html('<h2>Sent invitations</h2>');
     $('#new_invitation')[0].reset();
   } else {
     $('.invitation-table-wrapper tbody').append('<tr><td>' + recipientEmail + '</td><td>' + "<%= escape_javascript(link_to(image_tag('x.png', class: 'right js-delete-employee'),
                       [current_employee, @property, @invitation], method: :delete,
-                      data: { confirm: "Are you sure you want to delete this invitation?" }, remote: true)) %>" + '<td class="right-column">');
+                      data: { confirm: 'Are you sure you want to delete this invitation?' }, remote: true)) %>" + '<td class="right-column">');
   }
   
 <% end %>
