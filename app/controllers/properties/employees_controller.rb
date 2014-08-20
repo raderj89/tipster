@@ -46,7 +46,7 @@ class Properties::EmployeesController < ApplicationController
 
   def create_address
     @address = @employee.build_address(address_params)
-
+    DepositMethod.create(is_card: false, employee_id: @employee.id)
     if @address.save
       flash[:success] = "Your mailing address was successfully saved."
       redirect_to @employee

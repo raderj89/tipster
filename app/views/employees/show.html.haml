@@ -6,7 +6,7 @@
 %section.my-payment
   %h2 My Deposit Method
   .payment-information
-    %p 
+    %p
     - if current_employee.deposit_method.is_card
       %p
         Deposited to:
@@ -15,7 +15,7 @@
       %p
         Checks sent to:
       %p
-        = current_employee.full_address
+        = current_employee.address ? current_employee.full_address : "No Address Entered"
     = link_to "edit", employee_edit_deposit_method_path(current_employee), class: 'action-link right'
 
 %section.my-tipping

@@ -2,7 +2,8 @@
   var properties = "<%= escape_javascript(render partial: 'property', collection: current_user.property_relations, locals: { user: current_user }) %>"
 
   $('.all-properties').html(properties)
-  $('#js-add-property').html('')
+  $('.edit_user')[0].reset()
+  $('.edit_user').hide()
 <% end %>
 
 $('#flash').html("<%= escape_javascript(render 'shared/flash_messages', flash: flash).html_safe %>");
