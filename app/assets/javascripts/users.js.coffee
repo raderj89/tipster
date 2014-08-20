@@ -42,8 +42,7 @@ $ ->
     item.label = item.full_address
     $("<li>")
       .attr('data-value', item.value)
-      .append("<img src='" + item.picture_thumb + "'>" + item.label +
-              "<a href='#' class='js-property-select'>Select</a>")
+      .append("<img src='" + item.picture_thumb + "'>" + item.label)
       .appendTo(ul)
   
   $('#js-property-search-user-show').autocomplete

@@ -41,7 +41,7 @@ class Employee < ActiveRecord::Base
   end
 
   def manages?(property_employee)
-    managed_employees.include?(property_employee)
+    employees_managed.include?(property_employee)
   end
 
   def suggested_tip

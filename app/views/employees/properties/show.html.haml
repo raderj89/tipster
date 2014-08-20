@@ -1,70 +1,23 @@
-%section.my-properties{ data: { property_id: @property.id } }
-  %h2 Property Information
-  .all-properties-wrapper
-    .single-property.clearfix
-      = image_tag @property.picture_medium, class: 'property-image'
-      .property-info
-        %h2= @property.name
-        %p= @property.address
-        %p= @property.city_state_zip
+= render 'property', property: @property
 
-        .js-edit-photo{ style: 'display: none;' }
-          = simple_form_for [current_employee, @property], html: { multipart: true }, remote: true,authenticity_token: true do |f|
-
-            = f.label :picture, "Edit your building photo"
-            .js-pretty-input
-              Choose File
-            = f.input_field :picture, as: :file, label: 'Upload a photo of your building'
-
-            = f.submit "Save"
-
-      = link_to "edit", "#", class: 'action-link js-action-link'
-
-%section.suggested-tips
-  - if @property.property_employees.any?
-    %h2 Suggested Tips
-    .payment-information  
-      %table.small-table
-        - @property.titles_and_suggested_tips.each do |title, sugg_tip|
-          %tr
-            %td
-              = title
-            %td.right-column
-              %span{data: { title: title } }= number_to_currency(sugg_tip, precision: 0)
-              = text_field_tag 'suggested_tip', sugg_tip, size: 3, style: 'display: none;', data: { title: title }
-            %td.js-edit-column
-              = link_to "edit", "#", class: 'action-link js-action-link'
+= render 'suggested_tips', property: @property
 
 %section.my-employees
   %h2 Manage Employees
   .all-employees-wrapper{ data: { current_employee: current_employee.id} }
-    - @property.property_employees.each do |prop_employee|
-      .single-employee.clearfix{ id: "employee-#{prop_employee.employee_id}" }
-        = image_tag prop_employee.avatar_thumb, class: 'thumbnail'
-        .employee-info
-          %h2= prop_employee.full_name
-          %p{ data: { prop_employee_id: prop_employee.id, title: prop_employee.title } }= prop_employee.title
-          .styled-select
-            = select_tag('titles', options_for_select(PropertyEmployee::TITLES), prompt: 'select title', style: 'display: none;', data: { prop_employee_id: prop_employee.id } )
-        
-        - unless current_employee == prop_employee.employee
-          = link_to image_tag('x.png', class: 'right js-delete-employee'), employee_property_employee_path(current_employee, prop_employee), method: :delete, remote: true, data: { confirm: "Are you sure you want to remove #{prop_employee.full_name}?" }
-        = link_to "edit", "#", class: 'action-link js-action-link', data: { prop_employee_id: prop_employee.id }
+    = render partial: 'property_employee', collection: @property_employees
 
 %section.my-payment
   %h2 Pending Invitations
   .invitation-table-wrapper
     %table.small-table
-      %tr
-        %td
-          jessemauro@gmail.com
-        %td.right-column
-          = image_tag('x.png', class: 'right js-delete-employee')
+      - if current_employee.sent_invitations.any?
+        = render partial: 'invitation', collection: current_employee.sent_invitations
 
 %section.small-column
   %h2 Invite Employees
   .invitation-table-wrapper.clearfix
-    = simple_form_for [@property, current_employee, @invitation], remote: true do |f|
+    = simple_form_for [current_employee, @property, @invitation], remote: true do |f|
       = f.input_field :recipient_email, placeholder: "Employee Email Address", class: 'full-input'
       .styled-select.full-input
         = f.input_field :position, collection: PropertyEmployee::TITLES, prompt: "Employee Title"

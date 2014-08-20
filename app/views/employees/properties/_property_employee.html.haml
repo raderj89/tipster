@@ -1,0 +1,11 @@
+.single-employee.clearfix{ id: "employee-#{property_employee.employee_id}" }
+  = image_tag property_employee.avatar_thumb, class: 'thumbnail'
+  .employee-info
+    %h2= property_employee.full_name
+    %p{ data: { prop_employee_id: property_employee.id, title: property_employee.title } }= property_employee.title
+    .styled-select
+      = select_tag('titles', options_for_select(PropertyEmployee::TITLES), prompt: 'select title', style: 'display: none;', data: { prop_employee_id: property_employee.id } )
+  
+  - unless current_employee == property_employee.employee
+    = link_to image_tag('x.png', class: 'right js-delete-employee'), employee_property_employee_path(current_employee, property_employee), method: :delete, remote: true, data: { confirm: "Are you sure you want to remove #{property_employee.full_name}?" }
+  = link_to "edit", "#", class: 'action-link js-action-link', data: { prop_employee_id: property_employee.id }

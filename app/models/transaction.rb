@@ -15,8 +15,10 @@ class Transaction < ActiveRecord::Base
   accepts_nested_attributes_for :employee_tips, reject_if: proc { |attributes| attributes['amount'].blank? }
 
   # Scopes
-
   default_scope { order('created_at DESC' ) }
+
+  # Pagination
+  self.per_page = 5
 
   # Methods
   def total_price

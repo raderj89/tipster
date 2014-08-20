@@ -1,0 +1,10 @@
+.js-edit-photo{ style: 'display: none;' }
+  = simple_form_for [current_employee, @property], html: { multipart: true }, remote: true, authenticity_token: true do |f|
+
+    = f.label :picture, "Edit your building photo"
+    .js-pretty-input
+      Choose File
+    = f.input_field :picture, as: :file, label: 'Upload a photo of your building'
+
+    = f.submit "Save"
+    %a{:href => "#", class: 'js-cancel-edit'} Cancel

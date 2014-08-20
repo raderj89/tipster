@@ -1,0 +1,14 @@
+%section.suggested-tips
+  - if @property.property_employees.any?
+    %h2 Suggested Tips
+    .payment-information  
+      %table.small-table
+        - @property.titles_and_suggested_tips.each do |title, sugg_tip|
+          %tr
+            %td
+              = title
+            %td.right-column
+              %span{data: { title: title } }= number_to_currency(sugg_tip, precision: 0)
+              = text_field_tag 'suggested_tip', sugg_tip, size: 3, style: 'display: none;', data: { title: title }
+            %td.js-edit-column
+              = link_to "edit", "#", class: 'action-link js-action-link'

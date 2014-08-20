@@ -1,0 +1,13 @@
+%section.my-properties{ data: { property_id: @property.id } }
+  %h2 Property Information
+  .all-properties-wrapper
+    .single-property.clearfix
+      = image_tag @property.picture_medium, class: 'property-image'
+      .property-info
+        %h2= @property.name
+        %p= @property.address
+        %p= @property.city_state_zip
+
+        = render 'form'
+
+      = link_to "edit", "#", class: 'action-link js-action-link'

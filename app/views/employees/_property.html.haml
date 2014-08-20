@@ -5,5 +5,5 @@
     %p= property.address
     %p= property.city_state_zip
 
-  / If building manager
-  = link_to "Manage", employee_property_path(current_employee, property), class: 'primary-button right'
+  - if current_employee.is_admin
+    = link_to "Manage", employee_property_path(current_employee, property), class: 'primary-button right'
