@@ -15,8 +15,10 @@ $ ->
   $('body').on 'click', '.js-remove-building', (e) ->
     e.preventDefault()
     $this = $(this)
-    $this.closest('.js-property-relation').remove()
-    $this.closest('#js-add-property').remove()
+    $('.edit_user').find(".user_property_relations_property_id input").val('')
+    $('.edit_user').find('.address').text("")
+    $('.edit_user').find('img').attr('src', "")
+    $('.edit_user').hide()
 
   $('.js-add-building').on 'click', (e) ->
     e.preventDefault()
@@ -28,11 +30,10 @@ $ ->
     source: $('#js-property-search').data('autocomplete-source')
     minLength: 5
     open: (event, ui) ->
-      unless $('#js-property-search').val().length > 0
+      unless $('#js-property-search').val().length == 0
         $('#js-property-search').val('')
     close: (event, ui) ->
       inputField = $('#js-property-search')
-      $('.js-no-prop-button').remove()
     select: (event, ui) ->
       $('.js-property-relation:last-child').after(property_partial(ui.item))
       $('#js-building-search').hide()
@@ -49,11 +50,6 @@ $ ->
     appendTo: '#js-property-listings'
     source: $('#js-property-search-user-show').data('autocomplete-source')
     minLength: 5
-    open: (event, ui) ->
-      if $('#js-property-search-user-show').val().length > 0
-        $('#js-property-search-user-show').val('')
-    close: (event, ui) ->
-      inputField = $('#js-property-search')
     select: (event, ui) ->
       $('#js-property-search-user-show').val('')
       $('#js-building-search').hide()
@@ -64,6 +60,8 @@ $ ->
       # $editForm.find('.building_name').text("#{ui.item.name}")
       $editForm.find('.address').text("#{ui.item.full_address}")
       $editForm.find('img').attr('src', "#{ui.item.picture_thumb}")
+      $('#js-property-search-user-show').val('')
+      return false
 
   .autocomplete("instance")._renderItem = (ul, item) ->
     item.value = item.full_address

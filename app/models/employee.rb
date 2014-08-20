@@ -77,7 +77,7 @@ class Employee < ActiveRecord::Base
                              type: 'individual',
                              email: email,
                              bank_account: bank_info.merge(country: 'US' ))
-    stripe_id = recipient.id
+    self.stripe_id = recipient.id
     save!
     create_deposit_method(bank_info)
   rescue Stripe::InvalidRequestError => e
