@@ -9,12 +9,13 @@
 
 %section.my-payment
   %h2 Pending Invitations
-  .invitation-table-wrapper
+  .invitation-table-wrapper{ id: 'js-pending-invitations' }
     %table.small-table
       - if current_employee.sent_invitations.any?
         = render partial: 'invitation', collection: current_employee.sent_invitations
       - else
-        %p You have no pending invitations.
+        %p{id: 'js-no-invites-msg'} You have no pending invitations.
+        %tbody 
 
 %section.small-column
   %h2 Invite Employees
