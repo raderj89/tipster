@@ -103,6 +103,7 @@ begin
                                              cvc: 123 })
   user.stripe_id = customer.id
   user.save!
+  user.payment_methods.create(last_four: '4242', card_type: 'Visa')
 rescue Stripe::CardError => e
   puts "Stripe error while creating customer: #{e.message}"
   false

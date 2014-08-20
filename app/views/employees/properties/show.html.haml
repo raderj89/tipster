@@ -13,6 +13,8 @@
     %table.small-table
       - if current_employee.sent_invitations.any?
         = render partial: 'invitation', collection: current_employee.sent_invitations
+      - else
+        %p You have no pending invitations.
 
 %section.small-column
   %h2 Invite Employees

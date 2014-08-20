@@ -1,5 +1,7 @@
 .small-centering-wrapper
   %h1 Invite Employees
+  %p
+    Get all of the workers in your building started with SmartyTip. Enter in their email and job title and an invitation will be sent to their inbox.
 
   = simple_form_for [@property, current_employee, @invitation], remote: true do |f|
     = f.input_field :recipient_email, placeholder: "Employee Email Address", class: 'full-input'
