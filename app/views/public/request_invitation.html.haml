@@ -1,11 +1,12 @@
-%h1 Request your building be added to SmartyTip
+.medium-centering-wrapper
+  %h1 Request a building invitation
 
-%p Email us and we'll contact your building manager
+  %p Email us and we'll contact your building manager so you can enjoy the benefits of being on SmartyTip!
 
-= simple_form_for @message, url: send_message_path do |f|
-  = f.input :property_id, as: :hidden, input_html: { value: @property.id }
-  = f.input :email
-  = f.input :name
-  = f.input :content
+  = simple_form_for @message, url: send_message_path do |f|
+    = f.input :property_id, as: :hidden, input_html: { value: @property.id }
+    = f.input_field :email, class: 'full-input', placeholder: 'Your Email'
+    = f.input_field :name, class: 'full-input', placeholder: 'Your Name'
+    = f.input_field :content, as: :text, class: 'full-input', placeholder: 'Your Message'
 
-  = f.submit "Send Message"
+    = f.submit "Send Message"
