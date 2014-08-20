@@ -1,9 +1,5 @@
 Rails.application.routes.draw do
 
-  
-
-  resources :payment_methods
-
   namespace :api do
     namespace :v1 do
       resources :sessions, only: [:create, :destroy] do
@@ -71,4 +67,7 @@ Rails.application.routes.draw do
   get 'faq' => 'public#faq', as: :faq
   get 'privacy' => 'public#privacy', as: :privacy
   get 'contact' => 'public#contact', as: :contact
+  get 'request_invitation' => 'public#request_invitation', as: :request_invitation
+
+  post 'send_message' => 'public#send_message', as: :send_message
 end

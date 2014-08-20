@@ -18,4 +18,15 @@ class PublicController < ApplicationController
   def contact
   end
 
+  def request_invitation
+    @property = Property.find(params[:property])
+    @message = Message.new
+  end
+
+  def send_message
+    @message = Message.new(params[:message])
+
+    
+  end
+
 end

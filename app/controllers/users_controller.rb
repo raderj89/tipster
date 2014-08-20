@@ -6,8 +6,13 @@ class UsersController < ApplicationController
 
   def new
     @property = Property.find(params[:property_id])
-    @user = @property.tenants.build
-    @user.property_relations.build
+
+    if @property.is_managed
+      @user = @property.tenants.build
+      @user.property_relations.build
+    else
+      redirect_to request_invitation_path(property: @property)
+    end
   end
 
   def create
