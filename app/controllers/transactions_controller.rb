@@ -27,7 +27,13 @@ class TransactionsController < ApplicationController
 
   def confirm
     @transaction = Transaction.find(params[:transaction_id])
-    
+    TransactionMailer.user_transaction(current_user).deliver
+
+    @transaction.employee_tips.each do |tip|
+      TransactionMailer.employee_receive_tips(tip).deliver
+      puts tip.employee.email
+    end
+
     if @transaction.pay
       flash[:success] = "You have successfully sent out tips!"
       redirect_to current_user
