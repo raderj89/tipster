@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   before_action :correct_user, except: [:new, :create, :remove_property, :edit_payment_method, :update_payment_method]
 
   def new
-    @property = Property.find_by(params[:property_id])
+    @property = Property.find_by(id: params[:property_id])
     if @property 
       if @property.is_managed
         @user = @property.tenants.build
