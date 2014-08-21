@@ -21,8 +21,7 @@ namespace :addresses do
                            address: div.search('div.details_title h5 a').text.strip,
                            picture: (image_path unless image_path.nil?),
                            city: 'New York City',
-                           state: 'NY',
-                           zip: '00000')
+                           state: 'NY')
           puts "PROCESSED: #{p.address}"
         else
           address = div.search('div.building_address').text.gsub(/(At\s)/, '')
@@ -30,8 +29,7 @@ namespace :addresses do
                            address: address.strip,
                            picture: (image_path unless image_path.nil?),
                            city: 'New York City',
-                           state: 'NY',
-                           zip: '00000')
+                           state: 'NY')
           puts "PROCESSED: #{p.address}"
         end
       end
