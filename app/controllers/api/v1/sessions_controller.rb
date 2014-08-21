@@ -27,8 +27,7 @@ class Api::V1::SessionsController < Api::V1::BaseController
           info: "Current user",
           data: {
             auth_token: current_user.authentication_token,
-            email: current_user.email,
-            full_name: current_user.full_name
+            user: current_user
           }
         }
     else

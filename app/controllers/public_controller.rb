@@ -24,7 +24,6 @@ class PublicController < ApplicationController
   end
 
   def send_message
-    binding.pry
     @message = Message.new(params[:message])
 
     @property = Property.find(params[:message][:property_id])

@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :sessions, only: [:create, :destroy] do
-        post '/current_user' => 'sessions#get_current_user'
+        post '/current_user' => 'sessions#get_current_user', on: :collection
       end
       resources :users
       resources :properties

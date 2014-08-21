@@ -5,13 +5,17 @@ class UsersController < ApplicationController
   before_action :correct_user, except: [:new, :create, :remove_property, :edit_payment_method, :update_payment_method]
 
   def new
-    @property = Property.find(params[:property_id])
-
-    if @property.is_managed
-      @user = @property.tenants.build
-      @user.property_relations.build
+    @property = Property.find_by(params[:property_id])
+    if @property 
+      if @property.is_managed
+        @user = @property.tenants.build
+        @user.property_relations.build
+      else
+        redirect_to request_invitation_path(property: @property)
+      end
     else
-      redirect_to request_invitation_path(property: @property)
+      flash[:alert] = "Please select a property from the dropdown menu."
+      redirect_to root_path
     end
   end
 
