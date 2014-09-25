@@ -31,7 +31,6 @@ class TransactionsController < ApplicationController
 
     @transaction.employee_tips.each do |tip|
       TransactionMailer.employee_receive_tips(tip).deliver
-      puts tip.employee.email
     end
 
     if @transaction.pay

@@ -83,5 +83,17 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = { host: 'tipster.nycdevshop.com' }
 
+  config.action_mailer.delivery_method = :smtp
+
+  config.action_mailer.smtp_settings = {
+    address:        "smtp.mandrillapp.com",
+    port:           587,
+    domain:         "tipster.nycdevshop.com",
+    user_name:      Rails.application.secrets.mandrill_username,
+    password:       Rails.application.secrets.mandrill_key,
+    authentication: "plain",
+    enable_starttls_auto: true
+  }
+
   config.filter_parameters += [:card_number, :cvv, :card_expiration_month, :card_expiration_year]
 end

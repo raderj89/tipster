@@ -2,34 +2,29 @@ require 'spec_helper'
 
 feature 'inviting property admins', js: true do
   let(:admin) { create(:admin) }
-  let(:invite) { build(:manager_invitation) }
 
   before do
     log_in_admin!(admin)
 
-    visit '/admin/invitations/new'
+    visit new_admin_invitation_path
 
-    expect(page).to have_content("Invite property managers")
+    expect(page).to have_content("INVITE PROPERTY MANAGERS")
   end
 
-  scenario 'with valid credentials' do
-    fill_in "Email", with: invite.recipient_email
+  scenario 'with valid information' do
+    fill_in "Manager Email", with: "bob@trumptower.com"
 
     click_button "Send Invitation"
-
-    wait_for_ajax
 
     expect(page).to have_field('Email', with: "")
 
     expect(page).to have_content("Invite sent successfully!")
   end
 
-  scenario 'with invalid credentials' do
-    fill_in "Email", with: ''
+  scenario 'with invalid information' do
+    fill_in "Manager Email", with: ''
 
     click_button "Send Invitation"
-
-    wait_for_ajax
 
     expect(page).to have_content("There was a problem sending your invitation.")
   end

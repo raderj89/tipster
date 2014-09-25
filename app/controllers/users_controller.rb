@@ -1,33 +1,28 @@
 class UsersController < ApplicationController
   respond_to :js, :html
 
+  before_action :set_property, only: [:new, :create]
   before_action :signed_in_user, except: [:new, :create]
   before_action :correct_user, except: [:new, :create, :remove_property, :edit_payment_method, :update_payment_method]
 
   def new
-    @property = Property.find_by(id: params[:property_id])
-    if @property 
-      if @property.is_managed
-        @user = @property.tenants.build
-        @user.property_relations.build
-      else
-        redirect_to request_invitation_path(property: @property)
-      end
+    if @property.is_managed
+      @user = @property.tenants.build
+      @user.property_relations.build
     else
-      flash[:alert] = "Please select a property from the dropdown menu."
-      redirect_to root_path
+      redirect_to request_invitation_path(property: @property)
     end
   end
 
   def create
-    @property = Property.find(params[:property_id])
-    @user = @property.tenants.build(user_params)
+    @user = User.new(user_params)
 
     if @user.save_with_payment(params[:billing_information])
       sign_in(@user)
       flash[:success] = "Your account was successfully created!"
       redirect_to @user
     else
+      binding.pry
       flash[:error] = "There was a problem creating your account."
       render :new
     end
@@ -78,8 +73,15 @@ class UsersController < ApplicationController
 
   private
 
+    def set_property
+      @property = Property.find(params[:property_id])
+    rescue ActiveRecord::RecordNotFound
+      flash[:alert] = "Please select a property from the dropdown menu."
+      redirect_to root_path
+    end
+
     def user_params
-      params.require(:user).permit(:first_name, :last_name, :email,
+      params.require(:user).permit(:first_name, :last_name, :email, :avatar,
                                    :password, :password_confirmation, :signature,
                                    property_relations_attributes: [:property_id, :unit])
     end

@@ -7,6 +7,7 @@ class Admin::InvitationsController < Admin::BaseController
   def new
     @invitations = @admin.invitations.all
     @invitation = @admin.invitations.build
+    @properties = Property.all
   end
 
   def create
@@ -45,7 +46,7 @@ class Admin::InvitationsController < Admin::BaseController
 
     def invitation_params
       params.require(:invitation).permit(:recipient_email, :property_name, :property_address,
-                                         :property_city, :property_state, :property_zip)
+                                         :property_city, :property_state, :property_zip, :property_id)
     end
 
 end

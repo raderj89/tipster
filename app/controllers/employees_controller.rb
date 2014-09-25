@@ -1,12 +1,13 @@
 class EmployeesController < ApplicationController
 
-  before_action :set_employee, except: [:new, :create, :edit_deposit_method, :update_deposit_method, :update_address]
+  before_action :set_employee, except: [:new, :create]
   before_action :signed_in_employee, except: [:new, :create]
   before_action :correct_employee, except: [:new, :create, :edit_deposit_method, :update_deposit_method, :update_address]
 
   def new
     @employee = Employee.new(invitation_token: params[:invitation_token])
     if @employee.invitation
+      # Is this the best place to handle this?
       @position = @employee.positions.build
       @position.build_property
     else
@@ -94,11 +95,11 @@ class EmployeesController < ApplicationController
       params.require(:employee).permit(:invitation_token, :first_name, :last_name, :nickname,
                                        :email, :is_admin, :password, :password_confirmation,
                                        :avatar, positions_attributes: [:title, :suggested_tip,
-                                       property_attributes: [:name,:address, :city, :state, :zip, :picture]])
+                                       property_attributes: [:id, :name, :address, :city, :state, :zip, :picture]])
     end
 
     def redirect_to_property_invites_or_index(employee)
-      if employee.properties.count > 1
+      if employee.has_multiple_properties?
         redirect_to @employee
       else
         redirect_to new_property_employee_invitation_path(@employee.properties.first, @employee)

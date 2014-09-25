@@ -1,6 +1,8 @@
 .tipping-wrapper.clearfix
-  %h3= @property.address + " " + @property.city + ", " + @property.state
-  = simple_form_for [@property, current_user, @transaction] do |f|
+  %h3
+    = full_property_address(@property)
+
+  = simple_form_for [current_user, @property, @transaction] do |f|
     = f.input :property_id, as: :hidden, input_html: { value: @property.id }
     - @property.employees.each do |employee|
       .tip-single-employee.clearfix
@@ -8,8 +10,11 @@
           .employee-info
             = image_tag employee.avatar_thumb
             .employee-name-position
-              %h2= employee.first_name + " " + employee.last_name[0] + "."
-              %p= employee.positions.where(property_id: @property.id).first.title
+              %h2
+                = first_last_initial(employee)
+              %p
+                = employee.property_position(@property)
+
           .tip-fields
             = t.input :employee_id, as: :hidden, input_html: { value: employee.id }
             = t.input :amount, placeholder: "sugg. $#{employee.suggested_tip}", as: :string
@@ -20,5 +25,6 @@
         Subtotal
       %h2.js-subtotal
         $
+
     = f.submit "Submit Tips"
     = link_to "Cancel", '#', class: 'secondary-button'

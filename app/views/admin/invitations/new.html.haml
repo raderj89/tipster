@@ -4,19 +4,13 @@
     Get more buildings onto SmartyTip! Input a property manager&apos;s email address and the information of the property they manage to send them an invitation. The more building managers you invite, the more people can use SmartyTip! 
 
   = simple_form_for [:admin, @invitation], remote: true do |f|
-    = f.input_field :recipient_email, class: 'full-input', placeholder: "Property Manager Email"
+    = f.input :recipient_email, label: "Manager Email", placeholder: "Property Manager Email", input_html: { class: 'full-input' }
 
-    = f.input_field :property_name, class: 'full-input', placeholder: "Property Name(Optional)"
-    = f.input_field :property_address, class: 'full-input', placeholder: "Address"
+    = f.input :property_id, as: :hidden
 
-    = f.input_field :property_city, class: 'third-input', placeholder: "City"
+    = text_field_tag :query, params[:query], data: { autocomplete_source: properties_path }, id: 'admin_property_search', placeholder: '555 Anywhere St., Somewheresville, OK', class: 'admin-property-search full-input'
     .third-spacer
 
-    .styled-select.third-input
-      = f.input_field :property_state, collection: us_states, prompt: "State"
-    .third-spacer
-
-    = f.input_field :property_zip, class: 'third-input', placeholder: "Zip"
     = f.submit "Send Invitation"
 
   #sent-invitations

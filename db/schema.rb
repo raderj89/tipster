@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140820142003) do
+ActiveRecord::Schema.define(version: 20140821142839) do
 
   create_table "admins", force: true do |t|
     t.string   "email",           null: false
@@ -79,8 +79,10 @@ ActiveRecord::Schema.define(version: 20140820142003) do
     t.string   "property_city"
     t.string   "property_state"
     t.string   "property_zip"
+    t.integer  "property_id"
   end
 
+  add_index "invitations", ["property_id"], name: "index_invitations_on_property_id", using: :btree
   add_index "invitations", ["recipient_email"], name: "index_invitations_on_recipient_email", using: :btree
 
   create_table "payment_methods", force: true do |t|

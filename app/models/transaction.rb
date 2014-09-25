@@ -9,7 +9,7 @@ class Transaction < ActiveRecord::Base
   has_many :employee_tips, class_name: 'Tip', foreign_key: 'transaction_id'
 
   delegate :address, :full_address, :name, :city_state_zip, :picture_thumb, to: :property
-  delegate :signature, :avatar_thumb, to: :user
+  delegate :signature, :avatar_thumb, to: :user, prefix: true
 
   # Nested attributes
   accepts_nested_attributes_for :employee_tips, reject_if: proc { |attributes| attributes['amount'].blank? }

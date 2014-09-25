@@ -19,41 +19,44 @@ Rails.application.routes.draw do
     resources :invitations, except: [:edit, :update]
   end
 
-  resources :properties do
-    resources :employees, only: [:new, :create],
-              path_names: { new: 'new/:invitation_token' },
-              controller: 'properties/employees' do
-      get 'setup_payment' => 'properties/employees#setup_payment', as: :setup_payment
-      post 'create_payment' => 'properties/employees#create_payment', as: :create_payment
-      post 'create_address' => 'properties/employees#create_address', as: :create_address
-      resources :invitations, path_names: { new: 'new' }
+  get 'properties' => 'properties#index', as: :properties
+
+  resources :employees, except: [:new, :destroy] do
+    get "new/:invitation_token" => 'employees#new', as: :new, on: :collection
+    member do
+      get :setup_payment
+      post :create_payment
+      post :create_address 
+      get :edit_deposit_method
+      get :update_address
     end
 
-    resources :users, except: [:new, :create, :edit, :update] do
-      resources :transactions
-    end
-  end
-
-  resources :employees, except: [:destroy], path_names: { new: 'new/:invitation_token' } do
-    resources :properties, except: [:destroy], controller: 'employees/properties' do
-      post 'update_tips' => 'employees/properties#update_suggested_tips', as: :update_tips
-      resources :invitations, path_names: { new: 'new' }
-    end
-    get 'edit_deposit_method' => 'employees#edit_deposit_method', as: :edit_deposit_method
-    post 'update_deposit_method' => 'employees#update_deposit_method', as: :update_deposit_method
-    post 'update_address' => 'employees#update_address', as: :update_address
     resources :property_employees, only: [:update, :destroy], controller: 'employees/property_employees'
+    
+    resources :properties, except: [:destroy], controller: 'employees/properties' do
+      post :update_tips, on: :member
+      resources :invitations
+    end
   end
 
   resources :users do
-    resources :property_users
-    resources :transactions do
-      get "review" => 'transactions#review', as: :review
-      post "confirm" => 'transactions#confirm', as: :confirm
+    member do
+      get :edit_payment_method
+      post :update_payment_method
     end
+
+    resources :property_users
+    
+    resources :properties do
+      resources :transactions do
+        member do
+          get :review
+          post :confirm
+        end
+      end
+    end
+
     delete 'property/:id' => 'users#remove_property', as: :remove_property
-    get 'edit_payment_method' => 'users#edit_payment_method', as: :edit_payment_method
-    post 'update_payment_method' => 'users#update_payment_method', as: :update_payment_method
   end
   
   get 'log_in' => 'sessions#new', as: :log_in

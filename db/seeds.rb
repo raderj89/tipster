@@ -10,14 +10,14 @@ Tip.delete_all
 
 Admin.create!(email: 'admin@smartytip.com', password: 'password')
 
-# 10.times do |i|
-#   property = Property.create!(address: '165 Central Ave',
-#                               city: Faker::Address.city,
-#                               state: 'NY',
-#                               zip: Faker::AddressUS.zip_code,
-#                               picture: File.new("#{Rails.root}/app/assets/images/Apartments.jpg"),
-#                               is_managed: true)
-# end
+10.times do |i|
+  property = Property.create!(address: '165 Central Ave',
+                              city: Faker::Address.city,
+                              state: 'NY',
+                              zip: Faker::AddressUS.zip_code,
+                              picture: File.new("#{Rails.root}/app/assets/images/Apartments.jpg"),
+                              is_managed: true)
+end
 
 employee_admin_counter = 0
 employee_counter = 0

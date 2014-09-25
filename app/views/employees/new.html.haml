@@ -1,21 +1,14 @@
 %h1 Sign Up Your Building
 .medium-centering-wrapper.clearfix.employee-form
-  %h2 Building Information
-
+  %h2
+    Building Information
+    %p
+      = Property.find(@employee.invitation.property_id).full_address
   = simple_form_for @employee, html: { multipart: true } do |f|
     = f.simple_fields_for :positions do |p|
       = p.simple_fields_for :property do |pr|
- 
+        = pr.input :id, as: :hidden, input_html: { value: @employee.invitation.property_id }
         = pr.input_field :name, value: @employee.invitation.property_name, label: "Name of Building", class: 'full-input', placeholder: "Building Name (Optional)"
-        = pr.input_field :address, value: @employee.invitation.property_address, class: 'full-input', placeholder: "Address"
-        = pr.input_field :city, value: @employee.invitation.property_city, class: 'third-input', placeholder: "City"
-        
-        .third-spacer
-        .styled-select.third-input
-          = pr.input_field :state, collection: us_states, selected: @employee.invitation.property_state, class: 'third-input', placeholder: "State"
-
-        .third-spacer
-        = pr.input_field :zip, value: @employee.invitation.property_zip, class: 'third-input', placeholder: "Zip"
 
         = f.label :picture, "Upload a photo of your building"
         .js-pretty-input

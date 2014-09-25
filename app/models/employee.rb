@@ -1,11 +1,13 @@
 class Employee < ActiveRecord::Base
 
   # Relations
-  has_many :positions, inverse_of: :employee, class_name: 'PropertyEmployee', foreign_key: 'employee_id', dependent: :delete_all
+  has_many :positions, inverse_of: :employee, class_name: 'PropertyEmployee',
+           foreign_key: 'employee_id', dependent: :delete_all
   has_many :properties, through: :positions
   has_one :address, class_name: 'EmployeeAddress', foreign_key: 'employee_id'
   belongs_to :invitation
-  has_many :sent_invitations, as: :sender, class_name: 'Invitation', foreign_key: 'sender_id'
+  has_many :sent_invitations, as: :sender, class_name: 'Invitation',
+           foreign_key: 'sender_id'
   has_many :tips
   has_one :deposit_method
 
@@ -18,12 +20,14 @@ class Employee < ActiveRecord::Base
   # Validations
   validates :first_name, presence: true, length: { maximum: 100 }
   validates :last_name, presence: true, length: { maximum: 100 }
-  validates :email, presence: true, length: { maximum: 100 }, format: { with: VALID_EMAIL_REGEX }, uniqueness: { case_sensitive: false }
+  validates :email, presence: true, length: { maximum: 100 },
+            format: { with: VALID_EMAIL_REGEX }, uniqueness: { case_sensitive: false }
   validates :password, length: { minimum: 6 }, unless: Proc.new { |a| a.password.blank? }
 
   # Paperclip
-  has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "user_placeholder.png"
-  validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
+  has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>" },
+                    default_url: "user_placeholder.png"
+  validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
 
   # BCrypt
   has_secure_password
@@ -41,6 +45,14 @@ class Employee < ActiveRecord::Base
         PropertyEmployee.where(property_id: position.property_id)
       end.flatten
     end
+  end
+
+  def has_multiple_properties?
+    properties.count > 1
+  end
+
+  def property_position(property)
+    positions.where(property_id: property.id).first.title
   end
 
   def manages?(property_employee)
@@ -73,10 +85,7 @@ class Employee < ActiveRecord::Base
   end
 
   def setup_bank_deposit(bank_info)
-    recipient = Stripe::Recipient.create(name: full_name,
-                             type: 'individual',
-                             email: email,
-                             bank_account: bank_info.merge(country: 'US' ))
+    recipient = Stripe::Recipient.create(name: full_name, type: 'individual', email: email, bank_account: bank_info.merge(country: 'US' ))
     self.stripe_id = recipient.id
     save!
     create_deposit_method(bank_info)
@@ -88,10 +97,7 @@ class Employee < ActiveRecord::Base
 
   def update_or_create_bank_deposit(bank_info)
     if self.stripe_id
-      recipient = Stripe::Recipient.retrieve(self.stripe_id)
-      recipient.bank_account = bank_info.merge(country: 'US')
-      recipient.save
-      update_deposit_method(bank_info)
+      update_account_on_stripe(bank_info)
     else
       setup_bank_deposit(bank_info)
     end
@@ -121,12 +127,25 @@ class Employee < ActiveRecord::Base
     end
   end
 
-  def update_deposit_method(bank_info)
-    if self.stripe_id
-      self.deposit_method.update(is_card: true, last_four: bank_info[:account_number][-4..-1])
-    else
-      self.deposit_method.update(is_card: false, last_four: nil)
+  private
+
+    def update_deposit_info(bank_info)
+      update_account_on_stripe(bank_info)
+      update_deposit_method(bank_info)
     end
-  end
+
+    def update_account_on_stripe(bank_info)
+      recipient = Stripe::Recipient.retrieve(self.stripe_id)
+      recipient.bank_account = bank_info.merge(country: 'US')
+      recipient.save
+    end
+
+    def update_deposit_method(bank_info)
+      if self.stripe_id
+        self.deposit_method.update(is_card: true, last_four: bank_info[:account_number][-4..-1])
+      else
+        self.deposit_method.update(is_card: false, last_four: nil)
+      end
+    end
 
 end
