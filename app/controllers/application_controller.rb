@@ -24,6 +24,14 @@ class ApplicationController < ActionController::Base
 
     helper_method :current_user?
 
+    def signed_in_user
+      unless user_signed_in?
+        redirect_to root_path, notice: "Please sign in."
+      end
+    end
+
+    helper_method :signed_in_user
+
     # Employee users
     def current_employee
       @current_employee ||= Employee.find(session[:employee_id]) if session[:employee_id]

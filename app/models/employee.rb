@@ -107,16 +107,6 @@ class Employee < ActiveRecord::Base
     false
   end
 
-  def send_tip(tip_amount)
-    transfer = Stripe::Transfer.create(recipient: stripe_id,
-                                       amount: tip_amount * 100,
-                                       currency: 'usd')
-  rescue => e
-    logger.error "Stripe error while creating transfer: #{e.message}"
-    errors.add(:base, "There was a problem making the transfer.")
-    false
-  end
-
   def create_deposit_method(bank_info)
     if self.stripe_id
       method = self.build_deposit_method(last_four: bank_info[:account_number][-4..-1])
@@ -142,9 +132,9 @@ class Employee < ActiveRecord::Base
 
     def update_deposit_method(bank_info)
       if self.stripe_id
-        self.deposit_method.update(is_card: true, last_four: bank_info[:account_number][-4..-1])
+        self.deposit_method.update(is_bank: true, last_four: bank_info[:account_number][-4..-1])
       else
-        self.deposit_method.update(is_card: false, last_four: nil)
+        self.deposit_method.update(is_bank: false, last_four: nil)
       end
     end
 

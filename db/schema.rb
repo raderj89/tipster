@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20140821142839) do
 
   create_table "deposit_methods", force: true do |t|
     t.string   "last_four"
-    t.boolean  "is_card",     default: true
+    t.boolean  "is_bank",     default: true
     t.integer  "employee_id"
     t.datetime "created_at"
     t.datetime "updated_at"

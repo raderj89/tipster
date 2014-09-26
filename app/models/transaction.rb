@@ -25,13 +25,13 @@ class Transaction < ActiveRecord::Base
     employee_tips.to_a.sum { |tip| tip.amount }
   end
 
-  def set_total
-    self.total = total_price
+  def total_in_cents
+    total * 100
   end
 
   def pay
-    if user.charge(self.total)
-      send_out_tips
+    if user.charge(total_in_cents)
+      TipSender.new(self).send_tips
     else
       false
     end
@@ -39,15 +39,7 @@ class Transaction < ActiveRecord::Base
 
   private
 
-    def send_out_tips
-      employee_tips.each do |tip|
-        if tip.employee.deposit_method && tip.employee.deposit_method.is_card
-          tip.employee.send_tip(tip.amount)
-        end
-      end
-
-      tips_to_mail = employee_tips.map { |tip| tip if !tip.employee.deposit_method.nil? && tip.employee.deposit_method.is_card == false }
-      tips_to_mail.compact!
-      AdminSendTips.tips_to_send_by_mail(tips_to_mail).deliver
+    def set_total
+      self.total = total_price
     end
 end

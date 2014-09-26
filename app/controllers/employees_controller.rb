@@ -62,7 +62,7 @@ class EmployeesController < ApplicationController
   def update_address
     @address = current_employee.build_address(address_params)
     if @address.save
-      current_employee.deposit_method.update(is_card: false, last_four: nil)
+      current_employee.deposit_method.update(is_bank: false, last_four: nil)
       flash[:success] = "Your deposit method has been updated."
       redirect_to current_employee
     else

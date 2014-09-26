@@ -129,6 +129,6 @@ end
 Employee.all[1..-1].each do |employee|
   address = employee.build_address(address_line_1: "165 Central Ave", address_line_2: "1L", city: "Brooklyn", state: "New York", zip: "11221")
   address.save!
-  method = employee.build_deposit_method(is_card: false)
+  method = employee.build_deposit_method(is_bank: false)
   method.save!
 end

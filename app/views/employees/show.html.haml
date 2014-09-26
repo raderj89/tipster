@@ -7,7 +7,7 @@
   %h2 My Deposit Method
   .payment-information
     %p
-    - if current_employee.deposit_method && current_employee.deposit_method.is_card
+    - if current_employee.deposit_method && current_employee.deposit_method.is_bank
       %p
         Deposited to:
         = "-#{current_employee.deposit_method.last_four}"

@@ -3,7 +3,7 @@ class TransactionsController < ApplicationController
   before_action :set_property, except: [:show, :review, :confirm]
   before_action :signed_in_user
   before_action :correct_user
-  before_action :set_transaction, only: [:show]
+  before_action :set_transaction, except: [:new, :create]
 
   def new
     @transaction = current_user.transactions.new
@@ -14,7 +14,7 @@ class TransactionsController < ApplicationController
     @transaction = current_user.transactions.new(transaction_params)
     if @transaction.save
       flash[:success] = "Please review your order."
-      redirect_to user_transaction_review_path(current_user, @transaction)
+      redirect_to review_user_property_transaction_path(current_user, @property, @transaction)
     else
       flash[:error] = "There was a problem sending out your tips."
       render :new
@@ -22,18 +22,11 @@ class TransactionsController < ApplicationController
   end
 
   def review
-    @transaction = Transaction.find(params[:transaction_id])
   end
 
   def confirm
-    @transaction = Transaction.find(params[:transaction_id])
-    TransactionMailer.user_transaction(current_user).deliver
-
-    @transaction.employee_tips.each do |tip|
-      TransactionMailer.employee_receive_tips(tip).deliver
-    end
-
     if @transaction.pay
+      TransactionMailer.user_transaction(current_user).deliver
       flash[:success] = "You have successfully sent out tips!"
       redirect_to current_user
     else
@@ -51,10 +44,10 @@ class TransactionsController < ApplicationController
       @property = Property.find(params[:property_id])
     end
 
-    def signed_in_user
-      unless user_signed_in?
-        redirect_to root_path, notice: "Please sign in."
-      end
+    def set_transaction
+      @transaction = Transaction.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to current_user, notice: "We couldn't find that page"
     end
 
     def correct_user
@@ -62,14 +55,7 @@ class TransactionsController < ApplicationController
       redirect_to root_path unless current_user?(@user)
     end
 
-    def set_transaction
-      @transaction = Transaction.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      redirect_to current_user, notice: "We couldn't find that page"
-    end
-
     def transaction_params
       params.require(:transaction).permit(:property_id, employee_tips_attributes: [:employee_id, :amount, :message])
     end
-
 end

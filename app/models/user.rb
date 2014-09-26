@@ -45,15 +45,17 @@ class User < ActiveRecord::Base
 
   def save_with_payment(card_info)
     if valid?
-      binding.pry
       create_customer_on_stripe(card_info)
     end
   end
 
   def charge(transaction_amount)
-    Stripe::Charge.create(amount: transaction_amount * 100,
+    Stripe::Charge.create(amount: transaction_amount,
                           customer: stripe_id,
                           currency: 'usd')
+  rescue Stripe::CardError => e
+    logger.error "Stripe error while charging customer: #{e.message}"
+    false
   end
 
   def update_or_create_card(card_info)
@@ -73,9 +75,7 @@ class User < ActiveRecord::Base
 
     def create_customer_on_stripe(card_info)
       stripe_customer_params = params_for_stripe_customer(card_info)
-      binding.pry
       customer = Stripe::Customer.create(stripe_customer_params)
-      binding.pry
       add_stripe_token(customer)
       create_payment_method(card_info)
     rescue Stripe::CardError => e

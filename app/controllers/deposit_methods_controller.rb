@@ -1,2 +1,0 @@
-class DepositMethodsController < ApplicationController
-end
